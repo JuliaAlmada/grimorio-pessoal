@@ -549,31 +549,20 @@
   /* ---------- Print ---------- */
   #print-area{ display:none; }
   @media print{
-    /* margin:0 so the parchment reaches the paper edge (no white border).
-       Disable "Headers and footers" in the print dialog to remove the
-       browser's date/URL lines too. */
-    @page{ margin:0; }
+    /* Real page margin on EVERY page (white bg makes it invisible), so the
+       content never touches the top edge. Disable "Headers and footers" in
+       the print dialog to remove the browser's date/URL lines. */
+    @page{ margin:14mm 12mm; }
     *{ -webkit-print-color-adjust:exact !important; print-color-adjust:exact !important; }
-    html, body{
-      background:
-        radial-gradient(120% 80% at 50% 0%, rgba(120,80,30,.12), transparent 55%),
-        radial-gradient(100% 60% at 50% 100%, rgba(90,55,20,.16), transparent 55%),
-        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='pr'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23pr)' opacity='0.5'/%3E%3C/svg%3E"),
-        linear-gradient(160deg, #efe0bb 0%, #e6d3a6 55%, #dcc793 100%) !important;
-      background-blend-mode: normal, normal, soft-light, normal !important;
-    }
+    /* Plain white page — only the cards carry color. Lightest possible PDF. */
+    html, body{ background:#fff !important; }
     /* Remove the whole app from layout (display:none, not visibility:hidden)
        so the page count matches the printed cards instead of the tall app. */
     body::before, body::after{ display:none !important; }
     body > *:not(#print-area){ display:none !important; }
     #print-area{
       display:block !important; position:static; width:100%; color:#2c2013;
-      padding:14mm 12mm 16mm; /* inner breathing room now that the page margin is 0 */
-    }
-    /* aged edge vignette drawn behind everything */
-    #print-area::before{
-      content:""; position:fixed; inset:0; z-index:0; pointer-events:none;
-      box-shadow: inset 0 0 90px 20px rgba(90,55,20,.28);
+      padding:0; /* spacing now comes from the @page margin (applies to every page) */
     }
     .print-header{ position:relative; z-index:1; text-align:center; margin:4px 0 20px; padding-bottom:14px; }
     .print-header::after{
@@ -593,10 +582,7 @@
     .pcard{
       position:relative; page-break-inside:avoid; break-inside:avoid;
       border:1px solid #d9c391; border-radius:7px; overflow:hidden; color:#2c2013;
-      background:
-        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='pc'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23pc)' opacity='0.5'/%3E%3C/svg%3E"),
-        linear-gradient(180deg, #fbf1d3 0%, #f2e5bd 100%);
-      background-blend-mode: soft-light, normal;
+      background: linear-gradient(180deg, #fbf1d3 0%, #f2e5bd 100%);
     }
     .pcard-frame{ display:none; }
     .pcard-band{ position:relative; z-index:1; padding:8px 12px 7px; color:#fff; display:flex; align-items:center; gap:9px; box-shadow: 0 1px 0 rgba(0,0,0,.15); }
