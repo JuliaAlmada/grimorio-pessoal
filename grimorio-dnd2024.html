@@ -1,0 +1,1847 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Grimório · D&amp;D 5e 2024</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --tinta:#17212f; --papel:#eef1f5; --folha:#ffffff; --linha:#cdd4de; --linha-2:#e1e6ed;
+  --lapis:#2b4c7e; --lapis-2:#1d3559; --ouro:#98711c; --sangue:#8a2c3a; --mute:#5b6676;
+  --serif:'Newsreader',Georgia,'Times New Roman',serif;
+  --sans:'Instrument Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--papel);color:var(--tinta);font:15px/1.45 var(--sans)}
+h1,h2,h3,h4,h5{font-family:var(--serif);font-weight:600;margin:0}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--lapis);outline-offset:2px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+[hidden]{display:none!important}
+
+/* barra superior */
+.top{background:var(--tinta);color:#e8edf5;display:flex;flex-wrap:wrap;align-items:center;gap:10px 22px;padding:12px 22px}
+.brand{display:flex;align-items:baseline;gap:10px}
+.brand b{font:600 26px/1 var(--serif);letter-spacing:.01em}
+.brand span{font-size:13px;color:#9fb0c8}
+.charpick{display:flex;gap:8px;align-items:center}
+.charpick select{background:#22304a;border:1px solid #3a4c6d;color:#fff;border-radius:4px;padding:7px 10px;min-width:180px}
+nav.tabs{display:flex;gap:2px;margin-left:auto;flex-wrap:wrap}
+nav.tabs button{background:none;border:0;color:#b7c4d8;padding:8px 12px;border-bottom:2px solid transparent;font-weight:500}
+nav.tabs button[aria-selected=true]{color:#fff;border-bottom-color:#d9b25a}
+nav.tabs button:hover{color:#fff}
+
+.btn{border:1px solid var(--lapis);background:var(--lapis);color:#fff;border-radius:4px;padding:7px 14px;font-weight:500}
+.btn:hover{background:var(--lapis-2)}
+.btn.ghost{background:transparent;color:inherit;border-color:currentColor;opacity:.92}
+.top .btn.ghost{color:#cfd9ea;border-color:#4a5d80}
+.btn.ghost:hover{background:rgba(120,140,180,.16)}
+.btn.warn{background:transparent;color:var(--sangue);border-color:var(--sangue)}
+.btn.warn:hover{background:#f6e6e9}
+.btn.sm{padding:4px 10px;font-size:13px}
+
+.banner{background:#fff4d6;border-bottom:1px solid #e3cf8f;padding:8px 22px;font-size:14px}
+main{max-width:1240px;margin:0 auto;padding:20px 22px 60px}
+.view-title{font-size:26px;margin:0 0 4px}
+.lead{color:var(--mute);margin:0 0 16px;max-width:70ch}
+
+/* biblioteca */
+.filters{display:flex;flex-wrap:wrap;gap:8px 10px;align-items:end;margin-bottom:14px}
+.filters label{display:flex;flex-direction:column;gap:3px;font-size:13px;color:var(--mute)}
+.filters input[type=search],.filters select{border:1px solid var(--linha);background:var(--folha);border-radius:4px;padding:7px 9px;min-width:130px;color:var(--tinta)}
+.filters input[type=search]{min-width:220px}
+.chk{flex-direction:row!important;align-items:center;gap:6px!important;padding-bottom:8px;color:var(--tinta)!important}
+.count{margin-left:auto;color:var(--mute);font-size:13px;padding-bottom:8px}
+.split{display:grid;grid-template-columns:minmax(300px,430px) 1fr;gap:22px;align-items:start}
+.list{list-style:none;margin:0;padding:0;background:var(--folha);border:1px solid var(--linha);border-radius:6px;max-height:calc(100vh - 250px);min-height:260px;overflow:auto}
+.grp{display:flex;align-items:baseline;gap:12px;padding:10px 14px 6px;background:var(--folha);position:sticky;top:0;border-bottom:1px solid var(--linha-2);z-index:1}
+.grp .num{font:500 34px/1 var(--serif);color:var(--ouro);min-width:26px}
+.grp .lab{font-size:13px;color:var(--mute)}
+.row{display:grid;grid-template-columns:1fr auto;gap:2px 10px;padding:9px 14px;border-bottom:1px solid var(--linha-2);cursor:pointer;align-items:center}
+.row:hover{background:#f5f7fb}
+.row[aria-selected=true]{background:#e7edf7;box-shadow:inset 3px 0 0 var(--lapis)}
+.row .nm{font:500 17px/1.2 var(--serif)}
+.row .nm em{display:block;font:italic 400 13px/1.3 var(--serif);color:var(--mute)}
+.row .mt{grid-column:1;font-size:12.5px;color:var(--mute);display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.pill{border:1px solid var(--linha);border-radius:10px;padding:0 7px;font-size:11.5px;color:var(--mute)}
+.pill.c{border-color:#c69aa2;color:var(--sangue)}
+.pill.p{border-color:#b9a26b;color:var(--ouro)}
+.pill.t{border-color:#9fb3d3;color:var(--lapis)}
+#bookbar[hidden]{display:none}
+#bookbar button:disabled{opacity:.45;cursor:default}
+.tagbox{margin:16px 0 4px;padding:12px 14px;border:1px solid var(--linha);border-radius:6px;background:var(--folha)}
+.tagbox h4{margin:0 0 8px;font:600 14px var(--sans)}
+.tagrow{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:6px 0}
+.tagchip{display:inline-flex;align-items:center;gap:4px;border:1px solid #9fb3d3;border-radius:12px;padding:1px 9px;font-size:13px;color:var(--lapis);background:#fff}
+.tagchip button{border:0;background:none;color:var(--lapis);font-size:15px;line-height:1;padding:0 0 0 2px;cursor:pointer}
+button.tagchip.pick{cursor:pointer;color:var(--mute);border-style:dashed}
+.tagbox .hint{font-size:12.5px;color:var(--mute)}
+.tagadd{display:flex;gap:8px;margin-top:8px}
+.tagadd input{flex:1;min-width:0;border:1px solid var(--linha);border-radius:4px;padding:6px 9px;background:#fff}
+.sheet .ps .tg{font-size:8.5pt;color:#333;margin:0 0 2pt}
+.row .act{grid-row:1 / span 2;grid-column:2}
+.iconbtn{width:32px;height:32px;border-radius:50%;border:1px solid var(--lapis);background:#fff;color:var(--lapis);font-size:18px;line-height:1;display:grid;place-items:center}
+.iconbtn:hover{background:#e7edf7}
+.iconbtn.on{background:var(--lapis);color:#fff}
+.empty{padding:26px 18px;color:var(--mute)}
+
+/* detalhe da magia */
+.detail{position:sticky;top:12px;background:var(--folha);border:1px solid var(--linha);border-radius:6px;padding:22px 26px 26px;max-height:calc(100vh - 40px);overflow:auto}
+.detail .close{display:none}
+.detail .placeholder{color:var(--mute);font-family:var(--serif);font-size:18px}
+.spell h3{font-size:30px;line-height:1.1}
+.spell .en{margin:2px 0 0;font:italic 400 16px var(--serif);color:var(--mute)}
+.spell .lvl{margin:8px 0 12px;font:500 16px var(--serif);color:var(--lapis-2)}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px 22px;margin:0 0 14px;padding:10px 0;border-top:1px solid var(--linha);border-bottom:1px solid var(--linha)}
+.facts div{min-width:0}
+.facts dt{font-size:12.5px;color:var(--mute)}
+.facts dd{margin:0;font:400 16px/1.3 var(--serif)}
+.txt{font:400 17px/1.58 var(--serif);max-width:72ch}
+.txt p{margin:0 0 .7em}
+.txt ul{margin:0 0 .8em;padding-left:1.3em}
+.txt li{margin-bottom:.3em}
+.tb{border-collapse:collapse;margin:.3em 0 1em;font:400 15px/1.35 var(--serif);max-width:100%}
+.tb th,.tb td{border:1px solid var(--linha);padding:4px 10px;text-align:left;vertical-align:top}
+.tb th{background:#eef2f8}
+.sup{margin:.4em 0 .8em}
+.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px;padding-top:14px;border-top:1px solid var(--linha-2)}
+
+/* ficha de invocação */
+.ficha{margin:18px 0 6px;border:1px solid var(--tinta);border-left-width:5px;padding:12px 16px 12px;max-width:640px;background:#fbfcfe;break-inside:avoid}
+.ficha h4{font-size:22px;line-height:1.1}
+.ficha .tipo{margin:1px 0 8px;font:italic 400 15px var(--serif);color:var(--mute)}
+.ficha .vit{margin:0;padding:6px 0;border-top:1px solid var(--linha);font:400 15.5px/1.4 var(--serif)}
+.ficha .vit span{margin-right:16px;white-space:nowrap}
+.ficha table.abil{width:100%;border-collapse:collapse;margin:6px 0;font:400 14.5px/1.3 var(--serif);text-align:center}
+.ficha table.abil th{font-weight:600;text-align:left;padding:2px 4px}
+.ficha table.abil thead th{font:500 12px var(--sans);color:var(--mute);text-align:center}
+.ficha table.abil td{padding:2px 4px}
+.ficha table.abil td+th{border-left:1px solid var(--linha);padding-left:10px}
+.ficha table.abil tbody tr:nth-child(odd){background:#eef2f8}
+.ficha p.pr{margin:2px 0;font:400 15.5px/1.4 var(--serif)}
+.ficha h5{margin:10px 0 3px;font:600 17px var(--serif);border-bottom:1px solid var(--linha);color:var(--lapis-2)}
+.ficha p.en2{margin:3px 0;font:400 15.5px/1.45 var(--serif)}
+
+/* formulário */
+.form{background:var(--folha);border:1px solid var(--linha);border-radius:6px;padding:20px 24px;max-width:920px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px 16px}
+.fld{display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--mute)}
+.fld input,.fld select,.fld textarea{border:1px solid var(--linha);border-radius:4px;padding:7px 9px;background:#fff;color:var(--tinta);font-size:15px}
+.fld textarea{min-height:130px;resize:vertical;font-family:var(--serif);font-size:16px;line-height:1.5}
+.fld small{color:var(--mute)}
+.form h3{font-size:19px;margin:22px 0 8px;padding-top:14px;border-top:1px solid var(--linha-2)}
+.form h3:first-of-type{margin-top:6px;border:0;padding-top:0}
+.checks{display:flex;flex-wrap:wrap;gap:6px 14px}
+.checks label{display:flex;gap:6px;align-items:center;font-size:15px;color:var(--tinta)}
+.ff{border:1px solid var(--linha);border-left:4px solid var(--lapis);border-radius:4px;padding:14px 16px;margin:12px 0;background:#fafbfd}
+.ff legend{font:600 16px var(--serif);padding:0 6px}
+.abg{display:grid;grid-template-columns:repeat(6,minmax(70px,1fr));gap:8px;margin:10px 0}
+.abg .fld input{width:100%;padding:5px 7px}
+.msg{margin:12px 0 0;padding:9px 12px;border-radius:4px;font-size:14px}
+.msg.ok{background:#e4f1e8;color:#1e5a34}
+.msg.err{background:#f8e5e8;color:var(--sangue)}
+
+/* grimório do personagem */
+.bookhead{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 18px;margin-bottom:12px}
+.bookhead .meta{color:var(--mute)}
+.row .prep{display:flex;align-items:center;gap:4px;font-size:12.5px;color:var(--mute)}
+
+/* impressão */
+.opts{display:flex;flex-wrap:wrap;gap:10px 22px;align-items:center;background:var(--folha);border:1px solid var(--linha);border-radius:6px;padding:12px 16px;margin-bottom:16px}
+.opts label{display:flex;gap:6px;align-items:center}
+.opts select{border:1px solid var(--linha);border-radius:4px;padding:5px 8px;background:#fff}
+.paper{background:#fff;border:1px solid var(--linha);box-shadow:0 1px 0 var(--linha);padding:18mm 16mm;max-width:210mm;margin:0 auto;min-height:120mm}
+.sheet{font:400 10pt/1.38 var(--serif);color:#000}
+.sheet .sh{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1.2pt solid #000;padding-bottom:4pt;margin-bottom:8pt}
+.sheet .sh h2{font-size:18pt}
+.sheet .sh span{font-size:10pt}
+.sheet.cols2 .body{column-count:2;column-gap:9mm}
+.sheet .gh{font:600 11pt var(--serif);margin:10pt 0 3pt;border-bottom:.6pt solid #000;break-after:avoid}
+.sheet .ps{padding:4pt 0;border-bottom:.4pt solid #b5b5b5;break-inside:avoid}
+.sheet .ps.long{break-inside:auto}
+.sheet .ps h3{font-size:11.5pt;display:inline}
+.sheet .ps .en{font:italic 400 9pt var(--serif);color:#333;margin-left:6pt}
+.sheet .ps .mt{font-size:9pt;color:#222;margin:1pt 0 2pt}
+.sheet .ps .txt{font-size:9.6pt;line-height:1.36;max-width:none}
+.sheet .ps .txt p{margin:0 0 3pt}
+.sheet .ps .txt ul{margin:0 0 3pt}
+.sheet .ps .tb{font-size:9pt}
+.sheet .ps .tb th,.sheet .ps .tb td{border-color:#777;padding:1pt 5pt}
+.sheet .ps .tb th{background:none}
+.sheet .ps .sup{font-size:9.6pt;margin:1pt 0 3pt}
+.sheet .ficha{border:.8pt solid #000;border-left-width:3pt;background:none;padding:5pt 8pt;margin:4pt 0 2pt;max-width:none}
+.sheet .ficha h4{font-size:11pt}
+.sheet .ficha .tipo{font-size:9pt;color:#222;margin-bottom:3pt}
+.sheet .ficha .vit,.sheet .ficha p.pr,.sheet .ficha p.en2{font-size:9.2pt;line-height:1.3}
+.sheet .ficha table.abil{font-size:9pt}
+.sheet .ficha table.abil tbody tr:nth-child(odd){background:none}
+.sheet .ficha table.abil th{color:#000}
+.sheet .ficha h5{font-size:10pt;color:#000;border-color:#777;margin-top:5pt}
+.sheet .cp{display:grid;grid-template-columns:1fr auto;gap:0 10pt;align-items:baseline}
+
+/* diálogo */
+dialog{border:1px solid var(--linha);border-radius:8px;padding:0;max-width:440px;width:92vw}
+dialog::backdrop{background:rgba(23,33,47,.5)}
+dialog form{padding:20px 22px;display:grid;gap:12px}
+dialog h3{font-size:22px}
+.dbtn{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap;margin-top:6px}
+.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:var(--tinta);color:#fff;padding:9px 16px;border-radius:4px;font-size:14px;z-index:50;max-width:90vw}
+.help{background:#f3f6fb;border:1px solid var(--linha-2);border-radius:6px;padding:12px 16px;margin:10px 0;font-size:14.5px;max-width:78ch}
+.help ol{margin:6px 0 0;padding-left:1.3em}
+textarea.big{width:100%;min-height:150px;border:1px solid var(--linha);border-radius:4px;padding:9px;font:13px/1.4 ui-monospace,Menlo,Consolas,monospace}
+.datarow{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.card{background:var(--folha);border:1px solid var(--linha);border-radius:6px;padding:16px 20px;margin-bottom:16px;max-width:900px}
+.card h3{font-size:20px;margin-bottom:6px}
+
+@media (max-width:860px){
+  .split{grid-template-columns:1fr}
+  .list{max-height:none}
+  .detail{position:fixed;inset:0;z-index:40;border-radius:0;max-height:none;padding:16px 16px 30px;display:none}
+  .detail.open{display:block}
+  .detail .close{display:inline-block;margin-bottom:10px}
+  nav.tabs{margin-left:0;width:100%}
+  .top{padding:10px 14px}
+  main{padding:14px 14px 50px}
+  .abg{grid-template-columns:repeat(3,1fr)}
+  .paper{padding:8mm 6mm}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+/* impressão: só a folha */
+@page{size:A4;margin:13mm}
+@media print{
+  body{background:#fff}
+  .top,.banner,.opts,.toast,main>section:not(#v-print),#v-print .noprint{display:none!important}
+  main{max-width:none;padding:0}
+  .paper{border:0;box-shadow:none;padding:0;max-width:none;margin:0;min-height:0}
+  .sheet .ps{border-bottom-color:#999}
+  a{color:inherit;text-decoration:none}
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="brand"><b>Grimório</b><span>D&amp;D 5e · edição 2024</span></div>
+  <div class="charpick">
+    <label class="sr" for="charSel">Personagem ativo</label>
+    <select id="charSel"></select>
+    <button class="btn ghost sm" id="charNew" type="button">Novo personagem</button>
+    <button class="btn ghost sm" id="charEdit" type="button">Editar</button>
+  </div>
+  <nav class="tabs" id="tabs" aria-label="Seções">
+    <button type="button" data-go="lib">Biblioteca</button>
+    <button type="button" data-go="book">Meu grimório</button>
+    <button type="button" data-go="new">Criar magia</button>
+    <button type="button" data-go="print">Imprimir</button>
+    <button type="button" data-go="data">Importar e backup</button>
+  </nav>
+</header>
+<div class="banner" id="banner" hidden></div>
+
+<main>
+  <!-- BIBLIOTECA -->
+  <section id="v-lib" hidden>
+    <h1 class="view-title">Biblioteca de magias</h1>
+    <p class="lead" id="libLead"></p>
+    <div class="filters">
+      <label>Buscar<input type="search" id="fq" placeholder="Nome em português ou inglês"></label>
+      <label>Círculo<select id="fcirc"><option value="">Todos</option><option value="0">Truque</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option></select></label>
+      <label>Escola<select id="fesc"><option value="">Todas</option></select></label>
+      <label>Classe<select id="fcls"><option value="">Todas</option></select></label>
+      <label>Ordenar<select id="ford"><option value="circ">Círculo</option><option value="az">A–Z (português)</option><option value="za">Z–A (português)</option><option value="en">A–Z (inglês)</option></select></label>
+      <label class="chk"><input type="checkbox" id="frit"> Ritual</label>
+      <label class="chk"><input type="checkbox" id="fcon"> Concentração</label>
+      <label class="chk"><input type="checkbox" id="ffic"> Com ficha de invocação</label>
+      <label class="chk"><input type="checkbox" id="fcus"> Só personalizadas</label>
+      <span class="count" id="fcount"></span>
+    </div>
+    <div class="split">
+      <ul class="list" id="list" aria-label="Lista de magias"></ul>
+      <aside class="detail" id="detail-lib"></aside>
+    </div>
+  </section>
+
+  <!-- MEU GRIMÓRIO -->
+  <section id="v-book" hidden>
+    <div class="bookhead"><h1 class="view-title" id="bookTitle">Meu grimório</h1><span class="meta" id="bookMeta"></span></div>
+    <div class="opts" id="bookbar">
+      <label>Organizar por <select id="bord"><option value="circ">Círculo</option><option value="tag">Tag</option><option value="az">A–Z</option></select></label>
+      <label>Só a tag <select id="btag"></select></label>
+      <button class="btn ghost sm" type="button" id="btagRen" style="color:var(--lapis);border-color:var(--lapis)">Renomear tag</button>
+      <button class="btn warn sm" type="button" id="btagDel">Excluir tag</button>
+    </div>
+    <div class="split">
+      <ul class="list" id="booklist" aria-label="Magias do grimório"></ul>
+      <aside class="detail" id="detail-book"></aside>
+    </div>
+  </section>
+
+  <!-- CRIAR MAGIA -->
+  <section id="v-new" hidden>
+    <h1 class="view-title" id="newTitle">Criar magia personalizada</h1>
+    <p class="lead">A magia vai para a biblioteca e pode entrar no grimório de qualquer personagem. Se ela invocar uma criatura, adicione a ficha abaixo.</p>
+    <div class="form" id="form"></div>
+  </section>
+
+  <!-- IMPRIMIR -->
+  <section id="v-print" hidden>
+    <div class="noprint">
+      <h1 class="view-title">Imprimir grimório</h1>
+      <p class="lead">Folha em preto e branco, sem enfeites. Ajuste as opções e use o botão para imprimir ou salvar em PDF.</p>
+    </div>
+    <div class="opts">
+      <label>Formato <select id="pmode"><option value="compacto">Compacto (uma linha por magia)</option><option value="completo" selected>Completo (com descrição)</option></select></label>
+      <label>Colunas <select id="pcols"><option value="1">1</option><option value="2">2</option></select></label>
+      <label><input type="checkbox" id="pfic" checked> Fichas de invocação</label>
+      <label><input type="checkbox" id="pprep"> Só magias preparadas</label>
+      <label>Organizar por <select id="pord" title="Com “Tag”, uma magia com várias tags aparece em cada uma"><option value="circ">Círculo</option><option value="tag">Tag</option><option value="az">A–Z</option></select></label>
+      <label>Só a tag <select id="ptag"></select></label>
+      <label><input type="checkbox" id="ptags"> Mostrar tags</label>
+      <button class="btn" type="button" id="doPrint">Imprimir</button>
+    </div>
+    <div class="paper"><div class="sheet" id="sheet"></div></div>
+  </section>
+
+  <!-- DADOS -->
+  <section id="v-data" hidden>
+    <h1 class="view-title">Importar e backup</h1>
+    <div class="card">
+      <h3>Trazer as magias do site</h3>
+      <p class="lead" style="margin-bottom:8px">Esta versão já vem com uma amostra da lista do Simple Skans. Para carregar a lista completa, copie o texto direto do site:</p>
+      <div class="help"><ol>
+        <li>Abra <a href="https://simpleskans.com.br/dnd/2024/magias" target="_blank" rel="noopener">simpleskans.com.br/dnd/2024/magias</a> no Chrome.</li>
+        <li>Role até o final da página para carregar todas as magias.</li>
+        <li>Selecione tudo (Ctrl+A / Cmd+A), copie (Ctrl+C) e cole abaixo.</li>
+      </ol></div>
+      <label class="fld"><span>Texto do site (ou um arquivo .json de magias / backup)</span>
+        <textarea class="big" id="impText" placeholder="Cole aqui o texto copiado da página…"></textarea></label>
+      <div class="datarow">
+        <button class="btn" type="button" id="impGo">Importar magias</button>
+        <label class="btn ghost sm" style="display:inline-grid;place-items:center;color:var(--lapis);border-color:var(--lapis)">Escolher arquivo<input type="file" id="impFile" accept=".txt,.json,.md,text/plain,application/json" class="sr"></label>
+      </div>
+      <div id="impMsg" role="status"></div>
+    </div>
+    <div class="card">
+      <h3>Backup</h3>
+      <p class="lead" style="margin-bottom:8px">Personagens, grimórios, magias personalizadas e magias importadas. O backup também restaura tudo em outro navegador.</p>
+      <div class="datarow">
+        <button class="btn" type="button" id="bkDown">Baixar backup (JSON)</button>
+        <button class="btn ghost sm" type="button" id="libDown" style="color:var(--lapis);border-color:var(--lapis)">Exportar biblioteca inteira (JSON)</button>
+        <button class="btn warn sm" type="button" id="impClear">Remover magias importadas</button>
+      </div>
+      <div id="bkMsg" role="status"></div>
+    </div>
+  </section>
+</main>
+
+<dialog id="dlgChar">
+  <form method="dialog" id="charForm">
+    <h3 id="dlgTitle">Novo personagem</h3>
+    <label class="fld"><span>Nome</span><input id="cNome" required maxlength="60"></label>
+    <div class="grid">
+      <label class="fld"><span>Classe</span><input id="cClasse" maxlength="40" placeholder="Bruxo"></label>
+      <label class="fld"><span>Nível</span><input id="cNivel" type="number" min="1" max="20" value="1"></label>
+    </div>
+    <div class="dbtn">
+      <button class="btn warn sm" type="button" id="cDel" hidden>Excluir personagem</button>
+      <button class="btn ghost sm" type="button" id="cCancel" style="color:var(--tinta)">Cancelar</button>
+      <button class="btn" type="submit" id="cSave">Salvar personagem</button>
+    </div>
+  </form>
+</dialog>
+<div class="toast" id="toast" role="status" hidden></div>
+
+<!-- Amostra do site (formato copiado da página). O importador usa o mesmo formato. -->
+<script type="text/plain" id="seed">
+Acudir os Moribundos
+
+spare the dying
+
+ *Truque de Necromancia (Clérigo, Druida, Artífice)*
+
+Tempo de Conjuração: Ação
+
+Alcance:  4,5 metros (3)
+
+Componentes:  V, S
+
+Duração:  Instantânea
+
+Escolha uma criatura no alcance da magia que tenha 0 Pontos de Vida e não esteja morta. A criatura fica Estável.
+
+**Aprimoramento de Truque.** O alcance da magia dobra quando você atinge os níveis 5 (9 metros), 11 (18 metros) e 17 (36 metros).
+
+Alarme
+
+Alarm
+
+ *1º Círculo, Abjuração (Guardião, Mago, Artífice)*
+
+Tempo de Conjuração: 1 minuto ou Ritual
+
+Alcance:  9 metros (6)
+
+Componentes:  V, S, M (um sino e um fio de prata)
+
+Duração:  8 horas
+
+Você define um alarme contra intrusão. Escolha uma porta, uma janela ou uma área no alcance da magia que não seja maior do que um Cubo de 6 metros de lados. Até que a magia termine, um alarme o avisa sempre que uma criatura tocar ou entrar na área protegida. Ao conjurar a magia, você pode designar criaturas que não disparam o alarme. Você também escolhe se o alarme é audível ou mental:
+
+**Alarme Mental.** Você é alertado por um bipe mental se estiver a menos de 1,5 quilômetro da área protegida. Este bipe o acorda se você estiver dormindo.
+
+**Alarme Sonoro.** O alarme produz o som de uma sineta por 10 segundos a até 18 metros da área protegida.
+
+Amigos
+
+friends
+
+ *Truque de Encantamento (Bardo, Bruxo, Feiticeiro, Mago)*
+
+Tempo de Conjuração: Ação
+
+Alcance:  3 metros (2)
+
+Componentes:  S, M (um pouco de maquiagem)
+
+Duração:  Concentração,
+ até 1 minuto
+
+Você emana magicamente um sentimento de amizade em relação a uma criatura à sua vista e no alcance da magia. O alvo deve ser bem-sucedido em uma salvaguarda de Sabedoria ou tem a condição Enfeitiçado pela duração da magia. O alvo é bem-sucedido automaticamente se não for um Humanoide, se você estiver lutando contra ele ou se tiver conjurado esta magia nele nas últimas 24 horas.
+
+A magia encerra se o alvo sofrer dano ou se você realizar uma jogada de ataque, causar dano ou forçar alguém a realizar uma salvaguarda. Quando a magia termina, o alvo sabe que foi Enfeitiçado por você.
+
+Animar Mortos
+
+Animate Dead
+
+ *3º Círculo, Necromancia (Clérigo, Mago)*
+
+Tempo de Conjuração: 1 minuto
+
+Alcance:  3 metros (2)
+
+Componentes:  V, S, M (uma gota de sangue, um pedaço de carne e uma pitada de pó de osso)
+
+Duração:  Instantânea
+
+Escolha uma pilha de ossos ou um cadáver de um Humanoide Médio ou Pequeno no alcance da magia. O alvo se torna um Morto-vivo: um **Esqueleto** se tiver escolhido ossos ou um **Zumbi** se tiver escolhido um cadáver (veja o apêndice B para os blocos de estatística).
+
+Em cada um dos seus turnos, você pode executar uma Ação Bônus para comandar mentalmente qualquer criatura que tenha animado com essa magia se a criatura estiver a até 18 metros de você (se você controlar várias criaturas, pode comandar qualquer uma delas ao mesmo tempo, emitindo o mesmo comando para cada uma). Você decide qual ação a criatura realiza e para onde ela se move no próximo turno dela, ou pode emitir um comando geral, como proteger uma câmara ou um corredor. Se você não der nenhum comando, a criatura executa a ação Esquivar e move-se apenas para evitar dano. Uma vez dada uma ordem, a criatura continua a segui-la até que a tarefa seja concluída.
+
+A criatura fica sob seu controle por 24 horas, após as quais ela deixa de obedecer a qualquer comando que você tenha dado a ela. Para manter o controle da criatura por mais 24 horas, é necessário conjurar essa magia na criatura novamente antes que o período atual de 24 horas termine. Esse uso da magia reafirma seu controle sobre até quatro criaturas que você animou com essa magia em vez de animar uma nova criatura.
+
+**Usando um Espaço de Magia de Círculo Superior.** Você anima ou reafirma o controle sobre duas criaturas Mortas-vivas adicionais para cada círculo de espaço de magia acima de 3. Cada uma das criaturas deve vir de um cadáver ou pilha de ossos diferente.
+
+Animar Objetos
+
+Animate Objects
+
+ *5º Círculo, Transmutação (Bardo, Feiticeiro, Mago, Artífice)*
+
+Tempo de Conjuração: Ação
+
+Alcance:  36 metros (24)
+
+Componentes:  V, S
+
+Duração:  Concentração,
+ até 1 minuto
+
+Objetos são animados ao seu comando. Escolha uma série de objetos não mágicos no alcance da magia que não estejam sendo usados ou carregados, não estejam fixados a uma superfície e não sejam Colossais. O número máximo de objetos é igual ao seu modificador de atributo de conjuração. Para este número, um tamanho Médio ou menor conta como um objeto, um alvo Grande conta como dois e um alvo Enorme conta como três.
+
+Cada alvo se anima, faz brotar pernas e se torna um Constructo que usa o bloco de estatísticas do **Objeto Animado**; esta criatura está sob seu controle até que a magia termine ou até que ela seja reduzida a 0 Pontos de Vida. Cada criatura que você anima com esta magia é uma aliada sua e de seus aliados. Em combate, ele compartilha a contagem de Iniciativa com você e tem o turno dela imediatamente após o seu.
+
+Até que a magia encerre, você pode executar uma Ação Bônus para comandar mentalmente qualquer criatura que tenha animado com essa magia se a criatura estiver a até 150 metros de você (se você controlar várias criaturas, pode comandar quaisquer delas ao mesmo tempo, emitindo o mesmo comando para cada uma). Se você não der nenhum comando, a criatura executa a ação Esquivar e se move apenas para evitar danos. Quando a criatura é reduzida a 0 Pontos de Vida, ela reverte para sua forma de objeto, e qualquer dano restante é transferido para essa forma.
+
+**Usando um Espaço de Magia de Círculo Superior.** O dano de Pancada da criatura aumenta em 1d4 (Médio ou menor), 1d6 (Grande) ou 1d12 (Enorme) para cada círculo de espaço de magia acima de 5.
+
+Objetos Animados
+
+Construto Grande ou Menor, Sem Alinhamento
+
+**CA** 15
+
+**PV** 10 (Médio ou menor), 20 (Grande), 40 (Enorme)
+
+**Deslocamento** 9 m
+
+|         |    | **Mod** | **SG** |         |    | **Mod** | **SG** |         |    | **Mod** | **SG** |
+| ------- | --- | ------- | ------ | ------- | --- | ------- | ------ | ------- | --- | ------- | ------ |
+| **For** | 16 | +3      | +3     | **Des** | 10 | +0      | +0     | **Con** | 10 | +0      | +0     |
+| **Int** | 3  | -4      | -4     | **Sab** | 3  | -4      | -4     | **Car** | 1  | -5      | -5     |
+
+**Imunidades** Psíquico, Venenoso; Amedrontado, Enfeitiçado, Envenenado, Exaustão, Paralisado
+
+**Sentidos** Visão às Cegas 9 m, Percepção Passiva 6
+
+**Idiomas** Compreende os idiomas que você conhece
+
+**ND** Nenhum (XP 0; BP é igual ao seu Bônus de Proficiência)
+
+**Ações**
+
+**Pancada.** Jogada de Ataque Corpo a Corpo: Bônus igual ao seu modificador de ataque mágico, alcance 1,5 m. *Dano:* Energético igual a 1d4 + 3 (Médio ou menor), 2d6 + 3 + seu modificador de atributo de conjuração (Grande) ou 2d12 + 3 + seu modificador de atributo de conjuração (Enorme).
+
+Arca Secreta de Leomund
+
+Leomund’s Secret Chest
+
+ *4º Círculo, Invocação (Mago, Artífice)*
+
+Tempo de Conjuração: Ação
+
+Alcance:  Toque
+
+Componentes:  V, S, M (um baú de 1 m por 60 cm por 60 cm, construído com materiais raros no valor de 5.000 ou mais PO, e uma réplica minúscula do baú fabricada com os mesmos materiais no valor de 50 ou mais PO)
+
+Duração:  Até ser dissipada
+
+Você esconde um baú e todo o seu conteúdo no Plano Etéreo. Você deve tocar no baú e na réplica em miniatura que servem como componentes Materiais para a magia. O baú pode armazenar até 340 litros de material não vivo (1 m por 60 cm por 60 cm).
+
+Enquanto o baú permanecer no Plano Etéreo, você pode executar uma ação Usar Magia e tocar na réplica para recuperar o baú. Ele aparece em um espaço desocupado no chão a até 1,5 metro de você. Você pode enviar o baú de volta ao Plano Etéreo como uma ação Usar Magia para tocar o baú e a réplica.
+
+Após 60 dias, há uma chance cumulativa de 5% no final de cada dia de que a magia encerre. A magia também se encerra se você conjurá-la novamente ou se a réplica Minúscula for destruída. Se a magia encerrar e o baú maior estiver no Plano Etéreo, o baú permanece lá para você ou outra pessoa encontrar.
+
+Armadura de Agathys
+
+Armor of Agathys
+
+ *1º Círculo, Abjuração (Bruxo)*
+
+Tempo de Conjuração: Ação Bônus
+
+Alcance:  Pessoal
+
+Componentes:  V, S, M (um caco de vidro azul)
+
+Duração:  1 hora
+
+Um frio mágico protetor envolve você. Você recebe 5 Pontos de Vida Temporários. Se uma criatura acertar você com uma jogada de ataque corpo a corpo antes que a magia termine, a criatura sofre 5 pontos de dano Gélido. A magia encerra se você não tiver Pontos de Vida Temporários.
+
+**Usando um Espaço de Magia de Círculo Superior.** Os Pontos de Vida Temporários e o dano Gélido aumentam em 5 para cada círculo de espaço de magia acima de 1.
+
+Augúrio
+
+Augury
+
+ *2º Círculo, Adivinhação (Clérigo, Druida, Mago)*
+
+Tempo de Conjuração: 1 minuto ou Ritual
+
+Alcance:  Pessoal
+
+Componentes:  V, S, M (varetas, ossos, cartas ou símbolos semelhantes especialmente marcados no valor de 25 ou mais PO)
+
+Duração:  Instantânea
+
+Você recebe um presságio de uma entidade sobrenatural a respeito dos resultados de um curso de ação que você planeja realizar nos próximos 30 minutos. O Mestre escolhe o presságio da tabela Presságios.
+
+ **Presságios**
+
+| **Presságios**            | **Para Resultados Que Serão…** |
+| ------------------------- | ------------------------------ |
+| Prosperidade              | Bons                           |
+| Infortúnio                | Maus                           |
+| Prosperidade e Infortúnio | Bons e ruins                   |
+| Nada                      | Nem bons, nem ruins            |
+
+A magia não leva em conta circunstâncias, como outras magias, que podem alterar os resultados.
+
+Se você conjurar a magia mais de uma vez antes de terminar um Descanso Longo, há uma chance cumulativa de 25% para cada conjuração após a primeira de que você não receba resposta.
+
+Bênção
+
+bless
+
+ *1º Círculo, Encantamento (Clérigo, Paladino)*
+
+Tempo de Conjuração: Ação
+
+Alcance:  9 metros (6)
+
+Componentes:  V, S, M (um Símbolo Sagrado no valor de 5 ou mais PO)
+
+Duração:  Concentração,
+ até 1 minuto
+
+Você abençoa até três criaturas no alcance da magia. Sempre que um alvo realiza uma jogada de ataque ou uma salvaguarda antes que a magia termine, o alvo adiciona 1d4 à jogada de ataque ou salvaguarda.
+
+**Usando um Espaço de Magia de Círculo Superior.** Você pode escolher uma criatura adicional para cada círculo de espaço de magia acima de 1.
+
+Bola de Fogo
+
+fireball
+
+ *3º Círculo, Evocação (Feiticeiro, Mago)*
+
+Tempo de Conjuração: Ação
+
+Alcance:  45 metros (30)
+
+Componentes:  V, S, M (uma bola de guano de morcego e enxofre)
+
+Duração:  Instantânea
+
+Uma faixa brilhante emerge de você até um ponto à sua escolha no alcance da magia e, em seguida, desabrocha com um estrondo baixo em uma explosão de fogo. Cada criatura em uma Esfera de 6 metros de raio centrada nesse ponto realiza uma salvaguarda de Destreza, sofrendo 8d6 pontos de dano Ígneo se falhar, ou metade desse dano em caso de sucesso.
+
+Objetos inflamáveis na área que não estão sendo usados ou carregados entram em combustão.
+
+**Usando um Espaço de Magia de Círculo Superior.** O dano aumenta em 1d6 para cada círculo de espaço de magia acima de 3.
+
+Bolha Ácida
+
+Acid Splash
+
+ *Truque de Evocação (Feiticeiro, Mago, Artífice)*
+
+Tempo de Conjuração: Ação
+
+Alcance:  18 metros (12)
+
+Componentes:  V, S
+
+Duração:  Instantânea
+
+Você cria uma bolha ácida em um ponto no alcance da magia, onde ela explode em uma Esfera de 1,5 metro de raio. Cada criatura nessa Esfera deve ser bem-sucedida em uma salvaguarda de Destreza ou sofre 1d6 pontos de dano Ácido.
+
+**Aprimoramento de Truque.** O dano aumenta em 1d6 quando você atinge os níveis 5 (2d6), 11 (3d6) e 17 (4d6).
+
+Bom Fruto
+
+Goodberry
+
+ *1º Círculo, Invocação (Druida, Guardião)*
+
+Tempo de Conjuração: Ação
+
+Alcance:  Pessoal
+
+Componentes:  V, S, M (um ramo de visco)
+
+Duração:  24 horas
+
+Dez frutos aparecem em sua mão e são infundidos magicamente pela duração da magia. Uma criatura pode executar uma Ação Bônus para comer um fruto. Comer um fruto restaura 1 Ponto de Vida e fornece alimento suficiente para sustentar uma criatura por um dia. Frutos não comidos desaparecem quando a magia termina.
+
+Braços de Hadar
+
+Arms of Hadar
+
+ *1º Círculo, Invocação (Bruxo)*
+
+Tempo de Conjuração: Ação
+
+Alcance:  Pessoal
+
+Componentes:  V, S
+
+Duração:  Instantânea
+
+Clamando por Hadar, você faz com que tentáculos irrompam em você. Cada criatura em uma Emanação de 3 metros originada em você realiza uma salvaguarda de Força. Se falhar, um alvo sofre 2d6 pontos de dano Necrótico e não pode executar Reações até o início do próximo turno dele. Em caso de sucesso, um alvo sofre apenas metade do dano.
+
+**Usando um Espaço de Magia de Círculo Superior.** O dano aumenta em 1d6 pontos para cada círculo de espaço de magia acima de 1.
+
+Caldeirão Borbulhante de Tasha
+
+Tasha's Bubbling Cauldron
+
+ *6º Círculo, Invocação (Bruxo, Mago)*
+
+Tempo de Conjuração: Ação
+
+Alcance:  1,5 metros (1)
+
+Componentes:  V, S, M (uma colher de mexer caldeirão dourada no valor de 500 ou mais PO)
+
+Duração:  10 minutos
+
+Você conjura um caldeirão com pés de garra cheio de líquido borbulhante. O caldeirão aparece em um espaço desocupado no chão a até 1,5 metro de você e permanece pela duração da magia. O caldeirão não pode ser movido e desaparece quando a magia termina, junto com o líquido borbulhante dentro dele.
+
+O líquido no caldeirão copia as propriedades de uma poção Comum ou Incomum à sua escolha (como uma *Poção de Cura*). Como uma Ação Bônus, você ou um aliado pode alcançar o caldeirão e retirar dele uma poção desse tipo. A poção está contida em um frasco que desaparece quando a poção é consumida. O caldeirão pode produzir um número dessas poções igual ao seu modificador de atributo de conjuração (mínimo 1). Quando a última dessas poções é retirada do caldeirão, o caldeirão desaparece e a magia termina.
+
+Poções obtidas do caldeirão que não são consumidas desaparecem quando você conjura esta magia novamente.
+
+Cão Fiel de Mordenkainen
+
+Mordenkainen’s Faithful Hound
+
+ *4º Círculo, Invocação (Mago, Artífice)*
+
+Tempo de Conjuração: Ação
+
+Alcance:  9 metros (6)
+
+Componentes:  V, S, M (um apito de prata)
+
+Duração:  8 horas
+
+Você conjura um cão de guarda fantasmagórico em um espaço desocupado à sua vista e no alcance da magia. O cão permanece pela duração da magia ou até que vocês dois estejam separados por mais de 90 metros.
+
+Ninguém além de você pode ver o cão, e ele é intangível e invulnerável. Quando uma criatura de tamanho Pequeno ou maior se aproxima a 9 metros dele sem antes falar a senha que você especificou ao conjurar essa magia, o cão começa a latir alto. O cão possui Visão Verdadeira com alcance de 9 metros.
+
+No início de cada um dos seus turnos, o cão tenta morder um inimigo a até 1,5 metro dele. Esse inimigo deve ser bem-sucedido em uma salvaguarda de Destreza ou sofre 4d8 pontos de dano Energético.
+
+Nos seus turnos subsequentes, você pode executar uma ação Usar Magia para mover o cão até 9 metros.
+
+Chama Sagrada
+
+Sacred Flame
+
+ *Truque de Evocação (Clérigo)*
+
+Tempo de Conjuração: Ação
+
+Alcance:  18 metros (12)
+
+Componentes:  V, S
+
+Duração:  Instantânea
+
+Um brilho semelhante a uma chama desce sobre uma criatura à sua vista e no alcance da magia. O alvo deve ser bem-sucedido em uma salvaguarda de Destreza ou sofre 1d8 pontos de dano Radiante. O alvo não recebe nenhum benefício de Cobertura Parcial ou Cobertura de Três Quartos para esta salvaguarda.
+
+**Aprimoramento de Truque.** O dano aumenta em 1d8 quando você atinge os níveis 5 (2d8), 11 (3d8) e 17 (4d8).
+
+Círculo Mágico
+
+Magic Circle
+
+ *3º Círculo, Abjuração (Clérigo, Bruxo, Mago, Paladino)*
+
+Tempo de Conjuração: 1 minuto
+
+Alcance:  3 metros (2)
+
+Componentes:  V, S, M (sal e prata em pó no valor de 100 ou mais PO, que a magia consome)
+
+Duração:  1 hora
+
+Você cria um Cilindro de energia mágica com 3 metros de raio e 6 metros de altura, centrado em um ponto visível e ao alcance no chão. Runas brilhantes surgem onde o Cilindro toca o chão ou outra superfície.
+
+Escolha um ou mais dos seguintes tipos de criaturas: Celestiais, Elementais, Feéricos, Ínferos ou Mortos-Vivos. O círculo afeta uma criatura do tipo escolhido das seguintes maneiras:
+
+- A criatura não pode entrar voluntariamente no Cilindro por meios não mágicos. Se a criatura tentar usar teleporte ou viagem interplanar para fazer isso, ela deve primeiro ser bem-sucedida em uma salvaguarda de Carisma.
+
+- A criatura tem Desvantagem nas jogadas de ataque contra alvos dentro do Cilindro.
+
+- Alvos dentro do Cilindro não podem ser possuídos ou ter a condição Amedrontado ou Enfeitiçado pela criatura.
+
+     Ao conjurar essa magia, você pode fazer com que ela funcione na direção inversa, impedindo que uma criatura do tipo especificado saia do Cilindro e protegendo alvos fora dele.
+
+     **Usando um Espaço de Magia de Círculo Superior.** A duração aumenta em 1 hora para cada círculo de espaço de magia acima de 3.
+
+Confusão
+
+confusion
+
+ *4º Círculo, Encantamento (Bardo, Druida, Feiticeiro, Mago)*
+
+Tempo de Conjuração: Ação
+
+Alcance:  27 metros (18)
+
+Componentes:  V, S, M (três cascas de nozes)
+
+Duração:  Concentração,
+ até 1 minuto
+
+Cada criatura em uma Esfera de 3 metros de raio centrada em um ponto à sua escolha no alcance da magia deve ser bem-sucedida em uma salvaguarda de Sabedoria, ou esse alvo não pode executar Ações Bônus ou Reações, e deve jogar 1d10 no início de cada um dos turnos dele para determinar o comportamento nesse turno, consultando a tabela abaixo.
+
+| **1d10** | **Comportamento para o Turno**                                                                                                                                                             |
+| -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| 1        | O alvo não executa uma ação e usa todo o deslocamento para se mover. Jogue 1d4 para a direção: 1, norte; 2, leste; 3, sul; ou 4, oeste.                                                    |
+| 2-6      | O alvo não se move ou executa ações.                                                                                                                                                       |
+| 7-8      | O alvo não se move e executa a ação Atacar para realizar um ataque corpo a corpo contra uma criatura aleatória ao alcance. Se nenhuma estiver ao alcance, o alvo não executa nenhuma ação. |
+| 9-10     | O alvo escolhe o comportamento dele.                                                                                                                                                       |
+
+Ao final de cada um dos turnos dele, um alvo afetado repete a salvaguarda, encerrando a magia em caso de sucesso.
+
+**Usando um Espaço de Magia de Círculo Superior.** O raio da Esfera aumenta em 1,5 metro para cada círculo de espaço de magia acima de 4.
+
+Contramagia
+
+Counterspell
+
+ *3º Círculo, Abjuração (Bruxo, Feiticeiro, Mago)*
+
+Tempo de Conjuração: Reação, que você executa quando vê uma criatura a até 18 metros de você conjurando uma magia com componentes Verbais, Somáticos
+
+Alcance:  18 metros (12)
+
+Componentes:  S
+
+Duração:  Instantânea
+
+Você tenta interromper uma criatura no processo de conjurar uma magia. A criatura realiza uma salvaguarda de Constituição. Se falhar, a magia se dissipa sem efeito, e a ação, Ação Bônus ou Reação usada para conjurá-la é desperdiçada. Se a magia do alvo foi conjurada com um espaço de magia, o espaço de magia da criatura não é gasto.
+
+Convocar Celestial
+
+Summon Celestial
+
+ *5º Círculo, Invocação (Clérigo, Paladino)*
+
+Tempo de Conjuração: Ação
+
+Alcance:  27 metros (18)
+
+Componentes:  V, S, M (um relicário no valor de 500 ou mais PO)
+
+Duração:  Concentração,
+ até 1 hora
+
+Você invoca um Espírito Celestial. Ele se manifesta em uma forma angelical em um espaço desocupado à sua vista e no alcance da magia e usa o bloco de estatísticas do **Espírito Celestial**. Ao conjurar a magia, escolha Defensor ou Vingador. Sua escolha determina certos detalhes no bloco de estatísticas da criatura. A criatura desaparece ao ser reduzida a 0 Pontos de Vida ou quando a magia termina.
+
+A criatura é uma aliada sua e de seus aliados. Em combate, ela compartilha sua contagem de Iniciativa, mas o turno dela é imediatamente após o seu. Ele obedece aos seus comandos verbais (nenhuma ação é necessária). Se você não emitir nenhum, ela executa a ação Esquivar e usa o movimento dela para evitar o perigo.
+
+**Usando um Espaço de Magia de Círculo Superior.** Use o círculo do espaço de magia para o círculo da magia no bloco de estatísticas.
+
+Espírito Celestial
+
+Celestial Grande, Neutro
+
+**AC** 11 + o círculo da magia + 2 (apenas Defensor)
+
+**PV** 40 + 10 para cada círculo de magia acima de 5
+
+**Deslocamento** 9 m, Voo 12 m
+
+|         |    | **Mod** | **SG** |         |    | **Mod** | **SG** |         |    | **Mod** | **SG** |
+| ------- | --- | ------- | ------ | ------- | --- | ------- | ------ | ------- | --- | ------- | ------ |
+| **For** | 16 | +3      | +3     | **Des** | 14 | +2      | +2     | **Con** | 16 | +3      | +3     |
+| **Int** | 10 | +0      | +0     | **Sab** | 14 | +2      | +2     | **Car** | 16 | +3      | +3     |
+
+**Resistências:** Radiante
+
+**Imunidades:** Amedrontado, Enfeitiçado
+
+**Sentidos:** Visão no Escuro 18 m, Percepção Passiva 12
+
+**Idiomas:** Celestial, compreende os idiomas que você fala
+
+**ND** Nenhum (XP 0; BP é igual ao seu Bônus de Proficiência)
+
+Ações
+
+**Ataques Múltiplos.** O espírito realiza um número de ataques igual à metade do círculo da magia (arredondado para baixo).
+
+**Arco Radiante (Apenas Vingador).** *Jogada de Ataque à Distância:* Bônus é igual ao seu modificador de ataque mágico, alcance 180 m. *Dano:* 2d6 + 2 + o círculo da magia pontos de dano Radiante.
+
+**Maça Radiante (Apenas Defensor).** *Jogada de Ataque Corpo a Corpo:* Bônus é igual ao seu modificador de ataque mágico, alcance 1,5 m. *Dano:* 1d10 + 3 + o círculo da magia pontos de dano Radiante, e o espírito pode escolher a si mesmo ou outra criatura à vista dele a até 3 metros do alvo. A criatura escolhida obtém 1d10 Pontos de Vida Temporários.
+
+**Toque Curativo (1/Dia).** O espírito toca outra criatura. O alvo recupera Pontos de Vida iguais a 2d8 + o círculo da magia.
+
+Convocar Elemental
+
+Summon Elemental
+
+ *4º Círculo, Invocação (Druida, Guardião, Mago)*
+
+Tempo de Conjuração: Ação
+
+Alcance:  27 metros (18)
+
+Componentes:  V, S, M (ar, uma pedra, cinzas e água dentro de um frasco incrustado de ouro no valor de 400 ou mais PO)
+
+Duração:  Concentração,
+ até 1 hora
+
+Você invoca um Espírito Elemental. Ele se manifesta em um espaço desocupado à sua vista e no alcance da magia e usa o bloco de estatísticas do **Espírito Elemental**. Ao conjurar a magia, escolha um elemento: Água, Ar, Fogo ou Terra. A criatura se assemelha a uma forma bípede envolta no elemento escolhido, o que determina certas características no bloco de estatísticas da criatura. A criatura desaparece ao ser reduzida a 0 Pontos de Vida ou quando a magia termina.
+
+A criatura é uma aliada sua e de seus aliados. Em combate, ela compartilha sua contagem de Iniciativa, mas o turno dela é imediatamente após o seu. Ela obedece aos seus comandos verbais (nenhuma ação é necessária). Se você não emitir nenhum, ela executa a ação Esquivar e usa o movimento dela para evitar o perigo.
+
+**Usando um Espaço de Magia de Círculo Superior.** Use o círculo do espaço de magia para o círculo da magia no bloco de estatísticas.
+
+Espírito Elemental
+
+Elemental Médio, Neutro
+
+**CA** 11 + o círculo da magia
+
+**PV** 50 + 10 para cada círculo de magia acima de 4
+
+**Deslocamento** 12 m; Escavação 12 m (apenas Terra); Natação 12 m (apenas Água); Voo 12 m (pairar; apenas Ar)
+
+|         |    | **Mod** | **SG** |         |    | **Mod** | **SG** |         |    | **Mod** | **SG** |
+| ------- | --- | ------- | ------ | ------- | --- | ------- | ------ | ------- | --- | ------- | ------ |
+| **For** | 18 | +4      | +4     | **Des** | 15 | +2      | +2     | **Con** | 17 | +3      | +3     |
+| **Int** | 4  | -3      | -3     | **Sab** | 10 | +0      | +0     | **Car** | 16 | +3      | +3     |
+
+**Resistências** Ácido (apenas Água), Cortante e Perfurante (apenas Terra), Elétrico e Trovejante (apenas Ar)
+
+**Imunidades** Ígneo (somente Fogo), Venenoso; Envenenado, Exaustão, Paralisado, Petrificado
+
+**Sentidos** Visão no Escuro 18 m, Percepção Passiva 10
+
+**Idiomas** Primordial, compreende os idiomas que você fala
+
+**ND** Nenhum (XP 0; BP é igual ao seu Bônus de Proficiência)
+
+Traços
+
+**Estado Amorfo (Apenas Água, Ar e Fogo).** O espírito pode se mover por um espaço tão estreito quanto 2,5 centímetros de largura sem contá-lo como Terreno Difícil.
+
+Ações
+
+**Ataques Múltiplos.** O espírito realiza um número de ataques de Pancada igual à metade do círculo da magia (arredondado para baixo).
+
+**Pancada.** *Jogada de Ataque Corpo a Corpo:* Bônus é igual ao seu modificador de ataque mágico, alcance 1,5 m. *Dano:* 1d10 + 4 + o círculo da magia pontos de dano Contundente (apenas Terra), Elétrico (apenas Ar), Gélido (apenas Água) ou Ígneo (apenas Fogo).
+
+Convocar Familiar
+
+find familiar
+
+ *1º Círculo, Invocação (Mago)*
+
+Tempo de Conjuração: 1 hora ou Ritual
+
+Alcance:  3 metros (2)
+
+Componentes:  V, S, M (incenso queimando no valor de 10 ou mais PO, que a magia consome)
+
+Duração:  Instantânea
+
+Você adquire o serviço de um familiar, um espírito que assume uma forma animal que você escolhe: **Aranha, Coruja, Corvo, Doninha, Falcão, Gato, Lagarto, Morcego, Polvo, Rato, Sapo** ou outra Fera que tenha um Nível de Desafio 0. Aparecendo em um espaço desocupado no alcance da magia, o familiar tem as estatísticas da forma escolhida (veja o apêndice B), embora seja um Celestial, Feérico ou Ínfero (à sua escolha) em vez de uma Fera. Seu familiar age independentemente de você, mas obedece aos seus comandos.
+
+**Conexão Telepática.** Enquanto seu familiar estiver a até 30 metros de você, você pode se comunicar telepaticamente com ele. Além disso, como uma Ação Bônus, você pode ver através dos olhos do familiar e ouvir o que ele ouve até o início do seu próximo turno, obtendo os benefícios de quaisquer sentidos especiais que ele tenha.
+
+Por fim, ao conjurar uma magia com um alcance de toque, seu familiar pode entregar o toque. Seu familiar deve estar a até 30 metros de você, e ele deve executar uma Reação para entregar o toque quando você conjurar a magia.
+
+**Combate.** O familiar é um aliado seu e de seus aliados. Ele joga a Iniciativa dele e age no turno dele. Um familiar não pode atacar, mas pode realizar outras ações normalmente.
+
+**Desaparecimento do Familiar.** Quando o familiar é reduzido a 0 Pontos de Vida, ele desaparece. Ele reaparece depois que você conjura esta magia novamente. Como uma ação Usar Magia, você pode descartar temporariamente o familiar para uma mini dimensão. Como alternativa, você pode descartá-lo para sempre. Como uma ação Usar Magia enquanto está temporariamente descartado, você pode fazer com que ele reapareça em um espaço desocupado a até 9 metros de você. Sempre que o familiar é reduzido a 0 Pontos de Vida ou desaparece na mini dimensão, ele deixa para trás no espaço que ocupava qualquer coisa que estivesse vestindo ou carregando.
+
+**Apenas um Familiar.** Você não pode ter mais de um familiar ao mesmo tempo. Ao conjurar esta magia enquanto você tem um familiar, você faz com que ele adote uma nova forma elegível.
+
+Convocar Feérico
+
+Summon Fey
+
+ *3º Círculo, Invocação (Bruxo, Druida, Guardião, Mago)*
+
+Tempo de Conjuração: Ação
+
+Alcance:  27 metros (18)
+
+Componentes:  V, S, M (uma flor dourada no valor de 300 ou mais PO)
+
+Duração:  Concentração,
+ até 1 hora
+
+Você invoca um Espírito Feérico. Ele se manifesta em um espaço desocupado à sua vista e no alcance da magia e usa o bloco de estatísticas do **Espírito Feérico**. Ao conjurar a magia, escolha um humor: Alegre, Enfurecido ou Malandro. A criatura se assemelha a uma criatura Feérica à sua escolha definida pelo humor escolhido, o que determina certos detalhes no bloco de estatísticas da criatura. A criatura desaparece se reduzida a 0 Pontos de Vida ou quando a magia termina.
+
+A criatura é uma aliada sua e de seus aliados. Em combate, ela compartilha sua contagem de Iniciativa, mas o turno dela é imediatamente após o seu. Ela obedece aos seus comandos verbais (nenhuma ação é necessária). Se você não emitir nenhum, ela executa a ação Esquivar e usa o movimento dela para evitar o perigo.
+
+**Usando um Espaço de Magia de Círculo Superior.** Use o círculo do espaço de magia para o círculo da magia no bloco de estatísticas.
+
+Espírito Feérico
+
+Feérico Pequeno, Neutro
+
+**CA** 12 + o círculo da magia
+
+**PV** 30 + 10 para cada círculo de magia acima de 3
+
+**Deslocamento** 9 m, Voo 9 m
+
+|         |    | **Mod** | **SG** |         |    | **Mod** | **SG** |         |    | **Mod** | **SG** |
+| ------- | --- | ------- | ------ | ------- | --- | ------- | ------ | ------- | --- | ------- | ------ |
+| **For** | 13 | +1      | +1     | **Des** | 16 | +3      | +3     | **Con** | 14 | +2      | +2     |
+| **Int** | 14 | +2      | +2     | **Sab** | 11 | +0      | +0     | **Car** | 16 | +3      | +3     |
+
+**Imunidades** Enfeitiçado
+
+**Sentidos** Visão no Escuro 18 m, Percepção Passiva 10
+
+**Idiomas** Silvestre, compreende os idiomas que você fala
+
+**ND** Nenhum (XP 0; BP é igual ao seu Bônus de Proficiência)
+
+**Ações**
+
+**Ataques Múltiplos.** O espírito realiza um número de ataques com Lâmina Feérica igual à metade do círculo da magia (arredondado para baixo).
+
+**Lâmina Feérica.** *Jogada de Ataque Corpo a Corpo:* Bônus é igual ao seu modificador de ataque mágico, alcance 1,5 m. *Dano:* 3d6 + 3 + o círculo da magia pontos de dano Energético.
+
+**Ações Bônus**
+
+**Passo Feérico.** O espírito se teleporta magicamente até 9 metros para um espaço desocupado à vista dele. Em seguida, ocorre um dos seguintes efeitos, com base no humor escolhido para o espírito:
+
+**Alegre.** *Salvaguarda de Sabedoria:* CD é igual a CD para evitar sua magia, uma criatura à vista do espírito e a até 3 metros dele. *Falha:* O alvo fica Enfeitiçado por você e pelo espírito por 1 minuto ou até que o alvo sofra qualquer dano.
+
+**Enfurecido.** O espírito tem Vantagem na próxima jogada de ataque que realizar antes do final deste turno.
+
+**Malandro.** O espírito preenche um Cubo de 3 metros de lado a até 1,5 metro dele com Escuridão mágica, que dura até o final do próximo turno dele.
+
+Convocar Montaria
+
+find steed
+
+ *2º Círculo, Invocação (Paladino)*
+
+Tempo de Conjuração: Ação
+
+Alcance:  9 metros (6)
+
+Componentes:  V, S
+
+Duração:  Instantânea
+
+Você convoca um ser sobrenatural que aparece como uma montaria leal em um espaço desocupado à sua escolha no alcance da magia. Essa criatura usa o bloco de estatísticas de **Montaria Sobrenatural**. Se você já tem uma montaria desta magia, a montaria é substituída pela nova.
+
+A montaria se assemelha a um animal grande e que se pode montar à sua escolha, como um alce, um camelo, um cavalo ou um lobo atroz. Sempre que conjurar a magia, escolha o tipo de criatura da montaria — Celestial, Feérico ou Ínfero — que determina certas características no bloco de estatísticas.
+
+**Combate.** A montaria é um aliado seu e de seus aliados. Em combate, ela compartilha sua contagem de Iniciativa e funciona como uma montaria controlada enquanto você a monta (conforme definido nas regras sobre combate montado). Se você tem a condição Incapacitado, a montaria age no turno dela imediatamente após o seu, de forma independente, concentrando-se em protegê-lo.
+
+**Desaparecimento da Montaria.** A montaria desaparece se é reduzida a 0 Pontos de Vida ou se você morrer. Quando desaparece, deixa para trás qualquer coisa que estivesse vestindo ou carregando. Se você conjurar esta magia novamente, você decide se invoca a montaria que desapareceu ou uma diferente.
+
+**Usando um Espaço de Magia de Círculo Superior.** Use o círculo do espaço de magia para o círculo da magia no bloco de estatísticas.
+
+Montaria Sobrenatural
+
+Celestial Grande, Feérico ou Ínfero (À Sua Escolha), Neutro
+
+**CA** 10 + 1 por círculo de magia
+
+**PV** 5 + 10 por círculo de magia (a montaria tem um número de Dados de Vida [d10s] igual ao círculo da magia)
+
+**Deslocamento** 18 m, Voo 18 m (requer magia de 4º círculo ou superior)
+
+|         |    | **Mod** | **SG** |         |    | **Mod** | **SG** |         |    | **Mod** | **SG** |
+| ------- | --- | ------- | ------ | ------- | --- | ------- | ------ | ------- | --- | ------- | ------ |
+| **For** | 18 | +4      | +4     | **Des** | 12 | +1      | +1     | **Con** | 14 | +2      | +2     |
+| **Int** | 6  | -2      | -2     | **Sab** | 12 | +1      | +1     | **Car** | 8  | -1      | -1     |
+
+**Sentidos** Percepção Passiva 11
+
+**Idiomas** Telepatia 1,5 km (funciona apenas com você)
+
+**ND** Nenhum (XP 0; BP é igual ao seu Bônus de Proficiência)
+
+**Traços**
+
+**Vínculo Vital.** Ao recuperar Pontos de Vida de uma magia 1º círculo ou superior, a montaria recupera o mesmo número de Pontos de Vida se você estiver a até 1,5 metro dela.
+
+**Ações**
+
+**Pancada Sobrenatural.** *Jogada de Ataque Corpo a Corpo:* Bônus é igual ao seu modificador de ataque mágico, alcance 1,5 m. *Dano:* 1d8 mais o círculo da magia de pontos de dano Radiante (Celestial), Psíquico (Feérico) ou Necrótico (Ínfero).
+
+**Ações Bônus**
+
+**Derrubar Brilho (Apenas Ínfero; Recarrega após um Descanso Longo).** *Salvaguarda de Sabedoria:* CD é igual a CD para evitar sua magia, uma criatura a até 18 metros à vista da montaria. *Falha:* O alvo tem a condição Amedrontado até o final do seu próximo turno.
+
+**Passo Feérico (Apenas Feérico; Recarrega após um Descanso Longo).** A montaria se teleporta, junto com seu cavaleiro, para um espaço desocupado à sua escolha a até 18 metros de distância de onde está.
+
+**Toque Curativo (Apenas Celestial; Recarrega após um Descanso Longo).** Uma criatura a até 1,5 metro da montaria recupera um número de Pontos de Vida igual a 2d8 mais o círculo da magia.
+
+Criar Chamas
+
+produce flame
+
+ *Truque de Invocação (Druida)*
+
+Tempo de Conjuração: Ação Bônus
+
+Alcance:  Pessoal
+
+Componentes:  V, S
+
+Duração:  10 minutos
+
+Uma chama bruxuleante surge em sua mão e permanece lá pela duração da magia. Enquanto estiver lá, a chama não emite calor, não queima nada, e emite Luz Plena em um raio de 6 metros e Meia-luz por mais 6 metros. A magia se encerra se você a conjurar novamente.
+
+Até que a magia termine, você pode executar uma ação Usar Magia para arremessar a chama em uma criatura ou objeto a até 18 metros de você. Realize um ataque mágico à distância. Em caso de acerto, o alvo sofre 1d8 pontos de dano Ígneo.
+
+**Aprimoramento de Truque.** O dano aumenta em 1d8 quando você atinge os níveis 5 (2d8), 11 (3d8) e 17 (4d8).
+
+Curar Ferimentos
+
+cure wounds
+
+ *1º Círculo, Abjuração (Bardo, Clérigo, Druida, Guardião, Paladino, Artífice)*
+
+Tempo de Conjuração: Ação
+
+Alcance:  Toque
+
+Componentes:  V, S
+
+Duração:  Instantânea
+
+Uma criatura que você toca recupera um número de Pontos de Vida igual a 2d8 mais seu modificador de atributo de conjuração.
+
+**Usando um Espaço de Magia de Círculo Superior.** A cura aumenta em 2d8 para cada círculo de espaço de magia acima de 1.
+
+Danação
+
+Hex
+
+ *1º Círculo, Encantamento (Bruxo)*
+
+Tempo de Conjuração: Ação Bônus
+
+Alcance:  27 metros (18)
+
+Componentes:  V, S, M (o olho petrificado de uma salamandra)
+
+Duração:  Concentração,
+ até 1 hora
+
+Você coloca uma maldição em uma criatura à sua vista e no alcance da magia. Até que a magia termine, você causa 1d6 pontos de dano Necrótico adicional ao alvo sempre que o acertar com uma jogada de ataque. Além disso, escolha um atributo ao conjurar a magia. O alvo tem Desvantagem nos testes de atributo realizados com o atributo escolhido.
+
+Se o alvo é reduzido a 0 Pontos de Vida antes que esta magia termine, você pode executar uma ação Bônus em um turno posterior para amaldiçoar uma nova criatura.
+
+**Usando um Espaço de Magia de Círculo Superior.** Sua Concentração pode durar mais com um espaço de magia de 2º círculo (em até 4 horas), 3º–4º círculo (em até 8 horas) ou 5º círculo ou superior (em até 24 horas).
+
+Defensor da Fé
+
+Guardian of Fate
+
+ *4º Círculo, Invocação (Clérigo)*
+
+Tempo de Conjuração: Ação
+
+Alcance:  9 metros (6)
+
+Componentes:  V
+
+Duração:  8 horas
+
+Um defensor espectral Grande aparece e paira pela duração da magia em um espaço desocupado à sua vista e no alcance da magia. O defensor ocupa esse espaço e não pode ser atingido, e aparece em uma forma apropriada para sua divindade ou panteão.
+
+Qualquer inimigo que se mova para um espaço a até 3 metros do defensor pela primeira vez em um turno ou inicie o turno lá realiza uma salvaguarda de Destreza, sofrendo 20 pontos de dano Radiante se falhar, ou metade desse dano em caso de sucesso. O defensor desaparece quando causa um total de 60 pontos de dano.
+</script>
+
+<script>
+(() => {
+'use strict';
+
+// @@PARSER-START
+/* ---------- Leitura do texto do site (Simple Skans) ---------- */
+const ESCOLAS = ['Abjuração','Adivinhação','Encantamento','Evocação','Ilusão','Invocação','Necromancia','Transmutação'];
+const ATTRS = ['For','Des','Con','Int','Sab','Car'];
+const plain = s => String(s).replace(/\*/g,'');
+const norm = s => String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
+const slug = s => norm(s).replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');
+const HEAD_RE = /^(Truque|(\d)º\s*Círculo)\s*(?:,|de)\s*(Abjuração|Adivinhação|Encantamento|Evocação|Ilusão|Invocação|Necromancia|Transmutação)\s*(?:\(([^)]*)\))?\s*$/i;
+const TYPE_RE = /^(Aberração|Celestial|Constructo|Construto|Dragão|Elemental|Feérico|Ínfero|Gigante|Humanoide|Monstruosidade|Limo|Planta|Morto-vivo|Fera|Besta)\b.*,\s*[^,]+$/i;
+const SEC_RE = /^(Traços|Ações Bônus|Ações Lendárias|Ações|Reações)$/;
+const PROP_RE = /^(Resistências|Imunidades|Vulnerabilidades|Sentidos|Idiomas|Perícias|Salvaguardas|Equipamento)\s*:?\s*(.*)$/;
+const KEY_RE = /^(Tempo de Conjuração|Alcance|Componentes|Duração)\s*:\s*(.*)$/;
+const UP = /^[A-ZÁÀÂÃÉÊÍÓÔÕÚÇ]/;
+
+function splitEntry(raw){
+  let m = raw.match(/^\*\*(.+?)\*\*\s*(.*)$/);
+  if (m) return { nome: m[1].replace(/[.:]\s*$/,'').trim(), texto: m[2] };
+  m = raw.match(/^([^.]{1,80}?(?:\([^)]*\))?)\.\s+(.*)$/);
+  if (m && UP.test(m[1])) return { nome: m[1].trim(), texto: m[2] };
+  return null;
+}
+
+function parseDesc(lines){
+  const blocks = []; let sup = '', tru = '', table = null;
+  for (const raw0 of lines){
+    const raw = raw0.trim(); const p = plain(raw).trim();
+    if (!p) { table = null; continue; }
+    if (/^Componente\s*:/.test(p)) continue;
+    if (p.includes('|') && p.includes('-') && /^[\s:|-]+$/.test(p)) continue;         // separador de tabela markdown
+    if (raw.startsWith('|') && raw.endsWith('|')){
+      const cells = raw.slice(1,-1).split('|').map(c=>c.trim());
+      if (!table){ table = {t:'table', rows:[]}; blocks.push(table); }
+      table.rows.push(cells); continue;
+    }
+    if (raw.includes('\t')){
+      const cells = raw.split('\t').map(c=>c.trim());
+      if (!table){ table = {t:'table', rows:[]}; blocks.push(table); }
+      table.rows.push(cells); continue;
+    }
+    table = null;
+    let m = p.match(/^Usando um Espaço de Magia de Círculo Superior\.?\s*(.*)$/);
+    if (m){ sup = m[1]; continue; }
+    m = p.match(/^Aprimoramento de Truque\.?\s*(.*)$/);
+    if (m){ tru = m[1]; continue; }
+    m = raw.match(/^[-•]\s+(.*)$/);
+    if (m){ blocks.push({t:'li', x:m[1]}); continue; }
+    blocks.push({t:'p', x:raw});
+  }
+  return { blocks, sup, tru };
+}
+
+function parseStat(lines){
+  const f = { nome: plain(lines[0]).trim(), tipo: plain(lines[1]||'').trim(), ca:'', pv:'', deslocamento:'', atr:null, props:[], secoes:[] };
+  const abil = []; let sec = null;
+  for (const raw of lines.slice(2)){
+    const p = plain(raw).trim(); let m;
+    if (!p) continue;
+    if (SEC_RE.test(p)){ sec = { titulo:p, itens:[] }; f.secoes.push(sec); continue; }
+    if (!sec){
+      if ((m = p.match(/^(CA|AC)\b\s*:?\s*(.*)$/))){ f.ca = m[2]; continue; }
+      if ((m = p.match(/^(PV|HP)\b\s*:?\s*(.*)$/))){ f.pv = m[2]; continue; }
+      if ((m = p.match(/^(Deslocamento|Velocidade)\b\s*:?\s*(.*)$/))){ f.deslocamento = m[2]; continue; }
+      if ((m = p.match(PROP_RE))){ f.props.push([m[1], m[2]]); continue; }
+      if ((m = p.match(/^ND\b\s*:?\s*(.*)$/))){ f.props.push(['ND', m[1]]); continue; }
+      abil.push(p); continue;
+    }
+    const e = splitEntry(raw.trim());
+    if (e) sec.itens.push(e);
+    else if (sec.itens.length) sec.itens[sec.itens.length-1].texto += ' ' + raw.trim();
+    else sec.itens.push({ nome:'', texto: raw.trim() });
+  }
+  const j = abil.join(' ').replace(/[−–]/g,'-'); const atr = {}; let n = 0;
+  for (const a of ATTRS){
+    const m = j.match(new RegExp('\\b'+a+'\\b[\\s|]+(\\d+)[\\s|]+([+-]?\\d+)[\\s|]+([+-]?\\d+)'));
+    if (m){ atr[a] = [m[1], m[2], m[3]]; n++; }
+  }
+  if (n) f.atr = atr;
+  return f;
+}
+
+function parseSiteText(text){
+  const raw = String(text).replace(/\r/g,'').replace(/\u00a0/g,' ').split('\n')
+    .map(l=>l.trim()).filter(l=>!/^(Documento gerado|Tradução realizada)/.test(plain(l)));
+  const pl = raw.map(l=>plain(l).trim());
+  const starts = [];
+  for (let i=0;i<raw.length;i++){
+    if (!HEAD_RE.test(pl[i])) continue;
+    let en = i-1; while (en>=0 && !pl[en]) en--;
+    let pt = en-1; while (pt>=0 && !pl[pt]) pt--;
+    if (pt >= 0) starts.push({ h:i, en, pt });
+  }
+  const out = [];
+  starts.forEach((s,k)=>{
+    const end = k+1 < starts.length ? starts[k+1].pt : raw.length;
+    const hm = pl[s.h].match(HEAD_RE);
+    const body = raw.slice(s.h+1, end);
+    const F = {}; let j = 0;
+    for (; j<body.length && Object.keys(F).length<4; j++){
+      const p = plain(body[j]).trim(); if (!p) continue;
+      const m = p.match(KEY_RE); if (!m) break;
+      let v = m[2].trim();
+      while ((v==='' || /,$/.test(v)) && j+1<body.length){
+        let q = j+1; while (q<body.length && !plain(body[q]).trim()) q++;
+        if (q>=body.length || KEY_RE.test(plain(body[q]).trim())) break;
+        v = (v+' '+plain(body[q]).trim()).trim(); j = q;
+      }
+      F[m[1]] = v;
+    }
+    const rest = body.slice(j).filter(l=>plain(l).trim());
+    const sb = [];
+    for (let q=0;q+2<rest.length;q++){
+      if (TYPE_RE.test(plain(rest[q+1]).trim()) && /^(CA|AC)\b/.test(plain(rest[q+2]).trim())) sb.push(q);
+    }
+    const descLines = rest.slice(0, sb.length ? sb[0] : rest.length);
+    const fichas = sb.map((a,i)=>parseStat(rest.slice(a, i+1<sb.length ? sb[i+1] : rest.length)));
+    const d = parseDesc(descLines);
+    const nome = pl[s.pt], tempo = F['Tempo de Conjuração']||'', duracao = F['Duração']||'';
+    out.push({
+      id: slug(nome), nome, nomeEn: pl[s.en],
+      circulo: hm[2] ? +hm[2] : 0,
+      escola: ESCOLAS.find(e=>norm(e)===norm(hm[3])) || hm[3],
+      classes: hm[4] ? hm[4].split(',').map(c=>c.trim()).filter(Boolean) : [],
+      tempo, alcance: F['Alcance']||'', componentes: F['Componentes']||'', duracao,
+      ritual: /ritual/i.test(tempo), concentracao: /^concentra/i.test(duracao),
+      desc: d.blocks, superior: d.sup, truque: d.tru, fichas, fonte:'site'
+    });
+  });
+  return out;
+}
+// @@PARSER-END
+
+/* ---------- estado e armazenamento ---------- */
+const LS_KEY = 'grimorio-dnd2024-v1';
+const store = (() => {
+  let ok = true, mem = null;
+  try { localStorage.setItem('__t','1'); localStorage.removeItem('__t'); } catch(e){ ok = false; }
+  return {
+    persistent: () => ok,
+    load(){ try { return ok ? JSON.parse(localStorage.getItem(LS_KEY)||'null') : mem; } catch(e){ return null; } },
+    save(d){ if (ok){ try { localStorage.setItem(LS_KEY, JSON.stringify(d)); return; } catch(e){ ok = false; } } mem = d; }
+  };
+})();
+let S = Object.assign({ custom:[], imported:[], chars:[], active:null }, store.load()||{});
+const persist = () => store.save(S);
+const uid = p => p + Date.now().toString(36) + Math.random().toString(36).slice(2,6);
+
+const CLASSES = ['Artífice','Bardo','Bruxo','Clérigo','Druida','Feiticeiro','Guardião','Mago','Paladino'];
+let SEED = [], LIB = [], BY = {};
+try { SEED = parseSiteText(document.getElementById('seed').textContent); } catch(e){ console.error(e); }
+function rebuild(){
+  const m = new Map();
+  SEED.forEach(s=>m.set(s.id,s)); S.imported.forEach(s=>m.set(s.id,s)); S.custom.forEach(s=>m.set(s.id,s));
+  LIB = [...m.values()]; BY = Object.fromEntries(m);
+}
+rebuild();
+
+/* ---------- utilitários de tela ---------- */
+const $ = (s,r=document) => r.querySelector(s);
+const $$ = (s,r=document) => [...r.querySelectorAll(s)];
+const esc = s => String(s??'').replace(/[&<>"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const fmt = s => esc(s).replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/\*(.+?)\*/g,'<em>$1</em>');
+const circLabel = n => n===0 ? 'Truque' : n+'º círculo';
+const ptSort = (a,b) => a.localeCompare(b,'pt-BR',{sensitivity:'base'});
+let toastT;
+function toast(msg){ const t=$('#toast'); t.textContent=msg; t.hidden=false; clearTimeout(toastT); toastT=setTimeout(()=>t.hidden=true,2600); }
+const activeChar = () => S.chars.find(c=>c.id===S.active) || null;
+
+/* ---------- HTML de magia e ficha ---------- */
+function blocksHTML(blocks){
+  let h = '', ul = false;
+  for (const b of blocks){
+    if (b.t==='li'){ if(!ul){h+='<ul>';ul=true;} h+=`<li>${fmt(b.x)}</li>`; continue; }
+    if (ul){ h+='</ul>'; ul=false; }
+    if (b.t==='table'){
+      h += '<table class="tb"><tbody>' + b.rows.map((r,i)=>`<tr>${r.map(c=>i===0?`<th>${fmt(c)}</th>`:`<td>${fmt(c)}</td>`).join('')}</tr>`).join('') + '</tbody></table>';
+    } else h += `<p>${fmt(b.x)}</p>`;
+  }
+  return h + (ul?'</ul>':'');
+}
+function fichaHTML(f){
+  let h = `<section class="ficha"><h4>${esc(f.nome)}</h4>`;
+  if (f.tipo) h += `<p class="tipo">${esc(f.tipo)}</p>`;
+  const vit = [['CA',f.ca],['PV',f.pv],['Deslocamento',f.deslocamento]].filter(v=>v[1]);
+  if (vit.length) h += `<p class="vit">${vit.map(v=>`<span><strong>${v[0]}</strong> ${fmt(v[1])}</span>`).join('')}</p>`;
+  if (f.atr){
+    const head = '<th></th><th></th><th>Mod</th><th>SG</th>'.repeat(3);
+    h += `<table class="abil"><thead><tr>${head}</tr></thead><tbody>` +
+      [['For','Des','Con'],['Int','Sab','Car']].map(r=>`<tr>${r.map(a=>{const v=f.atr[a]||['','','']; return `<th>${a}</th><td>${esc(v[0])}</td><td>${esc(v[1])}</td><td>${esc(v[2])}</td>`;}).join('')}</tr>`).join('') + '</tbody></table>';
+  }
+  h += f.props.filter(p=>p[1]).map(p=>`<p class="pr"><strong>${esc(p[0])}</strong> ${fmt(p[1])}</p>`).join('');
+  for (const s of f.secoes){
+    if (!s.itens.length) continue;
+    h += `<h5>${esc(s.titulo)}</h5>` + s.itens.map(i=>`<p class="en2">${i.nome?`<strong>${esc(i.nome)}.</strong> `:''}${fmt(i.texto)}</p>`).join('');
+  }
+  return h + '</section>';
+}
+function spellHTML(s, o={}){
+  const facts = [['Tempo de conjuração',s.tempo],['Alcance',s.alcance],['Componentes',s.componentes],['Duração',s.duracao]];
+  let h = `<article class="spell"><h3>${esc(s.nome)}</h3>${s.nomeEn && s.nomeEn!==s.nome?`<p class="en">${esc(s.nomeEn)}</p>`:''}`;
+  h += `<p class="lvl">${s.circulo===0?'Truque':s.circulo+'º círculo'} de ${esc(s.escola.toLowerCase())}${s.classes.length?` (${esc(s.classes.join(', '))})`:''}</p>`;
+  h += `<dl class="facts">${facts.map(f=>`<div><dt>${f[0]}</dt><dd>${esc(f[1]||'—')}</dd></div>`).join('')}</dl>`;
+  h += `<div class="txt">${blocksHTML(s.desc)}`;
+  if (s.truque) h += `<p class="sup"><strong>Aprimoramento de truque.</strong> ${fmt(s.truque)}</p>`;
+  if (s.superior) h += `<p class="sup"><strong>Usando um espaço de magia de círculo superior.</strong> ${fmt(s.superior)}</p>`;
+  h += '</div>';
+  if (o.fichas!==false) h += s.fichas.map(fichaHTML).join('');
+  return h + '</article>';
+}
+
+/* ---------- navegação ---------- */
+const VIEWS = ['lib','book','new','print','data'];
+let view = 'lib';
+function go(v){
+  if (!VIEWS.includes(v)) v = 'lib';
+  view = v;
+  VIEWS.forEach(x=>{ $('#v-'+x).hidden = x!==v; });
+  $$('#tabs button').forEach(b=>b.setAttribute('aria-selected', b.dataset.go===v));
+  if (v==='lib') renderLib(); if (v==='book') renderBook(); if (v==='new' && !formBuilt) buildForm(); if (v==='print') renderSheet();
+  if (v==='data') updateDataInfo();
+  try { history.replaceState(null,'','#'+v); } catch(e){}
+  window.scrollTo(0,0);
+}
+$('#tabs').addEventListener('click', e=>{ const b=e.target.closest('[data-go]'); if(b) go(b.dataset.go); });
+
+/* ---------- personagens ---------- */
+function renderChars(){
+  const sel = $('#charSel');
+  if (!S.chars.length){ sel.innerHTML = '<option value="">Sem personagem</option>'; }
+  else sel.innerHTML = S.chars.map(c=>`<option value="${c.id}" ${c.id===S.active?'selected':''}>${esc(c.nome)}${c.classe?` — ${esc(c.classe)}${c.nivel?' '+c.nivel:''}`:''}</option>`).join('');
+  $('#charEdit').hidden = !activeChar();
+}
+$('#charSel').addEventListener('change', e=>{ S.active = e.target.value || null; persist(); refresh(); });
+let editingChar = null;
+function openChar(c){
+  editingChar = c;
+  $('#dlgTitle').textContent = c ? 'Editar personagem' : 'Novo personagem';
+  $('#cNome').value = c?.nome||''; $('#cClasse').value = c?.classe||''; $('#cNivel').value = c?.nivel||1;
+  $('#cDel').hidden = !c;
+  const d = $('#dlgChar'); if (d.showModal) d.showModal(); else d.setAttribute('open','');
+  setTimeout(()=>$('#cNome').focus(),30);
+}
+$('#charNew').addEventListener('click', ()=>openChar(null));
+$('#charEdit').addEventListener('click', ()=>openChar(activeChar()));
+$('#cCancel').addEventListener('click', ()=>$('#dlgChar').close());
+$('#charForm').addEventListener('submit', e=>{
+  e.preventDefault();
+  const nome = $('#cNome').value.trim(); if (!nome) return;
+  const data = { nome, classe:$('#cClasse').value.trim(), nivel: Math.max(1,Math.min(20,+$('#cNivel').value||1)) };
+  if (editingChar) Object.assign(editingChar, data);
+  else { const c = Object.assign({ id:uid('p-'), spells:[], prep:[] }, data); S.chars.push(c); S.active = c.id; }
+  persist(); $('#dlgChar').close(); refresh(); toast('Personagem salvo');
+});
+$('#cDel').addEventListener('click', ()=>{
+  if (!editingChar || !confirm(`Excluir ${editingChar.nome} e o grimório dele?`)) return;
+  S.chars = S.chars.filter(c=>c!==editingChar); S.active = S.chars[0]?.id || null;
+  persist(); $('#dlgChar').close(); refresh(); toast('Personagem excluído');
+});
+
+/* ---------- biblioteca ---------- */
+const F = { q:'', circ:'', escola:'', classe:'', ord:'circ', rit:false, con:false, fic:false, cus:false };
+const cur = { lib:null, book:null };
+function passes(s){
+  if (F.q){ const q = norm(F.q); if (!norm(s.nome).includes(q) && !norm(s.nomeEn).includes(q)) return false; }
+  if (F.circ!=='' && s.circulo!==+F.circ) return false;
+  if (F.escola && s.escola!==F.escola) return false;
+  if (F.classe && !s.classes.includes(F.classe)) return false;
+  if (F.rit && !s.ritual) return false;
+  if (F.con && !s.concentracao) return false;
+  if (F.fic && !s.fichas.length) return false;
+  if (F.cus && !s.custom) return false;
+  return true;
+}
+function sortSpells(a, ord){
+  const arr = [...a];
+  if (ord==='az') return arr.sort((x,y)=>ptSort(x.nome,y.nome));
+  if (ord==='za') return arr.sort((x,y)=>ptSort(y.nome,x.nome));
+  if (ord==='en') return arr.sort((x,y)=>ptSort(x.nomeEn||x.nome,y.nomeEn||y.nome));
+  return arr.sort((x,y)=>x.circulo-y.circulo || ptSort(x.nome,y.nome));
+}
+
+/* ---------- tags do grimório ---------- */
+const B = { ord:'circ', tag:'' };
+const normTag = t => String(t||'').trim().replace(/^#+/,'').replace(/\s+/g,' ').slice(0,30);
+const tagsOf = (ch,id) => (ch.tags && ch.tags[id]) || [];
+function allTags(ch){
+  const m = new Map();
+  for (const id of ch.spells) if (BY[id]) for (const t of tagsOf(ch,id)) m.set(t,(m.get(t)||0)+1);
+  return [...m.entries()].sort((a,b)=>ptSort(a[0],b[0]));
+}
+function addTag(ch,id,raw){
+  let t = normTag(raw); if (!t) return false;
+  const canon = allTags(ch).find(([x])=>x.toLowerCase()===t.toLowerCase()); if (canon) t = canon[0];
+  ch.tags = ch.tags || {};
+  const l = ch.tags[id] = ch.tags[id] || [];
+  if (l.some(x=>x.toLowerCase()===t.toLowerCase())) return false;
+  l.push(t); return true;
+}
+function dropSpellTags(ch,id){ if (ch.tags) delete ch.tags[id]; }
+function mapTags(ch, fn){
+  if (!ch.tags) return;
+  for (const id of Object.keys(ch.tags)){
+    const out = []; for (const t of ch.tags[id]){ const n = fn(t); if (n && !out.some(x=>x.toLowerCase()===n.toLowerCase())) out.push(n); }
+    if (out.length) ch.tags[id] = out; else delete ch.tags[id];
+  }
+}
+function bookGroups(ch, ord, tag, onlyPrep){
+  let arr = ch.spells.map(id=>BY[id]).filter(Boolean);
+  if (onlyPrep) arr = arr.filter(s=>ch.prep.includes(s.id));
+  if (tag) arr = arr.filter(s=>tagsOf(ch,s.id).includes(tag));
+  if (ord==='az') return arr.length ? [{ num:'A', head:'', lab:'Ordem alfabética', items: arr.sort((x,y)=>ptSort(x.nome,y.nome)) }] : [];
+  if (ord==='tag'){
+    const map = new Map(), none = [];
+    for (const s of sortSpells(arr,'circ')){
+      const t = tagsOf(ch,s.id);
+      if (!t.length) none.push(s); else t.forEach(x=>{ if (!map.has(x)) map.set(x,[]); map.get(x).push(s); });
+    }
+    let g = [...map.entries()].sort((a,b)=>ptSort(a[0],b[0])).map(([k,v])=>({ num:'#', head:k, lab:k, items:v }));
+    if (tag) g = g.filter(x=>x.head===tag);
+    else if (none.length) g.push({ num:'–', head:'Sem tag', lab:'Sem tag', items:none });
+    return g;
+  }
+  const g = [];
+  for (const s of sortSpells(arr,'circ')){
+    let last = g[g.length-1];
+    if (!last || last.c!==s.circulo){ last = { c:s.circulo, num:s.circulo===0?'T':String(s.circulo), head:s.circulo===0?'Truques':s.circulo+'º círculo', items:[] }; last.lab = last.head; g.push(last); }
+    last.items.push(s);
+  }
+  return g;
+}
+function tagBoxHTML(ch,id){
+  const mine = tagsOf(ch,id);
+  const sug = allTags(ch).map(x=>x[0]).filter(t=>!mine.includes(t)).slice(0,12);
+  return `<div class="tagbox"><h4>Tags</h4><div class="tagrow">${mine.map(t=>`<span class="tagchip">${esc(t)}<button type="button" data-untag="${esc(t)}" aria-label="Remover a tag ${esc(t)}">×</button></span>`).join('') || '<span class="hint">Nenhuma tag ainda.</span>'}</div>` +
+    `<div class="tagadd"><input type="text" id="tagIn" maxlength="30" placeholder="Nova tag (ex.: combate, utilidade)" autocomplete="off"><button class="btn sm" type="button" data-addtag="1">Adicionar</button></div>` +
+    (sug.length ? `<div class="tagrow"><span class="hint">Usar:</span>${sug.map(t=>`<button type="button" class="tagchip pick" data-pick="${esc(t)}">${esc(t)}</button>`).join('')}</div>` : '') + '</div>';
+}
+function rowHTML(s, mode){
+  const ch = activeChar(); const has = ch && ch.spells.includes(s.id);
+  const sel = cur[mode]===s.id;
+  let pills = '';
+  if (s.concentracao) pills += '<span class="pill c">Concentração</span>';
+  if (s.ritual) pills += '<span class="pill">Ritual</span>';
+  if (s.fichas.length) pills += '<span class="pill p">Ficha</span>';
+  if (s.custom) pills += '<span class="pill p">Personalizada</span>';
+  if (mode==='book' && ch) for (const t of tagsOf(ch,s.id)) pills += `<span class="pill t">#${esc(t)}</span>`;
+  let act;
+  if (mode==='lib') act = `<button class="iconbtn ${has?'on':''}" data-toggle="${s.id}" aria-label="${has?'Remover do':'Adicionar ao'} grimório: ${esc(s.nome)}" title="${has?'No grimório — clique para remover':'Adicionar ao grimório'}">${has?'✓':'+'}</button>`;
+  else { const pr = ch.prep.includes(s.id); act = `<label class="prep" title="Marcar como preparada"><input type="checkbox" data-prep="${s.id}" ${pr?'checked':''}> Preparada</label>`; }
+  return `<li class="row" role="option" tabindex="0" data-id="${s.id}" aria-selected="${sel}"><span class="nm">${esc(s.nome)}${s.nomeEn&&s.nomeEn!==s.nome?`<em>${esc(s.nomeEn)}</em>`:''}</span><span class="act">${act}</span><span class="mt">${esc(s.escola)}${pills}</span></li>`;
+}
+function listHTML(arr, mode, grouped){
+  if (!arr.length) return '<li class="empty">Nenhuma magia encontrada com esses filtros.</li>';
+  let h = '', last = null;
+  for (const s of arr){
+    if (grouped && s.circulo!==last){
+      last = s.circulo; const n = arr.filter(x=>x.circulo===last).length;
+      h += `<li class="grp" role="presentation"><span class="num">${last===0?'T':last}</span><span class="lab">${last===0?'Truques':last+'º círculo'} — ${n} ${n===1?'magia':'magias'}</span></li>`;
+    }
+    h += rowHTML(s, mode);
+  }
+  return h;
+}
+function renderLib(){
+  const arr = sortSpells(LIB.filter(passes), F.ord);
+  $('#list').innerHTML = listHTML(arr,'lib',F.ord==='circ');
+  $('#fcount').textContent = `${arr.length} de ${LIB.length} magias`;
+  const doSite = LIB.filter(s=>!s.custom).length;
+  $('#libLead').textContent = `${LIB.length} magias na biblioteca (${doSite} do site, ${S.custom.length} personalizadas). Para carregar a lista completa do site, use “Importar e backup”.`;
+  if (cur.lib && BY[cur.lib]) showDetail(cur.lib,'lib'); else $('#detail-lib').innerHTML = '<p class="placeholder">Escolha uma magia na lista para ver o texto completo.</p>';
+}
+const BY_SEED = id => SEED.some(s=>s.id===id);
+function showDetail(id, mode, open){
+  const s = BY[id]; const host = $('#detail-'+mode); if (!s) return;
+  cur[mode] = id;
+  const ch = activeChar(); const has = ch && ch.spells.includes(id);
+  let h = '<button class="btn ghost sm close" type="button" data-close style="color:var(--tinta)">Voltar à lista</button>' + spellHTML(s);
+  if (mode==='book' && has) h += tagBoxHTML(ch,id);
+  h += '<div class="actions">';
+  h += ch ? `<button class="btn" type="button" data-toggle="${id}">${has?'Remover do grimório':'Adicionar ao grimório'} de ${esc(ch.nome)}</button>` : '<button class="btn" type="button" data-newchar>Criar personagem para adicionar</button>';
+  h += `<button class="btn ghost sm" type="button" data-dup="${id}" style="color:var(--lapis);border-color:var(--lapis)">Duplicar como personalizada</button>`;
+  if (s.custom) h += `<button class="btn ghost sm" type="button" data-edit="${id}" style="color:var(--lapis);border-color:var(--lapis)">Editar</button><button class="btn warn sm" type="button" data-del="${id}">Excluir</button>`;
+  host.innerHTML = h + '</div>';
+  if (open) host.classList.add('open');
+  $$('.row', $(mode==='lib'?'#list':'#booklist')).forEach(r=>r.setAttribute('aria-selected', r.dataset.id===id));
+}
+function toggleSpell(id){
+  const ch = activeChar(); if (!ch){ openChar(null); return; }
+  const i = ch.spells.indexOf(id);
+  if (i>=0){ ch.spells.splice(i,1); ch.prep = ch.prep.filter(x=>x!==id); dropSpellTags(ch,id); toast('Removida do grimório'); }
+  else { ch.spells.push(id); toast(`Adicionada ao grimório de ${ch.nome}`); }
+  persist(); refresh(true);
+}
+function onListClick(e, mode){
+  const t = e.target.closest('[data-toggle]'); if (t){ e.stopPropagation(); toggleSpell(t.dataset.toggle); return; }
+  const pr = e.target.closest('[data-prep]'); if (pr){
+    const ch = activeChar(), id = pr.dataset.prep; const i = ch.prep.indexOf(id);
+    if (i>=0) ch.prep.splice(i,1); else ch.prep.push(id); persist(); renderBookMeta(); return;
+  }
+  const r = e.target.closest('.row'); if (r) showDetail(r.dataset.id, mode, true);
+}
+['lib','book'].forEach(mode=>{
+  const list = $(mode==='lib'?'#list':'#booklist'), det = $('#detail-'+mode);
+  list.addEventListener('click', e=>onListClick(e,mode));
+  list.addEventListener('keydown', e=>{ if ((e.key==='Enter'||e.key===' ') && e.target.classList.contains('row')){ e.preventDefault(); showDetail(e.target.dataset.id, mode, true); } });
+  det.addEventListener('click', e=>{
+    if (e.target.closest('[data-close]')){ det.classList.remove('open'); return; }
+    const t = e.target.closest('[data-toggle]'); if (t){ toggleSpell(t.dataset.toggle); return; }
+    if (e.target.closest('[data-newchar]')){ openChar(null); return; }
+    const d = e.target.closest('[data-dup]'); if (d){ formBuilt = false; buildForm(BY[d.dataset.dup], true); det.classList.remove('open'); go('new'); return; }
+    const ed = e.target.closest('[data-edit]'); if (ed){ formBuilt = false; buildForm(BY[ed.dataset.edit], false); det.classList.remove('open'); go('new'); return; }
+    const del = e.target.closest('[data-del]'); if (del){
+      const s = BY[del.dataset.del]; if (!confirm(`Excluir a magia “${s.nome}”? Ela também sai dos grimórios.`)) return;
+      S.custom = S.custom.filter(x=>x.id!==s.id); S.chars.forEach(c=>{ c.spells = c.spells.filter(x=>x!==s.id); c.prep = c.prep.filter(x=>x!==s.id); dropSpellTags(c,s.id); });
+      if (cur.lib===s.id) cur.lib=null; if (cur.book===s.id) cur.book=null;
+      det.classList.remove('open');
+      persist(); rebuild(); refresh(); toast('Magia excluída');
+    }
+  });
+});
+const bind = (id, key, ev='input', get=e=>e.target.value) => $(id).addEventListener(ev, e=>{ F[key]=get(e); renderLib(); });
+bind('#fq','q'); bind('#fcirc','circ','change'); bind('#fesc','escola','change'); bind('#fcls','classe','change'); bind('#ford','ord','change');
+bind('#frit','rit','change',e=>e.target.checked); bind('#fcon','con','change',e=>e.target.checked); bind('#ffic','fic','change',e=>e.target.checked); bind('#fcus','cus','change',e=>e.target.checked);
+$('#fesc').insertAdjacentHTML('beforeend', ESCOLAS.map(e=>`<option>${e}</option>`).join(''));
+function fillClasses(){
+  const set = new Set([...CLASSES, ...LIB.flatMap(s=>s.classes)]);
+  const sel = $('#fcls'), v = sel.value;
+  sel.innerHTML = '<option value="">Todas</option>' + [...set].sort(ptSort).map(c=>`<option>${esc(c)}</option>`).join(''); sel.value = v;
+}
+
+/* ---------- meu grimório ---------- */
+function renderBookMeta(){
+  const ch = activeChar(); if (!ch) return;
+  const total = ch.spells.filter(id=>BY[id]).length, pr = ch.prep.filter(id=>BY[id]).length;
+  $('#bookMeta').textContent = `${total} ${total===1?'magia':'magias'} no grimório, ${pr} ${pr===1?'preparada':'preparadas'}`;
+}
+function fillTagSel(sel, ch, val){
+  const tags = allTags(ch);
+  sel.innerHTML = '<option value="">Todas</option>' + tags.map(([t,n])=>`<option value="${esc(t)}">${esc(t)} (${n})</option>`).join('');
+  sel.value = tags.some(([t])=>t===val) ? val : '';
+  return sel.value;
+}
+function renderBook(){
+  const ch = activeChar();
+  $('#bookbar').hidden = !ch;
+  if (!ch){
+    $('#bookTitle').textContent = 'Meu grimório'; $('#bookMeta').textContent = '';
+    $('#booklist').innerHTML = '<li class="empty">Crie um personagem para começar a montar o grimório dele. <br><br><button class="btn" type="button" data-newchar>Criar personagem</button></li>';
+    $('#detail-book').innerHTML = '<p class="placeholder">O texto da magia aparece aqui.</p>';
+    return;
+  }
+  $('#bookTitle').textContent = `Grimório de ${ch.nome}`;
+  renderBookMeta();
+  B.tag = fillTagSel($('#btag'), ch, B.tag);
+  $('#bord').value = B.ord;
+  $('#btagRen').disabled = $('#btagDel').disabled = !B.tag;
+  const groups = bookGroups(ch, B.ord, B.tag, false);
+  if (!ch.spells.some(id=>BY[id])) $('#booklist').innerHTML = '<li class="empty">O grimório está vazio. Na biblioteca, use o botão + ao lado de cada magia.<br><br><button class="btn" type="button" data-go-lib>Abrir biblioteca</button></li>';
+  else if (!groups.length) $('#booklist').innerHTML = '<li class="empty">Nenhuma magia com essa tag.</li>';
+  else $('#booklist').innerHTML = groups.map(g=>{
+    const n = g.items.length;
+    const hd = g.num==='A' ? '' : `<li class="grp" role="presentation"><span class="num">${esc(g.num)}</span><span class="lab">${esc(g.lab)} — ${n} ${n===1?'magia':'magias'}</span></li>`;
+    return hd + g.items.map(s=>rowHTML(s,'book')).join('');
+  }).join('');
+  if (cur.book && BY[cur.book] && ch.spells.includes(cur.book)) showDetail(cur.book,'book'); else $('#detail-book').innerHTML = '<p class="placeholder">Escolha uma magia para ver o texto completo.</p>';
+}
+$('#bord').addEventListener('change', e=>{ B.ord = e.target.value; renderBook(); });
+$('#btag').addEventListener('change', e=>{ B.tag = e.target.value; renderBook(); });
+$('#btagRen').addEventListener('click', ()=>{
+  const ch = activeChar(); if (!ch || !B.tag) return;
+  const n = normTag(prompt('Novo nome para a tag “'+B.tag+'”:', B.tag)); if (!n || n===B.tag) return;
+  const old = B.tag; mapTags(ch, t=>t===old ? n : t); B.tag = n; persist(); renderBook(); toast('Tag renomeada');
+});
+$('#btagDel').addEventListener('click', ()=>{
+  const ch = activeChar(); if (!ch || !B.tag) return;
+  if (!confirm(`Excluir a tag “${B.tag}” de todas as magias de ${ch.nome}? As magias continuam no grimório.`)) return;
+  const old = B.tag; mapTags(ch, t=>t===old ? null : t); B.tag = ''; persist(); renderBook(); toast('Tag excluída');
+});
+function commitTag(){
+  const ch = activeChar(), id = cur.book, inp = $('#tagIn'); if (!ch || !id || !inp) return;
+  const ok = addTag(ch, id, inp.value);
+  if (ok){ persist(); renderBook(); toast('Tag adicionada'); } else inp.value = '';
+  const n = $('#tagIn'); if (n) n.focus();
+}
+$('#detail-book').addEventListener('click', e=>{
+  const ch = activeChar(), id = cur.book; if (!ch || !id) return;
+  const ut = e.target.closest('[data-untag]'), pk = e.target.closest('[data-pick]');
+  if (ut){
+    const l = tagsOf(ch,id).filter(x=>x!==ut.dataset.untag);
+    if (l.length) ch.tags[id] = l; else dropSpellTags(ch,id);
+    persist(); renderBook(); return;
+  }
+  if (pk){ if (addTag(ch,id,pk.dataset.pick)){ persist(); renderBook(); } return; }
+  if (e.target.closest('[data-addtag]')) commitTag();
+});
+$('#detail-book').addEventListener('keydown', e=>{
+  if (e.target.id==='tagIn' && (e.key==='Enter' || e.key===',')){ e.preventDefault(); commitTag(); }
+});
+$('#booklist').addEventListener('click', e=>{ if (e.target.closest('[data-newchar]')) openChar(null); if (e.target.closest('[data-go-lib]')) go('lib'); });
+
+/* ---------- impressão ---------- */
+function renderSheet(){
+  const ch = activeChar(); const host = $('#sheet');
+  if (!ch){ host.innerHTML = '<p>Crie um personagem e adicione magias ao grimório para imprimir.</p>'; return; }
+  const mode = $('#pmode').value, cols2 = $('#pcols').value==='2', fic = $('#pfic').checked, onlyPrep = $('#pprep').checked;
+  const ord = $('#pord').value, showTags = $('#ptags').checked;
+  const tag = fillTagSel($('#ptag'), ch, $('#ptag').value);
+  host.className = 'sheet' + (cols2?' cols2':'');
+  const groups = bookGroups(ch, ord, tag, onlyPrep);
+  const uniq = new Set(groups.flatMap(g=>g.items.map(s=>s.id))).size;
+  let h = `<div class="sh"><h2>${esc(ch.nome)}</h2><span>${esc([ch.classe, ch.nivel?'nível '+ch.nivel:''].filter(Boolean).join(', '))}${uniq?` — ${uniq} ${uniq===1?'magia':'magias'}`:''}${tag?` — tag: ${esc(tag)}`:''}</span></div><div class="body">`;
+  if (!groups.length) h += '<p>Nenhuma magia para imprimir. Adicione magias ao grimório (ou ajuste “Só magias preparadas” e “Só a tag”).</p>';
+  for (const g of groups){
+    if (g.head) h += `<div class="gh">${ord==='tag' && g.num==='#' ? '#' : ''}${esc(g.head)}</div>`;
+    for (const s of g.items){
+      const tg = showTags && ord!=='tag' && tagsOf(ch,s.id).length ? `<div class="tg">Tags: ${tagsOf(ch,s.id).map(esc).join(', ')}</div>` : '';
+      if (mode==='completo'){
+        h += `<div class="ps ${s.desc.length>5||s.fichas.length?'long':''}"><h3>${esc(s.nome)}</h3>${s.nomeEn&&s.nomeEn!==s.nome?`<span class="en">${esc(s.nomeEn)}</span>`:''}` +
+          `<div class="mt">${esc(s.escola)} / ${esc(s.tempo)} / ${esc(s.alcance)} / ${esc(s.componentes)} / ${esc(s.duracao)}</div>${tg}` +
+          `<div class="txt">${blocksHTML(s.desc)}${s.truque?`<p class="sup"><strong>Aprimoramento de truque.</strong> ${fmt(s.truque)}</p>`:''}${s.superior?`<p class="sup"><strong>Círculo superior.</strong> ${fmt(s.superior)}</p>`:''}</div>` +
+          (fic ? s.fichas.map(fichaHTML).join('') : '') + '</div>';
+      } else {
+        const comp = (s.componentes||'').replace(/\s*\(.*$/,'');
+        h += `<div class="ps ${fic&&s.fichas.length?'long':''}"><div class="cp"><div><h3>${esc(s.nome)}</h3>${s.nomeEn&&s.nomeEn!==s.nome?`<span class="en">${esc(s.nomeEn)}</span>`:''}</div><span class="mt">${esc(s.escola)}</span></div>` +
+          `<div class="mt">${esc(s.tempo)} / ${esc(s.alcance)} / ${esc(comp)} / ${esc(s.duracao)}</div>${tg}` +
+          (fic ? s.fichas.map(fichaHTML).join('') : '') + '</div>';
+      }
+    }
+  }
+  host.innerHTML = h + '</div>';
+}
+['#pmode','#pcols','#pfic','#pprep','#pord','#ptag','#ptags'].forEach(id=>$(id).addEventListener('change', renderSheet));
+$('#doPrint').addEventListener('click', ()=>{ renderSheet(); window.print(); });
+
+/* ---------- criar / editar magia ---------- */
+let formBuilt = false, editId = null;
+const OPT_T = ['Ação','Ação Bônus','Reação','1 minuto','10 minutos','1 hora','8 horas','24 horas'];
+const OPT_A = ['Pessoal','Toque','1,5 metro','3 metros','9 metros','18 metros','27 metros','36 metros','45 metros','90 metros','1,5 km'];
+function blocksToText(blocks){ return blocks.map(b=>b.t==='li'?'- '+b.x : b.t==='table'?b.rows.map(r=>'| '+r.join(' | ')+' |').join('\n') : b.x).join('\n\n'); }
+function fichaToText(f, t){ return (f.secoes.find(s=>s.titulo===t)?.itens||[]).map(i=>i.nome?`${i.nome}. ${i.texto}`:i.texto).join('\n'); }
+function fichaForm(f){
+  f = f || { nome:'', tipo:'', ca:'', pv:'', deslocamento:'', atr:null, props:[], secoes:[] };
+  const P = k => (f.props.find(p=>p[0]===k)||['',''])[1];
+  const at = a => f.atr && f.atr[a] ? f.atr[a] : ['10','',''];
+  const tx = (k,l,v,ph='') => `<label class="fld"><span>${l}</span><input data-k="${k}" value="${esc(v)}" placeholder="${esc(ph)}"></label>`;
+  const ta = (k,l) => `<label class="fld"><span>${l}</span><textarea data-k="${k}" style="min-height:70px" placeholder="Nome da ação. Texto…">${esc(fichaToText(f,l))}</textarea></label>`;
+  return `<fieldset class="ff"><legend>Ficha de invocação</legend>
+    <div class="grid">${tx('nome','Nome da criatura',f.nome,'Espírito Feérico')}${tx('tipo','Tipo, tamanho e alinhamento',f.tipo,'Feérico Pequeno, Neutro')}</div>
+    <div class="grid" style="margin-top:10px">${tx('ca','CA',f.ca,'12 + o círculo da magia')}${tx('pv','PV',f.pv,'30 + 10 por círculo acima de 3')}${tx('deslocamento','Deslocamento',f.deslocamento,'9 m, Voo 9 m')}</div>
+    <div class="abg">${ATTRS.map(a=>`<label class="fld"><span>${a}</span><input data-k="sc-${a}" type="number" min="1" max="30" value="${esc(at(a)[0])}"><input data-k="sg-${a}" placeholder="SG (opc.)" value="${esc(f.atr && at(a)[2]!==at(a)[1] ? at(a)[2] : '')}"></label>`).join('')}</div>
+    <div class="grid">${tx('Resistências','Resistências',P('Resistências'))}${tx('Imunidades','Imunidades',P('Imunidades'))}${tx('Vulnerabilidades','Vulnerabilidades',P('Vulnerabilidades'))}${tx('Sentidos','Sentidos',P('Sentidos'),'Visão no Escuro 18 m, Percepção Passiva 10')}${tx('Idiomas','Idiomas',P('Idiomas'))}${tx('ND','ND',P('ND')||'Nenhum (XP 0; BP é igual ao seu Bônus de Proficiência)')}</div>
+    <div class="grid" style="margin-top:10px">${ta('Traços','Traços')}${ta('Ações','Ações')}${ta('Ações Bônus','Ações Bônus')}${ta('Reações','Reações')}</div>
+    <div class="dbtn"><button type="button" class="btn warn sm" data-rmficha>Remover esta ficha</button></div></fieldset>`;
+}
+function buildForm(s, asCopy){
+  formBuilt = true;
+  editId = s && !asCopy ? s.id : null;
+  $('#newTitle').textContent = editId ? 'Editar magia personalizada' : (asCopy ? 'Nova magia a partir de “'+s.nome+'”' : 'Criar magia personalizada');
+  s = s || { nome:'', nomeEn:'', circulo:1, escola:'Evocação', classes:[], tempo:'Ação', alcance:'9 metros', componentes:'V, S', duracao:'Instantânea', desc:[], superior:'', truque:'', fichas:[] };
+  const comp = s.componentes || ''; const head = comp.split('(')[0];
+  const mat = (comp.match(/M\s*\((.*)\)\s*$/)||[])[1] || '';
+  const conc = /^concentra/i.test(s.duracao||''); const dur = conc ? (s.duracao||'').replace(/^Concentração,?\s*(até\s*)?/i,'') : (s.duracao||'');
+  $('#form').innerHTML = `
+  <h3>Identificação</h3>
+  <div class="grid">
+    <label class="fld"><span>Nome em português</span><input id="f-nome" maxlength="80" value="${esc(asCopy?s.nome+' (cópia)':s.nome)}"></label>
+    <label class="fld"><span>Nome em inglês (opcional)</span><input id="f-en" maxlength="80" value="${esc(s.nomeEn)}"></label>
+    <label class="fld"><span>Círculo</span><select id="f-circ">${[0,1,2,3,4,5,6,7,8,9].map(n=>`<option value="${n}" ${n===s.circulo?'selected':''}>${circLabel(n)}</option>`).join('')}</select></label>
+    <label class="fld"><span>Escola</span><select id="f-esc">${ESCOLAS.map(e=>`<option ${e===s.escola?'selected':''}>${e}</option>`).join('')}</select></label>
+  </div>
+  <div class="fld" style="margin-top:12px"><span>Classes</span><div class="checks" id="f-cls">${CLASSES.map(c=>`<label><input type="checkbox" value="${c}" ${s.classes.includes(c)?'checked':''}> ${c}</label>`).join('')}</div></div>
+  <h3>Conjuração</h3>
+  <div class="grid">
+    <label class="fld"><span>Tempo de conjuração</span><input id="f-tempo" list="dl-t" value="${esc((s.tempo||'').replace(/\s*ou Ritual/i,''))}"></label>
+    <label class="fld"><span>Alcance</span><input id="f-alc" list="dl-a" value="${esc(s.alcance)}"></label>
+    <label class="fld"><span>Duração</span><input id="f-dur" value="${esc(dur)}" placeholder="1 minuto, Instantânea…"></label>
+  </div>
+  <datalist id="dl-t">${OPT_T.map(o=>`<option>${o}</option>`).join('')}</datalist><datalist id="dl-a">${OPT_A.map(o=>`<option>${o}</option>`).join('')}</datalist>
+  <div class="checks" style="margin-top:10px">
+    <label><input type="checkbox" id="f-rit" ${s.ritual?'checked':''}> Pode ser conjurada como ritual</label>
+    <label><input type="checkbox" id="f-con" ${conc?'checked':''}> Exige concentração</label>
+  </div>
+  <div class="fld" style="margin-top:12px"><span>Componentes</span><div class="checks">
+    <label><input type="checkbox" id="f-v" ${/\bV\b/.test(head)?'checked':''}> Verbal</label>
+    <label><input type="checkbox" id="f-s" ${/\bS\b/.test(head)?'checked':''}> Somático</label>
+    <label><input type="checkbox" id="f-m" ${/\bM\b/.test(head)?'checked':''}> Material</label></div></div>
+  <label class="fld" style="margin-top:8px"><span>Material (se houver)</span><input id="f-mat" value="${esc(mat)}" placeholder="um pouco de enxofre; joia de 100 PO, que a magia consome"></label>
+  <h3>Texto da magia</h3>
+  <label class="fld"><span>Descrição</span><textarea id="f-desc" style="min-height:190px">${esc(blocksToText(s.desc))}</textarea><small>Uma linha em branco separa parágrafos. Comece a linha com “- ” para fazer lista. Use **negrito** e *itálico*. Tabelas: | col A | col B |</small></label>
+  <div class="grid" style="margin-top:12px">
+    <label class="fld"><span>Usando um espaço de magia de círculo superior (opcional)</span><textarea id="f-sup" style="min-height:70px">${esc(s.superior)}</textarea></label>
+    <label class="fld"><span>Aprimoramento de truque (opcional)</span><textarea id="f-tru" style="min-height:70px">${esc(s.truque)}</textarea></label>
+  </div>
+  <h3>Criatura invocada</h3>
+  <p class="lead" style="margin-bottom:6px">Se a magia invoca uma criatura, adicione a ficha. Em Traços, Ações, Ações Bônus e Reações, escreva uma entrada por linha no formato “Nome. Texto”.</p>
+  <div id="fichas">${s.fichas.map(fichaForm).join('')}</div>
+  <div class="datarow"><button type="button" class="btn ghost sm" id="addFicha" style="color:var(--lapis);border-color:var(--lapis)">Adicionar ficha de invocação</button></div>
+  <div id="formMsg" role="alert"></div>
+  <div class="datarow" style="margin-top:16px"><button type="button" class="btn" id="saveSpell">Salvar magia</button><button type="button" class="btn ghost sm" id="cancelSpell" style="color:var(--tinta)">Cancelar</button></div>`;
+}
+function collectFicha(fs){
+  const g = k => (fs.querySelector(`[data-k="${k}"]`)?.value||'').trim();
+  const f = { nome:g('nome'), tipo:g('tipo'), ca:g('ca'), pv:g('pv'), deslocamento:g('deslocamento'), atr:null, props:[], secoes:[] };
+  const sg = n => (n>=0?'+':'')+n;
+  const atr = {}; let any = false;
+  for (const a of ATTRS){
+    const sc = parseInt(g('sc-'+a),10); if (isNaN(sc)) continue; any = true;
+    const mod = Math.floor((sc-10)/2); let save = g('sg-'+a).replace('−','-'); if (save && /^\d/.test(save)) save = '+'+save;
+    atr[a] = [String(sc), sg(mod), save || sg(mod)];
+  }
+  if (any){ for (const a of ATTRS) if (!atr[a]) atr[a] = ['10','+0','+0']; f.atr = atr; }
+  for (const k of ['Resistências','Imunidades','Vulnerabilidades','Sentidos','Idiomas','ND']) if (g(k)) f.props.push([k, g(k)]);
+  for (const t of ['Traços','Ações','Ações Bônus','Reações']){
+    const itens = g(t) ? fs.querySelector(`[data-k="${t}"]`).value.split('\n').map(l=>l.trim()).filter(Boolean).map(l=>splitEntry(l)||{nome:'',texto:l}) : [];
+    if (itens.length) f.secoes.push({ titulo:t, itens });
+  }
+  return f;
+}
+function saveSpell(){
+  const msg = t => { $('#formMsg').innerHTML = `<div class="msg err">${esc(t)}</div>`; };
+  const nome = $('#f-nome').value.trim();
+  if (!nome) return msg('Informe o nome da magia.');
+  const tempoBase = $('#f-tempo').value.trim(); if (!tempoBase) return msg('Informe o tempo de conjuração.');
+  const ritual = $('#f-rit').checked, conc = $('#f-con').checked;
+  const comps = [$('#f-v').checked&&'V', $('#f-s').checked&&'S'].filter(Boolean);
+  const mat = $('#f-mat').value.trim();
+  if ($('#f-m').checked) comps.push(mat ? `M (${mat})` : 'M');
+  const dur0 = $('#f-dur').value.trim() || 'Instantânea';
+  const d = parseDesc($('#f-desc').value.split('\n'));
+  const fichas = $$('#fichas .ff').map(collectFicha).filter(f=>f.nome);
+  const id = editId || uid('c-');
+  const s = {
+    id, nome, nomeEn: $('#f-en').value.trim(), circulo: +$('#f-circ').value, escola: $('#f-esc').value,
+    classes: $$('#f-cls input:checked').map(i=>i.value),
+    tempo: ritual && !/ritual/i.test(tempoBase) ? tempoBase+' ou Ritual' : tempoBase,
+    alcance: $('#f-alc').value.trim() || 'Pessoal', componentes: comps.join(', ') || '—',
+    duracao: conc ? 'Concentração, até '+dur0.replace(/^até\s*/i,'') : dur0,
+    ritual, concentracao: conc, desc: d.blocks, superior: $('#f-sup').value.trim() || d.sup, truque: $('#f-tru').value.trim() || d.tru,
+    fichas, custom:true, fonte:'personalizada'
+  };
+  const i = S.custom.findIndex(x=>x.id===id); if (i>=0) S.custom[i] = s; else S.custom.push(s);
+  persist(); rebuild(); fillClasses(); cur.lib = id; formBuilt = false; editId = null;
+  toast('Magia salva na biblioteca'); go('lib');
+}
+$('#form').addEventListener('click', e=>{
+  if (e.target.id==='saveSpell') saveSpell();
+  else if (e.target.id==='cancelSpell'){ formBuilt = false; go('lib'); }
+  else if (e.target.id==='addFicha') $('#fichas').insertAdjacentHTML('beforeend', fichaForm());
+  else if (e.target.closest('[data-rmficha]')) e.target.closest('.ff').remove();
+});
+
+/* ---------- importar e backup ---------- */
+function say(id, cls, t){ $(id).innerHTML = `<div class="msg ${cls}">${esc(t)}</div>`; }
+function mergeSpells(list, fonte){
+  let novas = 0, atual = 0;
+  for (const s of list){
+    if (!s || !s.nome || typeof s.circulo!=='number') continue;
+    const sp = Object.assign({ nomeEn:'', escola:'', classes:[], tempo:'', alcance:'', componentes:'', duracao:'', ritual:false, concentracao:false, desc:[], superior:'', truque:'', fichas:[] }, s);
+    sp.id = sp.id || slug(sp.nome); sp.fonte = sp.fonte || fonte; delete sp.custom;
+    if (sp.id.startsWith('c-')) sp.id = slug(sp.nome);
+    const i = S.imported.findIndex(x=>x.id===sp.id);
+    if (i>=0){ S.imported[i] = sp; atual++; } else { if (BY[sp.id]) atual++; else novas++; S.imported.push(sp); }
+  }
+  return { novas, atual };
+}
+function doImport(text){
+  text = text.trim(); if (!text) return say('#impMsg','err','Cole o texto do site ou escolha um arquivo antes de importar.');
+  try {
+    if (/^[\[{]/.test(text)){
+      const j = JSON.parse(text);
+      if (j && (j.chars || j.custom)){
+        (j.chars||[]).forEach(c=>{ if (!S.chars.some(x=>x.id===c.id)) S.chars.push(c); });
+        (j.custom||[]).forEach(c=>{ const i=S.custom.findIndex(x=>x.id===c.id); if(i>=0) S.custom[i]=c; else S.custom.push(c); });
+        const r = mergeSpells(j.imported||[], 'importada');
+        if (!S.active && S.chars.length) S.active = S.chars[0].id;
+        persist(); rebuild(); fillClasses(); refresh();
+        return say('#impMsg','ok',`Backup restaurado: ${(j.chars||[]).length} personagens, ${(j.custom||[]).length} magias personalizadas, ${r.novas+r.atual} magias importadas.`);
+      }
+      const arr = Array.isArray(j) ? j : (j.spells || j.magias || []);
+      const r = mergeSpells(arr, 'importada');
+      persist(); rebuild(); fillClasses(); refresh();
+      return say('#impMsg', r.novas+r.atual ? 'ok':'err', r.novas+r.atual ? `${r.novas} magias novas e ${r.atual} atualizadas. Total na biblioteca: ${LIB.length}.` : 'O JSON não tem magias no formato do grimório (nome e circulo são obrigatórios).');
+    }
+    const list = parseSiteText(text);
+    if (!list.length) return say('#impMsg','err','Não encontrei magias nesse texto. Confira se você copiou a página inteira (Ctrl+A) depois de rolar até o final.');
+    const r = mergeSpells(list, 'site');
+    persist(); rebuild(); fillClasses(); refresh();
+    const fic = list.filter(s=>s.fichas.length).length;
+    say('#impMsg','ok',`Encontrei ${list.length} magias (${fic} com ficha de invocação): ${r.novas} novas, ${r.atual} já existentes e atualizadas. Total na biblioteca: ${LIB.length}.`);
+  } catch(e){ say('#impMsg','err','Não consegui ler o conteúdo: '+e.message); }
+}
+$('#impGo').addEventListener('click', ()=>doImport($('#impText').value));
+$('#impFile').addEventListener('change', e=>{
+  const f = e.target.files[0]; if (!f) return;
+  const r = new FileReader(); r.onload = ()=>{ $('#impText').value = String(r.result).slice(0,3e6); doImport(String(r.result)); }; r.readAsText(f); e.target.value='';
+});
+function download(name, data){
+  const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([JSON.stringify(data,null,1)],{type:'application/json'}));
+  a.download = name; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(a.href),2000);
+}
+$('#bkDown').addEventListener('click', ()=>{ download('grimorio-backup.json',{ versao:1, chars:S.chars, custom:S.custom, imported:S.imported }); say('#bkMsg','ok','Backup gerado.'); });
+$('#libDown').addEventListener('click', ()=>{ download('grimorio-biblioteca.json', LIB); say('#bkMsg','ok',`Biblioteca exportada: ${LIB.length} magias.`); });
+$('#impClear').addEventListener('click', ()=>{
+  if (!S.imported.length) return say('#bkMsg','err','Não há magias importadas para remover.');
+  if (!confirm('Remover todas as magias importadas do site? A amostra embutida e as suas magias personalizadas continuam.')) return;
+  S.imported = []; persist(); rebuild(); refresh(); say('#bkMsg','ok','Magias importadas removidas.');
+});
+function updateDataInfo(){ $('#impMsg').innerHTML=''; $('#bkMsg').innerHTML=''; }
+
+/* ---------- atualização geral ---------- */
+function refresh(){
+  renderChars(); fillClasses();
+  if (view==='lib') renderLib(); if (view==='book') renderBook(); if (view==='print') renderSheet();
+}
+
+/* ---------- início ---------- */
+if (!store.persistent()){
+  const b = $('#banner'); b.hidden = false;
+  b.textContent = 'Este navegador está bloqueando o armazenamento local: o que você criar vale só até fechar a página. Abra o arquivo direto no navegador ou use “Baixar backup”.';
+}
+if (S.active && !S.chars.some(c=>c.id===S.active)) S.active = S.chars[0]?.id || null;
+if (!S.active && S.chars.length) S.active = S.chars[0].id;
+renderChars(); fillClasses();
+go((location.hash||'#lib').slice(1));
+})();
+</script>
+</body>
+</html>
