@@ -4,264 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Grimório · D&amp;D 5e 2024</title>
-<meta name="theme-color" content="#16261d">
+<meta name="theme-color" content="#2f5744">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E📖%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Cinzel:wght@600;700&display=swap" rel="stylesheet">
-<style>
-:root{
-  --tinta:#16261d; --papel:#eef2e8; --folha:#fcfdf8; --linha:#c7d3c0; --linha-2:#dde6d6;
-  --lapis:#2f6b4a; --lapis-2:#1e4a33; --ouro:#a07c2c; --sangue:#8a2c3a; --mute:#5a6b5c;
-  --serif:'Newsreader',Georgia,'Times New Roman',serif;
-  --sans:'Instrument Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
-}
-*{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--papel);color:var(--tinta);font:15px/1.45 var(--sans)}
-h1,h2,h3,h4,h5{font-family:var(--serif);font-weight:600;margin:0}
-button,input,select,textarea{font:inherit;color:inherit}
-button{cursor:pointer}
-:focus-visible{outline:2px solid var(--lapis);outline-offset:2px}
-.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-[hidden]{display:none!important}
-
-/* barra superior */
-.top{background:var(--tinta);color:#e9f1e4;display:flex;flex-wrap:wrap;align-items:center;gap:10px 22px;padding:12px 22px}
-.brand{display:flex;align-items:baseline;gap:10px}
-.brand b{font:600 26px/1 var(--serif);letter-spacing:.01em}
-.brand span{font-size:13px;color:#a9c2ad}
-.charpick{display:flex;gap:8px;align-items:center}
-.charpick select{background:#244433;border:1px solid #3f6a50;color:#fff;border-radius:4px;padding:7px 10px;min-width:180px}
-nav.tabs{display:flex;gap:2px;margin-left:auto;flex-wrap:wrap}
-nav.tabs button{background:none;border:0;color:#bcd3c0;padding:8px 12px;border-bottom:2px solid transparent;font-weight:500}
-nav.tabs button[aria-selected=true]{color:#fff;border-bottom-color:#e0b95c}
-nav.tabs button:hover{color:#fff}
-
-.btn{border:1px solid var(--lapis);background:var(--lapis);color:#fff;border-radius:4px;padding:7px 14px;font-weight:500}
-.btn:hover{background:var(--lapis-2)}
-.btn.ghost{background:transparent;color:inherit;border-color:currentColor;opacity:.92}
-.top .btn.ghost{color:#d3e5d6;border-color:#4f7e62}
-.btn.ghost:hover{background:rgba(120,140,180,.16)}
-.btn.warn{background:transparent;color:var(--sangue);border-color:var(--sangue)}
-.btn.warn:hover{background:#f6e6e9}
-.btn.sm{padding:4px 10px;font-size:13px}
-
-.banner{background:#f6efd0;border-bottom:1px solid #dccd8c;padding:8px 22px;font-size:14px}
-main{max-width:1240px;margin:0 auto;padding:20px 22px 60px}
-.view-title{font-size:26px;margin:0 0 4px}
-.lead{color:var(--mute);margin:0 0 16px;max-width:70ch}
-
-/* biblioteca */
-.filters{display:flex;flex-wrap:wrap;gap:8px 10px;align-items:end;margin-bottom:14px}
-.filters label{display:flex;flex-direction:column;gap:3px;font-size:13px;color:var(--mute)}
-.filters input[type=search],.filters select{border:1px solid var(--linha);background:var(--folha);border-radius:4px;padding:7px 9px;min-width:130px;color:var(--tinta)}
-.filters input[type=search]{min-width:220px}
-.chk{flex-direction:row!important;align-items:center;gap:6px!important;padding-bottom:8px;color:var(--tinta)!important}
-.count{margin-left:auto;color:var(--mute);font-size:13px;padding-bottom:8px}
-.split{display:grid;grid-template-columns:minmax(300px,430px) 1fr;gap:22px;align-items:start}
-.list{list-style:none;margin:0;padding:0;background:var(--folha);border:1px solid var(--linha);border-radius:6px;max-height:calc(100vh - 250px);min-height:260px;overflow:auto}
-.grp{display:flex;align-items:baseline;gap:12px;padding:10px 14px 6px;background:var(--folha);position:sticky;top:0;border-bottom:1px solid var(--linha-2);z-index:1}
-.grp .num{font:500 34px/1 var(--serif);color:var(--ouro);min-width:26px}
-.grp .lab{font-size:13px;color:var(--mute)}
-.row{display:grid;grid-template-columns:1fr auto;gap:2px 10px;padding:9px 14px;border-bottom:1px solid var(--linha-2);cursor:pointer;align-items:center}
-.row:hover{background:#f3f7ef}
-.row[aria-selected=true]{background:#e1eddc;box-shadow:inset 3px 0 0 var(--lapis)}
-.row .nm{font:500 17px/1.2 var(--serif)}
-.row .nm em{display:block;font:italic 400 13px/1.3 var(--serif);color:var(--mute)}
-.row .mt{grid-column:1;font-size:12.5px;color:var(--mute);display:flex;gap:6px;flex-wrap:wrap;align-items:center}
-.pill{border:1px solid var(--linha);border-radius:10px;padding:0 7px;font-size:11.5px;color:var(--mute)}
-.pill.c{border-color:#c69aa2;color:var(--sangue)}
-.pill.p{border-color:#b9a26b;color:var(--ouro)}
-.pill.t{border-color:#8fb59c;color:var(--lapis)}
-#bookbar[hidden]{display:none}
-#bookbar button:disabled{opacity:.45;cursor:default}
-.tagbox{margin:16px 0 4px;padding:12px 14px;border:1px solid var(--linha);border-radius:6px;background:var(--folha)}
-.tagbox h4{margin:0 0 8px;font:600 14px var(--sans)}
-.tagrow{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:6px 0}
-.tagchip{display:inline-flex;align-items:center;gap:4px;border:1px solid #8fb59c;border-radius:12px;padding:1px 9px;font-size:13px;color:var(--lapis);background:#fff}
-.tagchip button{border:0;background:none;color:var(--lapis);font-size:15px;line-height:1;padding:0 0 0 2px;cursor:pointer}
-button.tagchip.pick{cursor:pointer;color:var(--mute);border-style:dashed}
-.tagbox .hint{font-size:12.5px;color:var(--mute)}
-.tagadd{display:flex;gap:8px;margin-top:8px}
-.tagadd input{flex:1;min-width:0;border:1px solid var(--linha);border-radius:4px;padding:6px 9px;background:#fff}
-.sheet .ps .tg{font-size:8.5pt;color:#333;margin:0 0 2pt}
-.row .act{grid-row:1 / span 2;grid-column:2}
-.iconbtn{width:32px;height:32px;border-radius:50%;border:1px solid var(--lapis);background:#fff;color:var(--lapis);font-size:18px;line-height:1;display:grid;place-items:center}
-.iconbtn:hover{background:#e1eddc}
-.iconbtn.on{background:var(--lapis);color:#fff}
-.empty{padding:26px 18px;color:var(--mute)}
-
-/* detalhe da magia */
-.detail{position:sticky;top:12px;background:var(--folha);border:1px solid var(--linha);border-radius:6px;padding:22px 26px 26px;max-height:calc(100vh - 40px);overflow:auto}
-.detail .close{display:none}
-.detail .placeholder{color:var(--mute);font-family:var(--serif);font-size:18px}
-.spell h3{font-size:30px;line-height:1.1}
-.spell .en{margin:2px 0 0;font:italic 400 16px var(--serif);color:var(--mute)}
-.spell .lvl{margin:8px 0 12px;font:500 16px var(--serif);color:var(--lapis-2)}
-.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px 22px;margin:0 0 14px;padding:10px 0;border-top:1px solid var(--linha);border-bottom:1px solid var(--linha)}
-.facts div{min-width:0}
-.facts dt{font-size:12.5px;color:var(--mute)}
-.facts dd{margin:0;font:400 16px/1.3 var(--serif)}
-.txt{font:400 17px/1.58 var(--serif);max-width:72ch}
-.txt p{margin:0 0 .7em}
-.txt ul{margin:0 0 .8em;padding-left:1.3em}
-.txt li{margin-bottom:.3em}
-.tb{border-collapse:collapse;margin:.3em 0 1em;font:400 15px/1.35 var(--serif);max-width:100%}
-.tb th,.tb td{border:1px solid var(--linha);padding:4px 10px;text-align:left;vertical-align:top}
-.tb th{background:#e8f0e2}
-.sup{margin:.4em 0 .8em}
-.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px;padding-top:14px;border-top:1px solid var(--linha-2)}
-
-/* ficha de invocação */
-.ficha{margin:18px 0 6px;border:1px solid var(--tinta);border-left-width:5px;padding:12px 16px 12px;max-width:640px;background:#fbfcf7;break-inside:avoid}
-.ficha h4{font-size:22px;line-height:1.1}
-.ficha .tipo{margin:1px 0 8px;font:italic 400 15px var(--serif);color:var(--mute)}
-.ficha .vit{margin:0;padding:6px 0;border-top:1px solid var(--linha);font:400 15.5px/1.4 var(--serif)}
-.ficha .vit span{margin-right:16px;white-space:nowrap}
-.ficha table.abil{width:100%;border-collapse:collapse;margin:6px 0;font:400 14.5px/1.3 var(--serif);text-align:center}
-.ficha table.abil th{font-weight:600;text-align:left;padding:2px 4px}
-.ficha table.abil thead th{font:500 12px var(--sans);color:var(--mute);text-align:center}
-.ficha table.abil td{padding:2px 4px}
-.ficha table.abil td+th{border-left:1px solid var(--linha);padding-left:10px}
-.ficha table.abil tbody tr:nth-child(odd){background:#e8f0e2}
-.ficha p.pr{margin:2px 0;font:400 15.5px/1.4 var(--serif)}
-.ficha h5{margin:10px 0 3px;font:600 17px var(--serif);border-bottom:1px solid var(--linha);color:var(--lapis-2)}
-.ficha p.en2{margin:3px 0;font:400 15.5px/1.45 var(--serif)}
-
-/* formulário */
-.form{background:var(--folha);border:1px solid var(--linha);border-radius:6px;padding:20px 24px;max-width:920px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px 16px}
-.fld{display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--mute)}
-.fld input,.fld select,.fld textarea{border:1px solid var(--linha);border-radius:4px;padding:7px 9px;background:#fff;color:var(--tinta);font-size:15px}
-.fld textarea{min-height:130px;resize:vertical;font-family:var(--serif);font-size:16px;line-height:1.5}
-.fld small{color:var(--mute)}
-.form h3{font-size:19px;margin:22px 0 8px;padding-top:14px;border-top:1px solid var(--linha-2)}
-.form h3:first-of-type{margin-top:6px;border:0;padding-top:0}
-.checks{display:flex;flex-wrap:wrap;gap:6px 14px}
-.checks label{display:flex;gap:6px;align-items:center;font-size:15px;color:var(--tinta)}
-.ff{border:1px solid var(--linha);border-left:4px solid var(--lapis);border-radius:4px;padding:14px 16px;margin:12px 0;background:#f9fbf5}
-.ff legend{font:600 16px var(--serif);padding:0 6px}
-.abg{display:grid;grid-template-columns:repeat(6,minmax(70px,1fr));gap:8px;margin:10px 0}
-.abg .fld input{width:100%;padding:5px 7px}
-.msg{margin:12px 0 0;padding:9px 12px;border-radius:4px;font-size:14px}
-.msg.ok{background:#e4f1e8;color:#1e5a34}
-.msg.err{background:#f8e5e8;color:var(--sangue)}
-
-/* grimório do personagem */
-.bookhead{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 18px;margin-bottom:12px}
-.bookhead .meta{color:var(--mute)}
-.row .prep{display:flex;align-items:center;gap:4px;font-size:12.5px;color:var(--mute)}
-
-/* impressão */
-.opts{display:flex;flex-wrap:wrap;gap:10px 22px;align-items:center;background:var(--folha);border:1px solid var(--linha);border-radius:6px;padding:12px 16px;margin-bottom:16px}
-.opts label{display:flex;gap:6px;align-items:center}
-.opts select{border:1px solid var(--linha);border-radius:4px;padding:5px 8px;background:#fff}
-.paper{background:#fff;border:1px solid var(--linha);box-shadow:0 1px 0 var(--linha);padding:18mm 16mm;max-width:210mm;margin:0 auto;min-height:120mm}
-.sheet{font:400 10pt/1.38 var(--serif);color:#000}
-.sheet .sh{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1.2pt solid #000;padding-bottom:4pt;margin-bottom:8pt}
-.sheet .sh h2{font-size:18pt}
-.sheet .sh span{font-size:10pt}
-.sheet.cols2 .body{column-count:2;column-gap:9mm}
-.sheet .gh{font:600 11pt var(--serif);margin:10pt 0 3pt;border-bottom:.6pt solid #000;break-after:avoid}
-.sheet .ps{padding:4pt 0;border-bottom:.4pt solid #b5b5b5;break-inside:avoid}
-.sheet .ps.long{break-inside:auto}
-.sheet .ps h3{font-size:11.5pt;display:inline}
-.sheet .ps .en{font:italic 400 9pt var(--serif);color:#333;margin-left:6pt}
-.sheet .ps .mt{font-size:9pt;color:#222;margin:1pt 0 2pt}
-.sheet .ps .txt{font-size:9.6pt;line-height:1.36;max-width:none}
-.sheet .ps .txt p{margin:0 0 3pt}
-.sheet .ps .txt ul{margin:0 0 3pt}
-.sheet .ps .tb{font-size:9pt}
-.sheet .ps .tb th,.sheet .ps .tb td{border-color:#777;padding:1pt 5pt}
-.sheet .ps .tb th{background:none}
-.sheet .ps .sup{font-size:9.6pt;margin:1pt 0 3pt}
-.sheet .ficha{border:.8pt solid #000;border-left-width:3pt;background:none;padding:5pt 8pt;margin:4pt 0 2pt;max-width:none}
-.sheet .ficha h4{font-size:11pt}
-.sheet .ficha .tipo{font-size:9pt;color:#222;margin-bottom:3pt}
-.sheet .ficha .vit,.sheet .ficha p.pr,.sheet .ficha p.en2{font-size:9.2pt;line-height:1.3}
-.sheet .ficha table.abil{font-size:9pt}
-.sheet .ficha table.abil tbody tr:nth-child(odd){background:none}
-.sheet .ficha table.abil th{color:#000}
-.sheet .ficha h5{font-size:10pt;color:#000;border-color:#777;margin-top:5pt}
-.sheet .cp{display:grid;grid-template-columns:1fr auto;gap:0 10pt;align-items:baseline}
-
-/* diálogo */
-dialog{border:1px solid var(--linha);border-radius:8px;padding:0;max-width:440px;width:92vw}
-dialog::backdrop{background:rgba(23,33,47,.5)}
-dialog form{padding:20px 22px;display:grid;gap:12px}
-dialog h3{font-size:22px}
-.dbtn{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap;margin-top:6px}
-.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:var(--tinta);color:#fff;padding:9px 16px;border-radius:4px;font-size:14px;z-index:50;max-width:90vw}
-.help{background:#f1f6ec;border:1px solid var(--linha-2);border-radius:6px;padding:12px 16px;margin:10px 0;font-size:14.5px;max-width:78ch}
-.help ol{margin:6px 0 0;padding-left:1.3em}
-textarea.big{width:100%;min-height:150px;border:1px solid var(--linha);border-radius:4px;padding:9px;font:13px/1.4 ui-monospace,Menlo,Consolas,monospace}
-.datarow{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
-.card{background:var(--folha);border:1px solid var(--linha);border-radius:6px;padding:16px 20px;margin-bottom:16px;max-width:900px}
-.card h3{font-size:20px;margin-bottom:6px}
-
-@media (max-width:860px){
-  .split{grid-template-columns:1fr}
-  .list{max-height:none}
-  .detail{position:fixed;inset:0;z-index:40;border-radius:0;max-height:none;padding:16px 16px 30px;display:none}
-  .detail.open{display:block}
-  .detail .close{display:inline-block;margin-bottom:10px}
-  nav.tabs{margin-left:0;width:100%}
-  .top{padding:10px 14px}
-  main{padding:14px 14px 50px}
-  .abg{grid-template-columns:repeat(3,1fr)}
-  .paper{padding:8mm 6mm}
-}
-@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
-
-/* impressão: só a folha */
-@page{size:A4;margin:13mm}
-@media print{
-  body{background:#fff}
-  .top,.banner,.opts,.toast,main>section:not(#v-print),#v-print .noprint{display:none!important}
-  main{max-width:none;padding:0}
-  .paper{border:0;box-shadow:none;padding:0;max-width:none;margin:0;min-height:0}
-  .sheet .ps{border-bottom-color:#999}
-  a{color:inherit;text-decoration:none}
-}
-
-/* ===== tema floresta ===== */
-:root{--cz:'Cinzel',Georgia,'Times New Roman',serif;--v:#2f6b4a;--v2:#1e4a33;--au:#b8963e}
-body{background:var(--papel) linear-gradient(#e2ebd8,transparent 280px) no-repeat}
-.top{background:linear-gradient(135deg,#1d4030,#12261b);border-bottom:3px double var(--au);box-shadow:0 2px 10px rgba(18,38,27,.35)}
-.brand b{font-family:var(--cz);font-weight:700;font-size:24px;letter-spacing:.07em;color:#f3e8c0}
-.brand b::before{content:"❦";color:var(--au);margin-right:8px;font-size:20px}
-.brand span{color:#b5ceb8}
-.view-title,.spell h3,dialog h3{font-family:var(--cz);color:var(--v2);letter-spacing:.02em}
-.view-title{font-size:23px}
-.spell h3{font-size:26px}
-.list,.detail,.form,.card,.opts,.tagbox,.help,dialog{border-radius:10px}
-.list,.detail,.card,.form,.opts{box-shadow:0 1px 2px rgba(18,38,27,.07),0 10px 24px -14px rgba(18,38,27,.35)}
-.detail{border-top:3px solid var(--au)}
-.btn{border-radius:6px}
-.grp{background:linear-gradient(#f1f6ea,#fcfdf8)}
-.facts{border-color:#d8d2aa}
-.ficha{border-color:var(--v2);border-radius:0 6px 6px 0}
-#userbox{display:flex;gap:8px;align-items:center}
-.usermail{font-size:13px;color:#b5ceb8;max-width:190px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-
-/* ===== folha impressa: simples, leve, só texto e filetes ===== */
-.sheet{--g:#245a3d;--g2:#58675a}
-.sheet.mono{--g:#000;--g2:#333}
-.sheet .sh{border-bottom:2.2pt double var(--g);padding-bottom:5pt;margin-bottom:6pt}
-.sheet .sh h2{font:700 19pt var(--cz);letter-spacing:.03em;color:var(--g)}
-.sheet .sh span{color:var(--g2);font-style:italic}
-.sheet .gh{font:700 10pt var(--cz);letter-spacing:.09em;text-transform:uppercase;color:var(--g);border-bottom:.8pt solid var(--g);margin:12pt 0 4pt;padding-bottom:1pt}
-.sheet .gh::before{content:"◆";font-size:7pt;margin-right:6pt;vertical-align:1pt}
-.sheet .ps{border-bottom:.4pt dotted #8a9a8a}
-.sheet .ps h3{color:var(--g)}
-.sheet .ps .mt,.sheet .ps .en,.sheet .ps .tg{color:var(--g2)}
-.sheet .ficha{border:.7pt solid var(--g);border-left:3pt solid var(--g)}
-.sheet .ficha h4,.sheet .ficha h5{color:var(--g)}
-.sheet .ficha h5{border-color:var(--g)}
-.sheet .ficha .tipo{color:var(--g2)}
-.sheet .ps .tb th,.sheet .ps .tb td{border-color:#9aa89a}
-</style>
+<link href="https://fonts.googleapis.com/css2?family=Inclusive+Sans:ital,wght@0,300..700;1,300..700&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
 <header class="top">
@@ -312,7 +60,7 @@ body{background:var(--papel) linear-gradient(#e2ebd8,transparent 280px) no-repea
     <div class="opts" id="bookbar">
       <label>Organizar por <select id="bord"><option value="circ">Círculo</option><option value="tag">Tag</option><option value="az">A–Z</option></select></label>
       <label>Só a tag <select id="btag"></select></label>
-      <button class="btn ghost sm" type="button" id="btagRen" style="color:var(--lapis);border-color:var(--lapis)">Renomear tag</button>
+      <button class="btn ghost sm outline-accent" type="button" id="btagRen">Renomear tag</button>
       <button class="btn warn sm" type="button" id="btagDel">Excluir tag</button>
     </div>
     <div class="split">
@@ -332,7 +80,6 @@ body{background:var(--papel) linear-gradient(#e2ebd8,transparent 280px) no-repea
   <section id="v-print" hidden>
     <div class="noprint">
       <h1 class="view-title">Imprimir grimório</h1>
-      <p class="lead">Folha limpa, só texto e filetes (leve para imprimir e para salvar em PDF). Marque “Preto e branco” para economizar tinta.</p>
     </div>
     <div class="opts">
       <label>Formato <select id="pmode"><option value="compacto">Compacto (uma linha por magia)</option><option value="completo" selected>Completo (com descrição)</option></select></label>
@@ -342,7 +89,7 @@ body{background:var(--papel) linear-gradient(#e2ebd8,transparent 280px) no-repea
       <label>Organizar por <select id="pord" title="Com “Tag”, uma magia com várias tags aparece em cada uma"><option value="circ">Círculo</option><option value="tag">Tag</option><option value="az">A–Z</option></select></label>
       <label>Só a tag <select id="ptag"></select></label>
       <label><input type="checkbox" id="ptags"> Mostrar tags</label>
-      <label><input type="checkbox" id="pmono"> Preto e branco</label>
+      <label class="colorpick">Cor dos títulos <input type="color" id="pcolor" value="#245a3d" aria-label="Cor dos títulos e subtítulos"></label>
       <button class="btn" type="button" id="doPrint">Imprimir</button>
     </div>
     <div class="paper"><div class="sheet" id="sheet"></div></div>
@@ -353,7 +100,7 @@ body{background:var(--papel) linear-gradient(#e2ebd8,transparent 280px) no-repea
     <h1 class="view-title">Importar e backup</h1>
     <div class="card" id="impCard">
       <h3>Trazer as magias do site</h3>
-      <p class="lead" style="margin-bottom:8px">A biblioteca padrão já carrega automaticamente do arquivo <b>magias.json</b> que fica junto do <b>index.html</b>. Para atualizar a sua biblioteca com uma versão mais recente, copie o texto do site e cole abaixo; a atualização fica salva neste navegador:</p>
+      <p class="lead compact">A biblioteca padrão já carrega automaticamente do arquivo <b>magias.json</b> que fica junto do <b>index.html</b>. Para atualizar a sua biblioteca com uma versão mais recente, copie o texto do site e cole abaixo; a atualização fica salva neste navegador:</p>
       <div class="help"><ol>
         <li>Abra <a href="https://simpleskans.com.br/dnd/2024/magias" target="_blank" rel="noopener">simpleskans.com.br/dnd/2024/magias</a> no Chrome.</li>
         <li>Role até o final da página para carregar todas as magias.</li>
@@ -363,16 +110,16 @@ body{background:var(--papel) linear-gradient(#e2ebd8,transparent 280px) no-repea
         <textarea class="big" id="impText" placeholder="Cole aqui o texto copiado da página…"></textarea></label>
       <div class="datarow">
         <button class="btn" type="button" id="impGo">Importar magias</button>
-        <label class="btn ghost sm" style="display:inline-grid;place-items:center;color:var(--lapis);border-color:var(--lapis)">Escolher arquivo<input type="file" id="impFile" accept=".txt,.json,.md,text/plain,application/json" class="sr"></label>
+        <label class="btn ghost sm file-trigger outline-accent">Escolher arquivo<input type="file" id="impFile" accept=".txt,.json,.md,text/plain,application/json" class="sr"></label>
       </div>
       <div id="impMsg" role="status"></div>
     </div>
     <div class="card">
       <h3>Backup</h3>
-      <p class="lead" style="margin-bottom:8px">Personagens, grimórios, magias personalizadas e magias importadas. O backup também restaura tudo em outro navegador.</p>
+      <p class="lead compact">Personagens, grimórios, magias personalizadas e magias importadas. O backup também restaura tudo em outro navegador.</p>
       <div class="datarow">
         <button class="btn" type="button" id="bkDown">Baixar backup (JSON)</button>
-        <button class="btn ghost sm" type="button" id="libDown" style="color:var(--lapis);border-color:var(--lapis)">Exportar biblioteca inteira (JSON)</button>
+        <button class="btn ghost sm outline-accent" type="button" id="libDown">Exportar biblioteca inteira (JSON)</button>
         <button class="btn warn sm" type="button" id="impClear">Remover magias importadas</button>
       </div>
       <div id="bkMsg" role="status"></div>
@@ -390,7 +137,7 @@ body{background:var(--papel) linear-gradient(#e2ebd8,transparent 280px) no-repea
     </div>
     <div class="dbtn">
       <button class="btn warn sm" type="button" id="cDel" hidden>Excluir personagem</button>
-      <button class="btn ghost sm" type="button" id="cCancel" style="color:var(--tinta)">Cancelar</button>
+      <button class="btn ghost sm text-ink" type="button" id="cCancel">Cancelar</button>
       <button class="btn" type="submit" id="cSave">Salvar personagem</button>
     </div>
   </form>
@@ -401,7 +148,7 @@ body{background:var(--papel) linear-gradient(#e2ebd8,transparent 280px) no-repea
     <label class="fld"><span>E-mail</span><input id="aMail" type="email" required autocomplete="email"></label>
     <label class="fld"><span>Senha (mínimo 6 caracteres)</span><input id="aPass" type="password" required minlength="6" autocomplete="current-password"></label>
     <div id="aMsg" role="status"></div>
-    <div class="dbtn"><button class="btn ghost sm" type="button" id="aSign" style="color:var(--lapis)">Criar conta</button><button class="btn" type="submit">Entrar</button></div>
+    <div class="dbtn"><button class="btn ghost sm text-accent" type="button" id="aSign">Criar conta</button><button class="btn" type="submit">Entrar</button></div>
   </form>
 </dialog>
 <div class="toast" id="toast" role="status" hidden></div>
@@ -1367,7 +1114,7 @@ function fichaHTML(f){
   h += f.props.filter(p=>p[1]).map(p=>`<p class="pr"><strong>${esc(p[0])}</strong> ${fmt(p[1])}</p>`).join('');
   for (const s of f.secoes){
     if (!s.itens.length) continue;
-    h += `<h5>${esc(s.titulo)}</h5>` + s.itens.map(i=>`<p class="en2">${i.nome?`<strong>${esc(i.nome)}.</strong> `:''}${fmt(i.texto)}</p>`).join('');
+    h += `<h5>${esc(s.titulo)}</h5>` + s.itens.map(i=>{ const nm=i.nome?String(i.nome).replace(/[.\s]+$/,''):''; return `<p class="en2">${nm?`<strong>${esc(nm)}.</strong> `:''}${fmt(i.texto)}</p>`; }).join('');
   }
   return h + '</section>';
 }
@@ -1550,12 +1297,12 @@ function showDetail(id, mode, open){
   const s = BY[id]; const host = $('#detail-'+mode); if (!s) return;
   cur[mode] = id;
   const ch = activeChar(); const has = ch && ch.spells.includes(id);
-  let h = '<button class="btn ghost sm close" type="button" data-close style="color:var(--tinta)">Voltar à lista</button>' + spellHTML(s);
+  let h = '<button class="btn ghost sm close text-ink" type="button" data-close>Voltar à lista</button>' + spellHTML(s);
   if (mode==='book' && has) h += tagBoxHTML(ch,id);
   h += '<div class="actions">';
   h += ch ? `<button class="btn" type="button" data-toggle="${id}">${has?'Remover do grimório':'Adicionar ao grimório'} de ${esc(ch.nome)}</button>` : '<button class="btn" type="button" data-newchar>Criar personagem para adicionar</button>';
-  h += `<button class="btn ghost sm" type="button" data-dup="${id}" style="color:var(--lapis);border-color:var(--lapis)">Duplicar como personalizada</button>`;
-  if (s.custom) h += `<button class="btn ghost sm" type="button" data-edit="${id}" style="color:var(--lapis);border-color:var(--lapis)">Editar</button><button class="btn warn sm" type="button" data-del="${id}">Excluir</button>`;
+  h += `<button class="btn ghost sm outline-accent" type="button" data-dup="${id}">Duplicar como personalizada</button>`;
+  if (s.custom) h += `<button class="btn ghost sm outline-accent" type="button" data-edit="${id}">Editar</button><button class="btn warn sm" type="button" data-del="${id}">Excluir</button>`;
   host.innerHTML = h + '</div>';
   if (open) host.classList.add('open');
   $$('.row', $(mode==='lib'?'#list':'#booklist')).forEach(r=>r.setAttribute('aria-selected', r.dataset.id===id));
@@ -1681,7 +1428,10 @@ function renderSheet(){
   const mode = $('#pmode').value, cols2 = $('#pcols').value==='2', fic = $('#pfic').checked, onlyPrep = $('#pprep').checked;
   const ord = $('#pord').value, showTags = $('#ptags').checked;
   const tag = fillTagSel($('#ptag'), ch, $('#ptag').value);
-  host.className = 'sheet' + (cols2?' cols2':'') + ($('#pmono').checked?' mono':'');
+  host.className = 'sheet' + (cols2?' cols2':'');
+  const printColor = $('#pcolor').value || '#245a3d';
+  host.style.setProperty('--g', printColor);
+  host.style.setProperty('--g2', printColor);
   const groups = bookGroups(ch, ord, tag, onlyPrep);
   const uniq = new Set(groups.flatMap(g=>g.items.map(s=>s.id))).size;
   let h = `<div class="sh"><h2>${esc(ch.nome)}</h2><span>${esc([ch.classe, ch.nivel?'nível '+ch.nivel:''].filter(Boolean).join(', '))}${uniq?` — ${uniq} ${uniq===1?'magia':'magias'}`:''}${tag?` — tag: ${esc(tag)}`:''}</span></div><div class="body">`;
@@ -1705,7 +1455,8 @@ function renderSheet(){
   }
   host.innerHTML = h + '</div>';
 }
-['#pmode','#pcols','#pfic','#pprep','#pord','#ptag','#ptags','#pmono'].forEach(id=>$(id).addEventListener('change', renderSheet));
+['#pmode','#pcols','#pfic','#pprep','#pord','#ptag','#ptags','#pcolor'].forEach(id=>$(id).addEventListener('change', renderSheet));
+$('#pcolor').addEventListener('input', renderSheet);
 $('#doPrint').addEventListener('click', ()=>{ renderSheet(); window.print(); });
 
 /* ---------- criar / editar magia ---------- */
@@ -1719,13 +1470,13 @@ function fichaForm(f){
   const P = k => (f.props.find(p=>p[0]===k)||['',''])[1];
   const at = a => f.atr && f.atr[a] ? f.atr[a] : ['10','',''];
   const tx = (k,l,v,ph='') => `<label class="fld"><span>${l}</span><input data-k="${k}" value="${esc(v)}" placeholder="${esc(ph)}"></label>`;
-  const ta = (k,l) => `<label class="fld"><span>${l}</span><textarea data-k="${k}" style="min-height:70px" placeholder="Nome da ação. Texto…">${esc(fichaToText(f,l))}</textarea></label>`;
+  const ta = (k,l) => `<label class="fld"><span>${l}</span><textarea class="textarea-sm" data-k="${k}" placeholder="Nome da ação. Texto…">${esc(fichaToText(f,l))}</textarea></label>`;
   return `<fieldset class="ff"><legend>Ficha de invocação</legend>
     <div class="grid">${tx('nome','Nome da criatura',f.nome,'Espírito Feérico')}${tx('tipo','Tipo, tamanho e alinhamento',f.tipo,'Feérico Pequeno, Neutro')}</div>
-    <div class="grid" style="margin-top:10px">${tx('ca','CA',f.ca,'12 + o círculo da magia')}${tx('pv','PV',f.pv,'30 + 10 por círculo acima de 3')}${tx('deslocamento','Deslocamento',f.deslocamento,'9 m, Voo 9 m')}</div>
+    <div class="grid mt-10">${tx('ca','CA',f.ca,'12 + o círculo da magia')}${tx('pv','PV',f.pv,'30 + 10 por círculo acima de 3')}${tx('deslocamento','Deslocamento',f.deslocamento,'9 m, Voo 9 m')}</div>
     <div class="abg">${ATTRS.map(a=>`<label class="fld"><span>${a}</span><input data-k="sc-${a}" type="number" min="1" max="30" value="${esc(at(a)[0])}"><input data-k="sg-${a}" placeholder="SG (opc.)" value="${esc(f.atr && at(a)[2]!==at(a)[1] ? at(a)[2] : '')}"></label>`).join('')}</div>
     <div class="grid">${tx('Resistências','Resistências',P('Resistências'))}${tx('Imunidades','Imunidades',P('Imunidades'))}${tx('Vulnerabilidades','Vulnerabilidades',P('Vulnerabilidades'))}${tx('Sentidos','Sentidos',P('Sentidos'),'Visão no Escuro 18 m, Percepção Passiva 10')}${tx('Idiomas','Idiomas',P('Idiomas'))}${tx('ND','ND',P('ND')||'Nenhum (XP 0; BP é igual ao seu Bônus de Proficiência)')}</div>
-    <div class="grid" style="margin-top:10px">${ta('Traços','Traços')}${ta('Ações','Ações')}${ta('Ações Bônus','Ações Bônus')}${ta('Reações','Reações')}</div>
+    <div class="grid mt-10">${ta('Traços','Traços')}${ta('Ações','Ações')}${ta('Ações Bônus','Ações Bônus')}${ta('Reações','Reações')}</div>
     <div class="dbtn"><button type="button" class="btn warn sm" data-rmficha>Remover esta ficha</button></div></fieldset>`;
 }
 function buildForm(s, asCopy){
@@ -1744,7 +1495,7 @@ function buildForm(s, asCopy){
     <label class="fld"><span>Círculo</span><select id="f-circ">${[0,1,2,3,4,5,6,7,8,9].map(n=>`<option value="${n}" ${n===s.circulo?'selected':''}>${circLabel(n)}</option>`).join('')}</select></label>
     <label class="fld"><span>Escola</span><select id="f-esc">${ESCOLAS.map(e=>`<option ${e===s.escola?'selected':''}>${e}</option>`).join('')}</select></label>
   </div>
-  <div class="fld" style="margin-top:12px"><span>Classes</span><div class="checks" id="f-cls">${CLASSES.map(c=>`<label><input type="checkbox" value="${c}" ${s.classes.includes(c)?'checked':''}> ${c}</label>`).join('')}</div></div>
+  <div class="fld mt-12"><span>Classes</span><div class="checks" id="f-cls">${CLASSES.map(c=>`<label><input type="checkbox" value="${c}" ${s.classes.includes(c)?'checked':''}> ${c}</label>`).join('')}</div></div>
   <h3>Conjuração</h3>
   <div class="grid">
     <label class="fld"><span>Tempo de conjuração</span><input id="f-tempo" list="dl-t" value="${esc((s.tempo||'').replace(/\s*ou Ritual/i,''))}"></label>
@@ -1752,27 +1503,27 @@ function buildForm(s, asCopy){
     <label class="fld"><span>Duração</span><input id="f-dur" value="${esc(dur)}" placeholder="1 minuto, Instantânea…"></label>
   </div>
   <datalist id="dl-t">${OPT_T.map(o=>`<option>${o}</option>`).join('')}</datalist><datalist id="dl-a">${OPT_A.map(o=>`<option>${o}</option>`).join('')}</datalist>
-  <div class="checks" style="margin-top:10px">
+  <div class="checks mt-10">
     <label><input type="checkbox" id="f-rit" ${s.ritual?'checked':''}> Pode ser conjurada como ritual</label>
     <label><input type="checkbox" id="f-con" ${conc?'checked':''}> Exige concentração</label>
   </div>
-  <div class="fld" style="margin-top:12px"><span>Componentes</span><div class="checks">
+  <div class="fld mt-12"><span>Componentes</span><div class="checks">
     <label><input type="checkbox" id="f-v" ${/\bV\b/.test(head)?'checked':''}> Verbal</label>
     <label><input type="checkbox" id="f-s" ${/\bS\b/.test(head)?'checked':''}> Somático</label>
     <label><input type="checkbox" id="f-m" ${/\bM\b/.test(head)?'checked':''}> Material</label></div></div>
-  <label class="fld" style="margin-top:8px"><span>Material (se houver)</span><input id="f-mat" value="${esc(mat)}" placeholder="um pouco de enxofre; joia de 100 PO, que a magia consome"></label>
+  <label class="fld mt-8"><span>Material (se houver)</span><input id="f-mat" value="${esc(mat)}" placeholder="um pouco de enxofre; joia de 100 PO, que a magia consome"></label>
   <h3>Texto da magia</h3>
-  <label class="fld"><span>Descrição</span><textarea id="f-desc" style="min-height:190px">${esc(blocksToText(s.desc))}</textarea><small>Uma linha em branco separa parágrafos. Comece a linha com “- ” para fazer lista. Use **negrito** e *itálico*. Tabelas: | col A | col B |</small></label>
-  <div class="grid" style="margin-top:12px">
-    <label class="fld"><span>Usando um espaço de magia de círculo superior (opcional)</span><textarea id="f-sup" style="min-height:70px">${esc(s.superior)}</textarea></label>
-    <label class="fld"><span>Aprimoramento de truque (opcional)</span><textarea id="f-tru" style="min-height:70px">${esc(s.truque)}</textarea></label>
+  <label class="fld"><span>Descrição</span><textarea id="f-desc" class="textarea-lg">${esc(blocksToText(s.desc))}</textarea><small>Uma linha em branco separa parágrafos. Comece a linha com “- ” para fazer lista. Use **negrito** e *itálico*. Tabelas: | col A | col B |</small></label>
+  <div class="grid mt-12">
+    <label class="fld"><span>Usando um espaço de magia de círculo superior (opcional)</span><textarea class="textarea-sm" id="f-sup">${esc(s.superior)}</textarea></label>
+    <label class="fld"><span>Aprimoramento de truque (opcional)</span><textarea class="textarea-sm" id="f-tru">${esc(s.truque)}</textarea></label>
   </div>
   <h3>Criatura invocada</h3>
-  <p class="lead" style="margin-bottom:6px">Se a magia invoca uma criatura, adicione a ficha. Em Traços, Ações, Ações Bônus e Reações, escreva uma entrada por linha no formato “Nome. Texto”.</p>
+  <p class="lead compact-xs">Se a magia invoca uma criatura, adicione a ficha. Em Traços, Ações, Ações Bônus e Reações, escreva uma entrada por linha no formato “Nome. Texto”.</p>
   <div id="fichas">${s.fichas.map(fichaForm).join('')}</div>
-  <div class="datarow"><button type="button" class="btn ghost sm" id="addFicha" style="color:var(--lapis);border-color:var(--lapis)">Adicionar ficha de invocação</button></div>
+  <div class="datarow"><button type="button" class="btn ghost sm outline-accent" id="addFicha">Adicionar ficha de invocação</button></div>
   <div id="formMsg" role="alert"></div>
-  <div class="datarow" style="margin-top:16px"><button type="button" class="btn" id="saveSpell">Salvar magia</button><button type="button" class="btn ghost sm" id="cancelSpell" style="color:var(--tinta)">Cancelar</button></div>`;
+  <div class="datarow mt-16"><button type="button" class="btn" id="saveSpell">Salvar magia</button><button type="button" class="btn ghost sm text-ink" id="cancelSpell">Cancelar</button></div>`;
 }
 function collectFicha(fs){
   const g = k => (fs.querySelector(`[data-k="${k}"]`)?.value||'').trim();
