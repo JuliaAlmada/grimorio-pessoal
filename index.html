@@ -353,7 +353,7 @@ body{background:var(--papel) linear-gradient(#e2ebd8,transparent 280px) no-repea
     <h1 class="view-title">Importar e backup</h1>
     <div class="card" id="impCard">
       <h3>Trazer as magias do site</h3>
-      <p class="lead" style="margin-bottom:8px">Esta versão já vem com uma amostra da lista do Simple Skans. A biblioteca base carrega sozinha do arquivo <b>magias.json</b> (ou <b>magias.txt</b>) que fica junto do site. Para atualizar por conta própria, copie o texto do site e cole abaixo; isso vale só para a sua conta:</p>
+      <p class="lead" style="margin-bottom:8px">A biblioteca padrão já carrega automaticamente do arquivo <b>magias.json</b> que fica junto do <b>index.html</b>. Para atualizar a sua biblioteca com uma versão mais recente, copie o texto do site e cole abaixo; a atualização fica salva neste navegador:</p>
       <div class="help"><ol>
         <li>Abra <a href="https://simpleskans.com.br/dnd/2024/magias" target="_blank" rel="noopener">simpleskans.com.br/dnd/2024/magias</a> no Chrome.</li>
         <li>Role até o final da página para carregar todas as magias.</li>
@@ -1252,8 +1252,12 @@ function parseStat(lines){
 }
 
 function parseSiteText(text){
-  const raw = String(text).replace(/\r/g,'').replace(/\u00a0/g,' ').split('\n')
+  let raw = String(text).replace(/\r/g,'').replace(/\u00a0/g,' ').split('\n')
     .map(l=>l.trim()).filter(l=>!/^(Documento gerado|Tradução realizada)/.test(plain(l)));
+  // O texto copiado do site traz o rodapé depois da última magia.
+  // Cortamos esse trecho para ele não virar parte da descrição de "Zona da Verdade".
+  const footer = raw.findIndex(l => /^(?:©.*Simple Skans|Feito com Jekyll\b)/i.test(plain(l).trim()));
+  if (footer >= 0) raw = raw.slice(0, footer);
   const pl = raw.map(l=>plain(l).trim());
   const starts = [];
   for (let i=0;i<raw.length;i++){
@@ -1874,8 +1878,8 @@ $('#bkDown').addEventListener('click', ()=>{ download('grimorio-backup.json',{ v
 $('#libDown').addEventListener('click', ()=>{ download('grimorio-biblioteca.json', LIB); say('#bkMsg','ok',`Biblioteca exportada: ${LIB.length} magias.`); });
 $('#impClear').addEventListener('click', ()=>{
   if (!S.imported.length) return say('#bkMsg','err','Não há magias importadas para remover.');
-  if (!confirm('Remover todas as magias importadas do site? A amostra embutida e as suas magias personalizadas continuam.')) return;
-  S.imported = []; persist(); rebuild(); refresh(); say('#bkMsg','ok','Magias importadas removidas.');
+  if (!confirm('Remover todas as atualizações importadas? A biblioteca padrão e as suas magias personalizadas continuam.')) return;
+  S.imported = []; persist(); rebuild(); refresh(); say('#bkMsg','ok','Atualizações importadas removidas. Biblioteca padrão restaurada.');
 });
 function updateDataInfo(){ $('#impMsg').innerHTML=''; $('#bkMsg').innerHTML=''; }
 
