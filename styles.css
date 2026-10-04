@@ -85,6 +85,19 @@ main{max-width:1220px;margin:0 auto;padding:24px 22px 56px}
 .pill.p{color:#76601f;border-color:#d7c98f}
 .pill.t{color:var(--accent);border-color:#a9bdae}
 .pill.n{color:var(--accent-dark);border-color:#9fb3a4;background:var(--accent-soft)}
+.row-note{
+  grid-column:1 / -1;
+  margin-top:4px;
+  padding:7px 9px;
+  background:#fbf6e8;
+  border-left:2px solid #b68b24;
+  color:var(--ink);
+  font-size:12.5px;
+  line-height:1.45;
+  white-space:pre-wrap;
+  overflow-wrap:anywhere;
+  text-align:left;
+}
 .notebox{margin:18px 0 4px;padding:12px 13px;background:var(--surface-soft);border:1px solid var(--line);border-left:3px solid var(--accent)}
 .notehead{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:8px}
 .notebox h4{font:700 13px var(--title)}
@@ -210,6 +223,28 @@ button.tagchip.pick{color:var(--muted);border-style:dashed}
 .sheet .ficha table.abil th{color:#000}
 .sheet .ficha h5{margin-top:5pt;color:var(--g);border-color:var(--g);font-size:9.1pt}
 .sheet .cp{display:grid;grid-template-columns:1fr auto;gap:0 10pt;align-items:baseline}
+.sheet .print-note{
+  margin:4pt 0 2pt;
+  padding:3pt 5pt;
+  border-left:1.5pt solid var(--g);
+  background:#faf8f0;
+  font-size:8.9pt;
+  line-height:1.38;
+  break-inside:avoid;
+}
+.sheet .print-note strong{
+  display:block;
+  margin-bottom:1.5pt;
+  color:var(--g);
+  font-family:var(--title);
+  font-size:8.6pt;
+}
+.sheet .print-note div{
+  white-space:pre-wrap;
+  overflow-wrap:anywhere;
+  text-align:justify;
+  text-justify:inter-word;
+}
 
 /* diálogo, ajuda e dados */
 dialog{width:92vw;max-width:440px;padding:0;background:var(--surface);border:1px solid var(--line);border-radius:3px}

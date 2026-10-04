@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inclusive+Sans:ital,wght@0,300..700;1,300..700&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=7">
+<link rel="stylesheet" href="styles.css?v=notes-print-2">
 </head>
 <body>
 <header class="top">
@@ -1271,14 +1271,16 @@ function rowHTML(s, mode){
   if (s.ritual) pills += '<span class="pill">Ritual</span>';
   if (s.fichas.length) pills += '<span class="pill p">Ficha</span>';
   if (s.custom) pills += '<span class="pill p">Personalizada</span>';
+  let note = '';
   if (mode==='book' && ch){
-    if (noteOf(ch,s.id).trim()) pills += '<span class="pill n">Anotação</span>';
+    note = noteOf(ch,s.id).trim();
     for (const t of tagsOf(ch,s.id)) pills += `<span class="pill t">#${esc(t)}</span>`;
   }
   let act;
   if (mode==='lib') act = `<button class="iconbtn ${has?'on':''}" data-toggle="${s.id}" aria-label="${has?'Remover do':'Adicionar ao'} grimório: ${esc(s.nome)}" title="${has?'No grimório — clique para remover':'Adicionar ao grimório'}">${has?'✓':'+'}</button>`;
   else { const pr = ch.prep.includes(s.id); act = `<label class="prep" title="Marcar como preparada"><input type="checkbox" data-prep="${s.id}" ${pr?'checked':''}> Preparada</label>`; }
-  return `<li class="row" role="option" tabindex="0" data-id="${s.id}" aria-selected="${sel}"><span class="nm">${esc(s.nome)}${s.nomeEn&&s.nomeEn!==s.nome?`<em>${esc(s.nomeEn)}</em>`:''}</span><span class="act">${act}</span><span class="mt">${esc(s.escola)}${pills}</span></li>`;
+  const noteRow = mode==='book' && note ? `<div class="row-note" data-note-row="${s.id}">${esc(note)}</div>` : '';
+  return `<li class="row" role="option" tabindex="0" data-id="${s.id}" aria-selected="${sel}"><span class="nm">${esc(s.nome)}${s.nomeEn&&s.nomeEn!==s.nome?`<em>${esc(s.nomeEn)}</em>`:''}</span><span class="act">${act}</span><span class="mt">${esc(s.escola)}${pills}</span>${noteRow}</li>`;
 }
 function listHTML(arr, mode, grouped){
   if (!arr.length) return '<li class="empty">Nenhuma magia encontrada com esses filtros.</li>';
@@ -1414,11 +1416,26 @@ function commitTag(){
   const n = $('#tagIn'); if (n) n.focus();
 }
 let noteSaveT = null;
+function updateBookRowNote(id, value){
+  const row = $(`#booklist .row[data-id="${id}"]`);
+  if (!row) return;
+  let box = row.querySelector('[data-note-row]');
+  const text = String(value || '').trim();
+  if (!text){ if (box) box.remove(); return; }
+  if (!box){
+    box = document.createElement('div');
+    box.className = 'row-note';
+    box.dataset.noteRow = id;
+    row.appendChild(box);
+  }
+  box.textContent = text;
+}
 function saveSpellNote(el, immediate=false){
   const ch = activeChar(), id = cur.book; if (!ch || !id || !el) return;
   ch.notes = ch.notes || {};
   if (el.value.trim()) ch.notes[id] = el.value;
   else delete ch.notes[id];
+  updateBookRowNote(id, el.value);
   const status = $('#noteStatus');
   if (status) status.textContent = 'Salvando…';
   clearTimeout(noteSaveT);
@@ -1467,16 +1484,18 @@ function renderSheet(){
     if (g.head) h += `<div class="gh">${ord==='tag' && g.num==='#' ? '#' : ''}${esc(g.head)}</div>`;
     for (const s of g.items){
       const tg = showTags && ord!=='tag' && tagsOf(ch,s.id).length ? `<div class="tg">Tags: ${tagsOf(ch,s.id).map(esc).join(', ')}</div>` : '';
+      const note = noteOf(ch,s.id).trim();
+      const nt = note ? `<div class="print-note"><strong>Anotações</strong><div>${esc(note)}</div></div>` : '';
       if (mode==='completo'){
-        h += `<div class="ps ${s.desc.length>5||s.fichas.length?'long':''}"><h3>${esc(s.nome)}</h3>${s.nomeEn&&s.nomeEn!==s.nome?`<span class="en">${esc(s.nomeEn)}</span>`:''}` +
+        h += `<div class="ps ${s.desc.length>5||s.fichas.length||note?'long':''}"><h3>${esc(s.nome)}</h3>${s.nomeEn&&s.nomeEn!==s.nome?`<span class="en">${esc(s.nomeEn)}</span>`:''}` +
           `<div class="mt">${esc(s.escola)} · ${esc(s.tempo)} · ${esc(s.alcance)} · ${esc(s.componentes)} · ${esc(s.duracao)}</div>${tg}` +
           `<div class="txt">${blocksHTML(s.desc)}${s.truque?`<p class="sup"><strong>Aprimoramento de truque.</strong> ${fmt(s.truque)}</p>`:''}${s.superior?`<p class="sup"><strong>Círculo superior.</strong> ${fmt(s.superior)}</p>`:''}</div>` +
-          (fic ? s.fichas.map(fichaHTML).join('') : '') + '</div>';
+          (fic ? s.fichas.map(fichaHTML).join('') : '') + nt + '</div>';
       } else {
         const comp = (s.componentes||'').replace(/\s*\(.*$/,'');
-        h += `<div class="ps ${fic&&s.fichas.length?'long':''}"><div class="cp"><div><h3>${esc(s.nome)}</h3>${s.nomeEn&&s.nomeEn!==s.nome?`<span class="en">${esc(s.nomeEn)}</span>`:''}</div><span class="mt">${esc(s.escola)}</span></div>` +
+        h += `<div class="ps ${fic&&s.fichas.length||note?'long':''}"><div class="cp"><div><h3>${esc(s.nome)}</h3>${s.nomeEn&&s.nomeEn!==s.nome?`<span class="en">${esc(s.nomeEn)}</span>`:''}</div><span class="mt">${esc(s.escola)}</span></div>` +
           `<div class="mt">${esc(s.tempo)} · ${esc(s.alcance)} · ${esc(comp)} · ${esc(s.duracao)}</div>${tg}` +
-          (fic ? s.fichas.map(fichaHTML).join('') : '') + '</div>';
+          (fic ? s.fichas.map(fichaHTML).join('') : '') + nt + '</div>';
       }
     }
   }
