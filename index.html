@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inclusive+Sans:ital,wght@0,300..700;1,300..700&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="styles.css?v=7">
 </head>
 <body>
 <header class="top">
@@ -1171,7 +1171,7 @@ $('#charForm').addEventListener('submit', e=>{
   const nome = $('#cNome').value.trim(); if (!nome) return;
   const data = { nome, classe:$('#cClasse').value.trim(), nivel: Math.max(1,Math.min(20,+$('#cNivel').value||1)) };
   if (editingChar) Object.assign(editingChar, data);
-  else { const c = Object.assign({ id:uid('p-'), spells:[], prep:[] }, data); S.chars.push(c); S.active = c.id; }
+  else { const c = Object.assign({ id:uid('p-'), spells:[], prep:[], notes:{} }, data); S.chars.push(c); S.active = c.id; }
   persist(); $('#dlgChar').close(); refresh(); toast('Personagem salvo');
 });
 $('#cDel').addEventListener('click', ()=>{
@@ -1206,6 +1206,11 @@ function sortSpells(a, ord){
 const B = { ord:'circ', tag:'' };
 const normTag = t => String(t||'').trim().replace(/^#+/,'').replace(/\s+/g,' ').slice(0,30);
 const tagsOf = (ch,id) => (ch.tags && ch.tags[id]) || [];
+const noteOf = (ch,id) => (ch.notes && ch.notes[id]) || '';
+function noteBoxHTML(ch,id){
+  return `<section class="notebox"><div class="notehead"><h4>Anotações</h4><span class="notestatus" id="noteStatus">Salvo automaticamente</span></div>` +
+    `<textarea id="spellNote" maxlength="5000" placeholder="Escreva aqui lembretes, estratégias, combinações ou observações sobre esta magia…">${esc(noteOf(ch,id))}</textarea></section>`;
+}
 function allTags(ch){
   const m = new Map();
   for (const id of ch.spells) if (BY[id]) for (const t of tagsOf(ch,id)) m.set(t,(m.get(t)||0)+1);
@@ -1266,7 +1271,10 @@ function rowHTML(s, mode){
   if (s.ritual) pills += '<span class="pill">Ritual</span>';
   if (s.fichas.length) pills += '<span class="pill p">Ficha</span>';
   if (s.custom) pills += '<span class="pill p">Personalizada</span>';
-  if (mode==='book' && ch) for (const t of tagsOf(ch,s.id)) pills += `<span class="pill t">#${esc(t)}</span>`;
+  if (mode==='book' && ch){
+    if (noteOf(ch,s.id).trim()) pills += '<span class="pill n">Anotação</span>';
+    for (const t of tagsOf(ch,s.id)) pills += `<span class="pill t">#${esc(t)}</span>`;
+  }
   let act;
   if (mode==='lib') act = `<button class="iconbtn ${has?'on':''}" data-toggle="${s.id}" aria-label="${has?'Remover do':'Adicionar ao'} grimório: ${esc(s.nome)}" title="${has?'No grimório — clique para remover':'Adicionar ao grimório'}">${has?'✓':'+'}</button>`;
   else { const pr = ch.prep.includes(s.id); act = `<label class="prep" title="Marcar como preparada"><input type="checkbox" data-prep="${s.id}" ${pr?'checked':''}> Preparada</label>`; }
@@ -1298,7 +1306,7 @@ function showDetail(id, mode, open){
   cur[mode] = id;
   const ch = activeChar(); const has = ch && ch.spells.includes(id);
   let h = '<button class="btn ghost sm close text-ink" type="button" data-close>Voltar à lista</button>' + spellHTML(s);
-  if (mode==='book' && has) h += tagBoxHTML(ch,id);
+  if (mode==='book' && has) h += noteBoxHTML(ch,id) + tagBoxHTML(ch,id);
   h += '<div class="actions">';
   h += ch ? `<button class="btn" type="button" data-toggle="${id}">${has?'Remover do grimório':'Adicionar ao grimório'} de ${esc(ch.nome)}</button>` : '<button class="btn" type="button" data-newchar>Criar personagem para adicionar</button>';
   h += `<button class="btn ghost sm outline-accent" type="button" data-dup="${id}">Duplicar como personalizada</button>`;
@@ -1334,7 +1342,7 @@ function onListClick(e, mode){
     const ed = e.target.closest('[data-edit]'); if (ed){ formBuilt = false; buildForm(BY[ed.dataset.edit], false); det.classList.remove('open'); go('new'); return; }
     const del = e.target.closest('[data-del]'); if (del){
       const s = BY[del.dataset.del]; if (!confirm(`Excluir a magia “${s.nome}”? Ela também sai dos grimórios.`)) return;
-      S.custom = S.custom.filter(x=>x.id!==s.id); S.chars.forEach(c=>{ c.spells = c.spells.filter(x=>x!==s.id); c.prep = c.prep.filter(x=>x!==s.id); dropSpellTags(c,s.id); });
+      S.custom = S.custom.filter(x=>x.id!==s.id); S.chars.forEach(c=>{ c.spells = c.spells.filter(x=>x!==s.id); c.prep = c.prep.filter(x=>x!==s.id); dropSpellTags(c,s.id); if (c.notes) delete c.notes[s.id]; });
       if (cur.lib===s.id) cur.lib=null; if (cur.book===s.id) cur.book=null;
       det.classList.remove('open');
       persist(); rebuild(); refresh(); toast('Magia excluída');
@@ -1405,6 +1413,25 @@ function commitTag(){
   if (ok){ persist(); renderBook(); toast('Tag adicionada'); } else inp.value = '';
   const n = $('#tagIn'); if (n) n.focus();
 }
+let noteSaveT = null;
+function saveSpellNote(el, immediate=false){
+  const ch = activeChar(), id = cur.book; if (!ch || !id || !el) return;
+  ch.notes = ch.notes || {};
+  if (el.value.trim()) ch.notes[id] = el.value;
+  else delete ch.notes[id];
+  const status = $('#noteStatus');
+  if (status) status.textContent = 'Salvando…';
+  clearTimeout(noteSaveT);
+  const done = ()=>{ persist(); const s = $('#noteStatus'); if (s) s.textContent = 'Salvo automaticamente'; };
+  if (immediate) done(); else noteSaveT = setTimeout(done, 450);
+}
+$('#detail-book').addEventListener('input', e=>{
+  if (e.target.id==='spellNote') saveSpellNote(e.target, false);
+});
+$('#detail-book').addEventListener('focusout', e=>{
+  if (e.target.id==='spellNote') saveSpellNote(e.target, true);
+});
+
 $('#detail-book').addEventListener('click', e=>{
   const ch = activeChar(), id = cur.book; if (!ch || !id) return;
   const ut = e.target.closest('[data-untag]'), pk = e.target.closest('[data-pick]');

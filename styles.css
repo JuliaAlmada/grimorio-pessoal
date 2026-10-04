@@ -84,6 +84,13 @@ main{max-width:1220px;margin:0 auto;padding:24px 22px 56px}
 .pill.c{color:var(--danger);border-color:#d8b3ba}
 .pill.p{color:#76601f;border-color:#d7c98f}
 .pill.t{color:var(--accent);border-color:#a9bdae}
+.pill.n{color:var(--accent-dark);border-color:#9fb3a4;background:var(--accent-soft)}
+.notebox{margin:18px 0 4px;padding:12px 13px;background:var(--surface-soft);border:1px solid var(--line);border-left:3px solid var(--accent)}
+.notehead{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:8px}
+.notebox h4{font:700 13px var(--title)}
+.notestatus{color:var(--muted);font-size:11.5px;white-space:nowrap}
+.notebox textarea{width:100%;min-height:105px;resize:vertical;padding:9px 10px;background:var(--surface);border:1px solid var(--line);border-radius:3px;line-height:1.5;text-align:left}
+.notebox textarea:focus{border-color:#92a99a}
 #bookbar[hidden]{display:none}
 #bookbar button:disabled{opacity:.45;cursor:default}
 .tagbox{margin:16px 0 4px;padding:12px 13px;background:var(--surface);border:1px solid var(--line)}
@@ -231,6 +238,7 @@ textarea.big{width:100%;min-height:150px;padding:9px;border:1px solid var(--line
   main{padding:16px 14px 48px}
   .abg{grid-template-columns:repeat(3,1fr)}
   .paper{padding:8mm 6mm}
+  .notehead{align-items:flex-start;flex-direction:column;gap:3px}
 }
 
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
