@@ -1,7 +1,7 @@
 {
   "versao": 1,
   "origem": "Lista de Magias D&D 2024",
-  "quantidade": 391,
+  "quantidade": 443,
   "spells": [
     {
       "id": "acalmar-emocoes",
@@ -65,6 +65,39 @@
       "truque": "O alcance da magia dobra quando você atinge os níveis 5 (9 metros), 11 (18 metros) e 17 (36 metros).",
       "fichas": [],
       "fonte": "site"
+    },
+    {
+      "id": "afastar",
+      "nome": "Afastar",
+      "nomeEn": "Wardaway",
+      "circulo": 1,
+      "escola": "Abjuração",
+      "classes": [
+        "Bardo",
+        "Clérigo",
+        "Mago",
+        "Paladino"
+      ],
+      "tempo": "Ação",
+      "alcance": "18 metros (12)",
+      "componentes": "V, S, M (uma mão de argila em miniatura)",
+      "duracao": "Instantânea",
+      "ritual": false,
+      "concentracao": false,
+      "desc": [
+        {
+          "t": "p",
+          "x": "Você lança uma força mágica desorientadora em direção a uma criatura no alcance da magia. O alvo realiza uma salvaguarda de Constituição; Constructos e Mortos-Vivos são automaticamente bem-sucedidos nesta salvaguarda."
+        },
+        {
+          "t": "p",
+          "x": "Se falhar, o alvo sofre 2d4 pontos de dano Energético, seu Deslocamento é reduzido à metade até o início do seu próximo turno e, no próximo turno dele, ele pode realizar apenas uma ação ou uma Ação Bônus (mas não ambas). Em caso de sucesso, o alvo sofre apenas metade do dano."
+        }
+      ],
+      "superior": "O dano aumenta em 2d4 para cada círculo de espaço de magia acima de 1.",
+      "truque": "",
+      "fichas": [],
+      "fonte": "Heróis de Faerûn"
     },
     {
       "id": "alarme",
@@ -304,6 +337,39 @@
       "truque": "",
       "fichas": [],
       "fonte": "site"
+    },
+    {
+      "id": "anel-de-relampagos",
+      "nome": "Anel de Relâmpagos",
+      "nomeEn": "Lightning Ring",
+      "circulo": 8,
+      "escola": "Evocação",
+      "classes": [
+        "Bruxo",
+        "Druida",
+        "Feiticeiro",
+        "Mago"
+      ],
+      "tempo": "Ação Bônus",
+      "alcance": "Pessoal",
+      "componentes": "V, S, M (um pouco de pelo e um anel de vidro)",
+      "duracao": "Concentração, até 10 minutos",
+      "ritual": false,
+      "concentracao": true,
+      "desc": [
+        {
+          "t": "p",
+          "x": "Um anel de eletricidade crepitante preenche uma Emanação de 3 metros originada em você. Sempre que a Emanação entrar no espaço de uma criatura e sempre que uma criatura entrar na Emanação ou terminar o turno dela lá, você pode forçar essa criatura a realizar uma salvaguarda de Constituição. Se falhar, a criatura sofre 3d6 pontos de dano Elétrico mais 3d6 pontos de dano Trovejante e tem a condição Surdo por 1 minuto. Em caso de sucesso, a criatura sofre apenas metade do dano."
+        },
+        {
+          "t": "p",
+          "x": "Como uma ação Usar Magia enquanto a magia estiver ativa, você pode emitir uma Linha de 18 metros de comprimento e 1,5 metro de largura a partir de você em uma direção à sua escolha. Cada criatura na Linha realiza uma salvaguarda de Destreza, sofrendo 6d6 pontos de dano Elétrico se falhar ou metade desse dano em caso de sucesso."
+        }
+      ],
+      "superior": "",
+      "truque": "",
+      "fichas": [],
+      "fonte": "Arcana Unleashed"
     },
     {
       "id": "animar-mortos",
@@ -733,6 +799,33 @@
       "fonte": "site"
     },
     {
+      "id": "armadura-da-morte",
+      "nome": "Armadura da Morte",
+      "nomeEn": "Death Armor",
+      "circulo": 2,
+      "escola": "Necromancia",
+      "classes": [
+        "Feiticeiro",
+        "Mago"
+      ],
+      "tempo": "Ação",
+      "alcance": "Toque",
+      "componentes": "V, S, M (um ônix no valor de 50 ou mais PO, que a magia consome)",
+      "duracao": "1 hora",
+      "ritual": false,
+      "concentracao": false,
+      "desc": [
+        {
+          "t": "p",
+          "x": "Pela duração da magia, uma aura de tinta envolve uma criatura que você tocar. O alvo tem Vantagem em Salvaguardas Contra a Morte e, uma vez por turno, quando uma criatura a até 1,5 metro do alvo o acertar com um ataque corpo a corpo, o atacante sofre 2d4 pontos de dano Necrótico."
+        }
+      ],
+      "superior": "",
+      "truque": "",
+      "fichas": [],
+      "fonte": "Heróis de Faerûn"
+    },
+    {
       "id": "armadura-de-agathys",
       "nome": "Armadura de Agathys",
       "nomeEn": "Armor of Agathys",
@@ -977,6 +1070,34 @@
       "truque": "",
       "fichas": [],
       "fonte": "site"
+    },
+    {
+      "id": "aura-de-evasao",
+      "nome": "Aura de Evasão",
+      "nomeEn": "Aura of Evasion",
+      "circulo": 7,
+      "escola": "Abjuração",
+      "classes": [
+        "Bruxo",
+        "Feiticeiro",
+        "Mago"
+      ],
+      "tempo": "Ação",
+      "alcance": "Pessoal",
+      "componentes": "V, S",
+      "duracao": "Concentração, até 1 minuto",
+      "ritual": false,
+      "concentracao": true,
+      "desc": [
+        {
+          "t": "p",
+          "x": "Uma aura de presteza irradia de você em uma Emanação de 9 metros pela duração da magia. Enquanto estiver na aura, você e seus aliados têm Vantagem em salvaguardas de Destreza. Quando uma criatura afetada é submetida a um efeito que permite uma salvaguarda de Destreza para sofrer apenas metade do dano, ela não sofre dano se for bem-sucedida na salvaguarda e sofre apenas metade do dano se falhar. Uma criatura com a condição Incapacitado não obtém nenhum benefício de estar na aura."
+        }
+      ],
+      "superior": "",
+      "truque": "",
+      "fichas": [],
+      "fonte": "Arcana Unleashed"
     },
     {
       "id": "aura-de-pureza",
@@ -1658,6 +1779,87 @@
       "fonte": "site"
     },
     {
+      "id": "campo-de-duelo",
+      "nome": "Campo de Duelo",
+      "nomeEn": "Dueling Ground",
+      "circulo": 2,
+      "escola": "Abjuração",
+      "classes": [
+        "Bardo",
+        "Bruxo",
+        "Clérigo",
+        "Druida",
+        "Feiticeiro",
+        "Guardião",
+        "Mago",
+        "Paladino",
+        "Artífice"
+      ],
+      "tempo": "10 minutos ou Ritual",
+      "alcance": "Toque",
+      "componentes": "V, S, M (uma bandeira de seda no valor de 100 ou mais PO)",
+      "duracao": "1 hora",
+      "ritual": true,
+      "concentracao": false,
+      "desc": [
+        {
+          "t": "p",
+          "x": "Você cria um campo de duelo mágico delimitado por um círculo brilhante inscrito com runas em uma Esfera de 4,5 metros de raio centrada em um ponto no chão que você tocar."
+        },
+        {
+          "t": "p",
+          "x": "Como parte da criação do campo de duelo, você designa duas criaturas dispostas dentro da Esfera como os alvos. A magia termina antecipadamente se uma criatura que não seja um dos alvos entrar na Esfera."
+        },
+        {
+          "t": "p",
+          "x": "Se um alvo for reduzido a 0 Pontos de Vida enquanto estiver no campo de duelo, ele fica Estável e se teleporta para o espaço desocupado mais próximo fora do campo de duelo. Se um alvo for submetido a um efeito que o mataria instantaneamente sem causar dano enquanto estiver no campo de duelo, o alvo não morre e, em vez disso, fica com 0 Pontos de Vida e com a condição Inconsciente, fica Estável e se teleporta para o espaço desocupado mais próximo fora do campo de duelo."
+        },
+        {
+          "t": "p",
+          "x": "Quando apenas um alvo permanece no campo de duelo, runas iguais às do chão ao redor da Esfera brilham brevemente ao redor da cabeça do alvo remanescente como uma coroa."
+        }
+      ],
+      "superior": "Você pode escolher uma criatura disposta adicional como alvo para cada círculo de espaço de magia acima de 2.",
+      "truque": "",
+      "fichas": [],
+      "fonte": "Arcana Unleashed"
+    },
+    {
+      "id": "canto-funebre",
+      "nome": "Canto Fúnebre",
+      "nomeEn": "Dirge",
+      "circulo": 6,
+      "escola": "Encantamento",
+      "classes": [
+        "Bardo",
+        "Clérigo"
+      ],
+      "tempo": "Ação",
+      "alcance": "Pessoal",
+      "componentes": "V",
+      "duracao": "Concentração, até 1 minuto",
+      "ritual": false,
+      "concentracao": true,
+      "desc": [
+        {
+          "t": "p",
+          "x": "Poder mortal preenche uma Emanação de 18 metros originada em você pela duração da magia. Quando você conjura esta magia, pode designar criaturas para não serem afetadas por ela. Qualquer outra criatura não pode recuperar Pontos de Vida enquanto estiver na Emanação."
+        },
+        {
+          "t": "p",
+          "x": "Sempre que a Emanação entrar no espaço de uma criatura e sempre que uma criatura entrar na Emanação ou terminar o turno dela lá, a criatura realiza uma salvaguarda de Constituição. Se falhar, a criatura sofre 3d10 pontos de dano Necrótico e fica com a condição Caído. Em caso de sucesso, a criatura sofre apenas metade do dano e seu Deslocamento é reduzido à metade. Uma criatura realiza esta salvaguarda apenas uma vez por turno."
+        },
+        {
+          "t": "p",
+          "x": "Conjuração como Magia de Círculo. Conjurar isto como uma magia de Círculo requer no mínimo dois conjuradores secundários. Se a magia for conjurada como magia de Círculo, sua duração se torna Concentração, até 10 minutos. Uma criatura que falhar na salvaguarda contra o efeito da magia também ganha 1 nível de Exaustão. Enquanto a criatura tiver níveis de Exaustão, terminar um Descanso Longo não restaura Pontos de Vida perdidos nem reduz o nível de Exaustão da criatura. Quando a magia é conjurada, cada conjurador secundário deve gastar um espaço de magia de 4º círculo ou superior; caso contrário, a magia falha."
+        }
+      ],
+      "superior": "",
+      "truque": "",
+      "fichas": [],
+      "fonte": "Heróis de Faerûn"
+    },
+    {
       "id": "cao-fiel-de-mordenkainen",
       "nome": "Cão Fiel de Mordenkainen",
       "nomeEn": "Mordenkainen’s Faithful Hound",
@@ -2089,6 +2291,33 @@
       "fonte": "site"
     },
     {
+      "id": "clarao-de-fogo-magico",
+      "nome": "Clarão de Fogo Mágico",
+      "nomeEn": "Spellfire Flare",
+      "circulo": 1,
+      "escola": "Evocação",
+      "classes": [
+        "Feiticeiro",
+        "Mago"
+      ],
+      "tempo": "Ação",
+      "alcance": "18 metros (12)",
+      "componentes": "V, S",
+      "duracao": "Instantânea",
+      "ritual": false,
+      "concentracao": false,
+      "desc": [
+        {
+          "t": "p",
+          "x": "Você libera um jato de fogo brilhante. Realize um ataque mágico à distância contra um alvo no alcance da magia; um alvo não obtém benefício de Cobertura Parcial ou Cobertura de Três Quartos para esta jogada de ataque. Em caso de acerto, o alvo sofre 2d10 pontos de dano Radiante."
+        }
+      ],
+      "superior": "Você cria um jato adicional para cada círculo de espaço de magia acima de 1. Você pode direcionar os jatos para o mesmo alvo ou para alvos diferentes. Realize uma jogada de ataque separada para cada jato.",
+      "truque": "",
+      "fichas": [],
+      "fonte": "Heróis de Faerûn"
+    },
+    {
       "id": "clarividencia",
       "nome": "Clarividência",
       "nomeEn": "clairvoyance",
@@ -2154,6 +2383,35 @@
       "truque": "",
       "fichas": [],
       "fonte": "site"
+    },
+    {
+      "id": "cochilo",
+      "nome": "Cochilo",
+      "nomeEn": "Catnap",
+      "circulo": 3,
+      "escola": "Encantamento",
+      "classes": [
+        "Bardo",
+        "Feiticeiro",
+        "Mago",
+        "Artífice"
+      ],
+      "tempo": "Ação",
+      "alcance": "9 metros (6)",
+      "componentes": "S, M (uma pitada de areia)",
+      "duracao": "10 minutos",
+      "ritual": false,
+      "concentracao": false,
+      "desc": [
+        {
+          "t": "p",
+          "x": "Você faz um gesto calmante, e até três criaturas dispostas à sua escolha que você possa ver no alcance da magia ficam com a condição Inconsciente pela duração da magia. A magia termina em um alvo se ele sofrer dano ou se outra criatura executar uma ação para acordá-lo. Se um alvo permanecer com a condição Inconsciente desta magia pela duração completa, ele obtém os benefícios de terminar um Descanso Curto e não pode ser afetado por esta magia novamente até terminar um Descanso Longo."
+        }
+      ],
+      "superior": "Você pode escolher uma criatura disposta adicional para cada círculo de espaço de magia acima de 3.",
+      "truque": "",
+      "fichas": [],
+      "fonte": "Arcana Unleashed"
     },
     {
       "id": "coluna-de-chamas",
@@ -2464,6 +2722,48 @@
       "fonte": "site"
     },
     {
+      "id": "conjurar-constructos",
+      "nome": "Conjurar Constructos",
+      "nomeEn": "Conjure Constructs",
+      "circulo": 3,
+      "escola": "Invocação",
+      "classes": [
+        "Mago"
+      ],
+      "tempo": "Ação",
+      "alcance": "18 metros (12)",
+      "componentes": "V, S, M (uma engrenagem de latão)",
+      "duracao": "Concentração, até 10 minutos",
+      "ritual": false,
+      "concentracao": true,
+      "desc": [
+        {
+          "t": "p",
+          "x": "Você conjura um grupo de espíritos intangíveis e ordenados que aparecem como um grupo Médio de modrons ou outros Constructos em um espaço desocupado que você possa ver no alcance da magia. Os espíritos duram pela duração da magia."
+        },
+        {
+          "t": "p",
+          "x": "Quando você conjura esta magia e como uma ação Usar Magia em turnos subsequentes, você pode comandar os espíritos a alvejar uma criatura ou objeto que você possa ver a até 1,5 metro dos espíritos e criar um dos seguintes efeitos:"
+        },
+        {
+          "t": "p",
+          "x": "Força Mecânica. O alvo realiza uma salvaguarda de Destreza, sofrendo 3d6 pontos de dano Energético se falhar ou metade desse dano em caso de sucesso."
+        },
+        {
+          "t": "p",
+          "x": "Proteção Ordenada. O alvo ganha Pontos de Vida Temporários iguais a 1d6 mais seu modificador de atributo de conjuração."
+        },
+        {
+          "t": "p",
+          "x": "Quando você se move no seu turno, também pode mover os espíritos até 9 metros para um espaço desocupado que você possa ver."
+        }
+      ],
+      "superior": "O dano e os Pontos de Vida Temporários aumentam em 1d6 para cada círculo de espaço de magia acima de 3.",
+      "truque": "",
+      "fichas": [],
+      "fonte": "Heróis de Faerûn"
+    },
+    {
       "id": "consagrar",
       "nome": "Consagrar",
       "nomeEn": "Hallow",
@@ -2536,6 +2836,39 @@
       "truque": "",
       "fichas": [],
       "fonte": "site"
+    },
+    {
+      "id": "consciencia-fraturada",
+      "nome": "Consciência Fraturada",
+      "nomeEn": "Fractured Awareness",
+      "circulo": 7,
+      "escola": "Adivinhação",
+      "classes": [
+        "Bardo",
+        "Bruxo",
+        "Feiticeiro",
+        "Mago"
+      ],
+      "tempo": "Ação",
+      "alcance": "36 metros (24)",
+      "componentes": "V, S",
+      "duracao": "Concentração, até 1 minuto",
+      "ritual": false,
+      "concentracao": true,
+      "desc": [
+        {
+          "t": "p",
+          "x": "Você faz uma criatura receber visões conflitantes de vários futuros possíveis. Escolha uma criatura que você possa ver no alcance da magia. O alvo realiza uma salvaguarda de Inteligência. Se falhar, o alvo sofre 12d10 pontos de dano Psíquico e tem Desvantagem em Testes de D20 pela duração da magia. Em caso de sucesso, o alvo sofre apenas metade do dano, e a magia termina."
+        },
+        {
+          "t": "p",
+          "x": "No final de cada um dos turnos dele, um alvo afetado repete a salvaguarda, encerrando a magia em caso de sucesso."
+        }
+      ],
+      "superior": "",
+      "truque": "",
+      "fichas": [],
+      "fonte": "Arcana Unleashed"
     },
     {
       "id": "contagio",
@@ -3529,6 +3862,34 @@
       "fonte": "site"
     },
     {
+      "id": "corpo-de-ferro",
+      "nome": "Corpo de Ferro",
+      "nomeEn": "Iron Body",
+      "circulo": 8,
+      "escola": "Transmutação",
+      "classes": [
+        "Bruxo",
+        "Feiticeiro",
+        "Mago"
+      ],
+      "tempo": "Ação",
+      "alcance": "Toque",
+      "componentes": "V, S, M (pó de diamante no valor de 250 ou mais PO, que a magia consome)",
+      "duracao": "Concentração, até 1 hora",
+      "ritual": false,
+      "concentracao": true,
+      "desc": [
+        {
+          "t": "p",
+          "x": "Uma criatura disposta que você tocar se transforma em metal vivo. Até que a magia termine, o nível de Exaustão do alvo não pode aumentar; o alvo tem Resistência a dano Contundente, Ígneo, Perfurante e Cortante; e tem Imunidade a dano Venenoso e às condições Paralisado, Petrificado e Envenenado. Se o alvo estiver Paralisado, Petrificado ou Envenenado quando você conjurar a magia, essas condições terminam imediatamente para ele."
+        }
+      ],
+      "superior": "",
+      "truque": "",
+      "fichas": [],
+      "fonte": "Arcana Unleashed"
+    },
+    {
       "id": "corrente-de-relampagos",
       "nome": "Corrente de Relâmpagos",
       "nomeEn": "chain lightning",
@@ -4152,6 +4513,38 @@
       "fonte": "site"
     },
     {
+      "id": "definhar-e-florescer",
+      "nome": "Definhar e Florescer",
+      "nomeEn": "Wither and Bloom",
+      "circulo": 2,
+      "escola": "Necromancia",
+      "classes": [
+        "Druida",
+        "Feiticeiro",
+        "Mago"
+      ],
+      "tempo": "Ação",
+      "alcance": "18 metros (12)",
+      "componentes": "V, S, M (uma videira murcha torcida em forma de laço)",
+      "duracao": "Instantânea",
+      "ritual": false,
+      "concentracao": false,
+      "desc": [
+        {
+          "t": "p",
+          "x": "Você invoca tanto a morte quanto a vida em uma Esfera de 3 metros de raio centrada em um ponto no alcance da magia. Cada criatura à sua escolha nessa área realiza uma salvaguarda de Constituição, sofrendo 3d6 pontos de dano Necrótico se falhar ou metade desse dano em caso de sucesso. Plantas não mágicas nessa área que não sejam criaturas, como árvores e arbustos, definham."
+        },
+        {
+          "t": "p",
+          "x": "Além disso, uma criatura à sua escolha nessa área pode jogar um dos seus Dados de Vida não gastos e recuperar um número de Pontos de Vida igual ao resultado mais seu modificador de atributo de conjuração. Esse dado é então gasto."
+        }
+      ],
+      "superior": "O dano aumenta em 1d6 para cada círculo de espaço de magia acima de 2. O número de Dados de Vida que podem ser jogados e gastos aumenta em um para cada círculo de espaço de magia acima de 2. Você adiciona seu modificador de atributo de conjuração aos Pontos de Vida recuperados por esta magia apenas uma vez, independentemente do número de Dados de Vida jogados e gastos.",
+      "truque": "",
+      "fichas": [],
+      "fonte": "Arcana Unleashed"
+    },
+    {
       "id": "desejo",
       "nome": "Desejo",
       "nomeEn": "wish",
@@ -4707,6 +5100,42 @@
       "fonte": "site"
     },
     {
+      "id": "detonar",
+      "nome": "Detonar",
+      "nomeEn": "Detonate",
+      "circulo": 9,
+      "escola": "Evocação",
+      "classes": [
+        "Bruxo",
+        "Feiticeiro",
+        "Mago"
+      ],
+      "tempo": "Ação",
+      "alcance": "150 metros (100)",
+      "componentes": "V, S, M (um pedaço de isca)",
+      "duracao": "Instantânea",
+      "ritual": false,
+      "concentracao": false,
+      "desc": [
+        {
+          "t": "p",
+          "x": "Você cria uma semente mágica explosiva dentro de uma criatura que você possa ver no alcance da magia. O alvo realiza uma salvaguarda de Constituição, sofrendo 10d10 pontos de dano Ígneo se falhar ou metade desse dano em caso de sucesso."
+        },
+        {
+          "t": "p",
+          "x": "Uma explosão então se origina do alvo. Cada criatura em uma Emanação de 18 metros originada do alvo (sem incluí-lo) realiza uma salvaguarda de Destreza, com Desvantagem se esta magia reduziu o alvo a 0 Pontos de Vida. Uma criatura sofre 10d10 pontos de dano Ígneo se falhar ou metade desse dano em caso de sucesso."
+        },
+        {
+          "t": "p",
+          "x": "Um objeto não mágico que não esteja sendo vestido ou carregado também sofre o dano se estiver na Emanação, e o objeto começa a queimar se for inflamável."
+        }
+      ],
+      "superior": "",
+      "truque": "",
+      "fichas": [],
+      "fonte": "Arcana Unleashed"
+    },
+    {
       "id": "disco-flutuante-de-tenser",
       "nome": "Disco Flutuante de Tenser",
       "nomeEn": "Tenser’s Floating Disk",
@@ -4847,6 +5276,47 @@
       "fonte": "site"
     },
     {
+      "id": "distancia-distorcida",
+      "nome": "Distância Distorcida",
+      "nomeEn": "Distorted Distance",
+      "circulo": 4,
+      "escola": "Ilusão",
+      "classes": [
+        "Bardo",
+        "Bruxo",
+        "Mago",
+        "Artífice"
+      ],
+      "tempo": "Ação",
+      "alcance": "36 metros (24)",
+      "componentes": "V, S",
+      "duracao": "Concentração, até 10 minutos",
+      "ritual": false,
+      "concentracao": true,
+      "desc": [
+        {
+          "t": "p",
+          "x": "Você cria uma dilatação espacial ilusória que preenche uma Esfera de 18 metros de raio centrada em um ponto no alcance da magia. Para cada criatura que você possa ver na Esfera, você pode escolher um dos seguintes efeitos para ela:"
+        },
+        {
+          "t": "p",
+          "x": "Alongamento Vertiginoso. A criatura realiza uma salvaguarda de Inteligência. Se falhar, a criatura sofre 2d10 pontos de dano Psíquico, e a Esfera é Terreno Difícil para ela até o final do turno dela."
+        },
+        {
+          "t": "p",
+          "x": "Espaço Encurtado. O Deslocamento da criatura aumenta em 6 metros até o final do próximo turno dela."
+        },
+        {
+          "t": "p",
+          "x": "Até que a magia termine, sempre que uma criatura entrar na Esfera ou terminar o turno dela lá, você pode escolher que ela receba um desses efeitos. Uma criatura pode ser afetada por esta magia apenas uma vez por turno."
+        }
+      ],
+      "superior": "",
+      "truque": "",
+      "fichas": [],
+      "fonte": "Arcana Unleashed"
+    },
+    {
       "id": "dominar-fera",
       "nome": "Dominar Fera",
       "nomeEn": "Dominate Beast",
@@ -4956,6 +5426,44 @@
       "fonte": "site"
     },
     {
+      "id": "dragao-ilusorio",
+      "nome": "Dragão Ilusório",
+      "nomeEn": "Illusory Dragon",
+      "circulo": 8,
+      "escola": "Ilusão",
+      "classes": [
+        "Mago"
+      ],
+      "tempo": "Ação",
+      "alcance": "36 metros (24)",
+      "componentes": "S",
+      "duracao": "Concentração, até 1 minuto",
+      "ritual": false,
+      "concentracao": true,
+      "desc": [
+        {
+          "t": "p",
+          "x": "Reunindo fios de matéria sombria do Pendor das Sombras, você cria um dragão sombrio Enorme em um espaço desocupado que você possa ver no alcance da magia. A ilusão dura pela duração da magia e ocupa seu espaço como se fosse uma criatura. A ilusão é tangível por causa da matéria sombria usada para criá-la, mas tem Imunidade a todos os danos e condições."
+        },
+        {
+          "t": "p",
+          "x": "Quando a ilusão aparece, qualquer inimigo que possa vê-la realiza uma salvaguarda de Sabedoria. Se falhar, a criatura larga o que estiver segurando e tem a condição Amedrontado pela duração. Se uma criatura Amedrontada dessa forma terminar o turno dela em um espaço onde não tenha linha de visão para a ilusão, a criatura repete a salvaguarda, encerrando a condição sobre si em caso de sucesso."
+        },
+        {
+          "t": "p",
+          "x": "Como uma Ação Bônus, você pode mover a ilusão até 18 metros. Em qualquer ponto durante o movimento dela, você pode fazer o dragão sombrio exalar uma rajada de energia em um Cone de 18 metros. Cada criatura no Cone realiza uma salvaguarda de Inteligência, sofrendo 6d6 pontos de dano Ácido, Gélido, Ígneo, Elétrico, Necrótico ou Venenoso (à sua escolha quando você cria o dragão) se falhar ou metade desse dano em caso de sucesso."
+        },
+        {
+          "t": "p",
+          "x": "Uma criatura que execute uma ação Analisar para examinar o dragão pode determinar que ele é uma ilusão com um teste bem-sucedido de Inteligência (Investigação) contra a CD para evitar sua magia. Se uma criatura discernir a ilusão pelo que ela é, a criatura pode ver através da imagem e tem Vantagem em salvaguardas para encerrar a condição Amedrontado que ela causou e para resistir à exalação."
+        }
+      ],
+      "superior": "",
+      "truque": "",
+      "fichas": [],
+      "fonte": "Arcana Unleashed"
+    },
+    {
       "id": "duelo-compelido",
       "nome": "Duelo Compelido",
       "nomeEn": "Compelled Duel",
@@ -5033,6 +5541,32 @@
       "truque": "",
       "fichas": [],
       "fonte": "site"
+    },
+    {
+      "id": "elusao-de-elminster",
+      "nome": "Elusão de Elminster",
+      "nomeEn": "Elminster’s Elusion",
+      "circulo": 2,
+      "escola": "Abjuração",
+      "classes": [
+        "Mago"
+      ],
+      "tempo": "Ação Bônus",
+      "alcance": "Pessoal",
+      "componentes": "V, S",
+      "duracao": "Concentração, até 10 minutos",
+      "ritual": false,
+      "concentracao": true,
+      "desc": [
+        {
+          "t": "p",
+          "x": "Proteções arcanas protegem você contra magia pela duração da magia. Você tem Vantagem em salvaguardas contra magias e efeitos mágicos. Além disso, se você for bem-sucedido em uma salvaguarda contra uma magia ou efeito mágico e normalmente sofreria metade do dano, você, em vez disso, não sofre dano."
+        }
+      ],
+      "superior": "",
+      "truque": "",
+      "fichas": [],
+      "fonte": "Heróis de Faerûn"
     },
     {
       "id": "emaranhar",
@@ -5159,6 +5693,46 @@
       "truque": "",
       "fichas": [],
       "fonte": "site"
+    },
+    {
+      "id": "enervacao",
+      "nome": "Enervação",
+      "nomeEn": "Enervation",
+      "circulo": 5,
+      "escola": "Necromancia",
+      "classes": [
+        "Bruxo",
+        "Feiticeiro",
+        "Mago"
+      ],
+      "tempo": "Ação",
+      "alcance": "18 metros (12)",
+      "componentes": "V, S",
+      "duracao": "Concentração, até 1 minuto",
+      "ritual": false,
+      "concentracao": true,
+      "desc": [
+        {
+          "t": "p",
+          "x": "Uma gavinha de escuridão como tinta se estende de você para drenar a vida de uma criatura que você possa ver no alcance da magia."
+        },
+        {
+          "t": "p",
+          "x": "O alvo realiza uma salvaguarda de Destreza. Se falhar, o alvo sofre 6d8 pontos de dano Necrótico. Em cada um dos seus turnos subsequentes, você pode executar uma Ação Bônus para causar automaticamente 2d8 pontos de dano Necrótico ao alvo. A magia termina se o alvo ficar fora do alcance da magia ou tiver Cobertura Total em relação a você."
+        },
+        {
+          "t": "p",
+          "x": "Em caso de sucesso, o alvo sofre apenas metade do dano inicial, e a magia termina."
+        },
+        {
+          "t": "p",
+          "x": "Sempre que esta magia causar dano a um alvo, você recupera Pontos de Vida iguais à metade do dano Necrótico causado."
+        }
+      ],
+      "superior": "O dano inicial aumenta em 1d8 para cada círculo de espaço de magia acima de 5.",
+      "truque": "",
+      "fichas": [],
+      "fonte": "Arcana Unleashed"
     },
     {
       "id": "enfeiticar-monstro",
@@ -5347,6 +5921,38 @@
       "truque": "",
       "fichas": [],
       "fonte": "site"
+    },
+    {
+      "id": "escudo-cacofonico",
+      "nome": "Escudo Cacofônico",
+      "nomeEn": "Cacophonic Shield",
+      "circulo": 3,
+      "escola": "Evocação",
+      "classes": [
+        "Bardo",
+        "Feiticeiro",
+        "Mago"
+      ],
+      "tempo": "Ação",
+      "alcance": "Pessoal",
+      "componentes": "V, S",
+      "duracao": "Concentração, até 10 minutos",
+      "ritual": false,
+      "concentracao": true,
+      "desc": [
+        {
+          "t": "p",
+          "x": "Reverberações trovejantes preenchem uma Emanação de 3 metros originada em você pela duração da magia. Sempre que a Emanação entrar no espaço de uma criatura e sempre que uma criatura entrar na Emanação ou terminar o turno dela lá, a criatura realiza uma salvaguarda de Constituição. Se falhar, a criatura sofre 3d6 pontos de dano Trovejante e fica com a condição Surdo até o início do seu próximo turno. Em caso de sucesso, a criatura sofre apenas metade do dano. Uma criatura realiza esta salvaguarda apenas uma vez por turno. Quando você conjura esta magia, pode designar criaturas para não serem afetadas por ela."
+        },
+        {
+          "t": "p",
+          "x": "Além disso, você tem Resistência a dano Trovejante, e jogadas de ataque à distância contra você são realizadas com Desvantagem."
+        }
+      ],
+      "superior": "O dano aumenta em 1d6 para cada círculo de espaço de magia acima de 3.",
+      "truque": "",
+      "fichas": [],
+      "fonte": "Heróis de Faerûn"
     },
     {
       "id": "escudo-da-fe",
@@ -5549,6 +6155,46 @@
       "fonte": "site"
     },
     {
+      "id": "esferas-refulgentes-de-elminster",
+      "nome": "Esferas Refulgentes de Elminster",
+      "nomeEn": "Elminster’s Effulgent Spheres",
+      "circulo": 6,
+      "escola": "Evocação",
+      "classes": [
+        "Druida",
+        "Feiticeiro",
+        "Mago"
+      ],
+      "tempo": "Ação",
+      "alcance": "Pessoal",
+      "componentes": "V, S, M (uma opala no valor de 1.000 ou mais PO)",
+      "duracao": "1 hora",
+      "ritual": false,
+      "concentracao": false,
+      "desc": [
+        {
+          "t": "p",
+          "x": "Seis esferas cromáticas orbitam você pela duração da magia. Enquanto as esferas estiverem presentes, você pode gastar esferas para criar os seguintes efeitos:"
+        },
+        {
+          "t": "p",
+          "x": "Absorver Energia. Quando você sofrer dano Ácido, Gélido, Ígneo, Elétrico ou Trovejante, pode usar uma Reação para gastar uma esfera e conceder a si mesmo Resistência ao tipo de dano desencadeador até o início do seu próximo turno."
+        },
+        {
+          "t": "p",
+          "x": "Explosão de Energia. Como uma Ação Bônus, você envia uma esfera em alta velocidade em direção a um alvo a até 36 metros de você. Realize um ataque mágico à distância. Em caso de acerto, o alvo sofre 3d6 pontos de dano Ácido, Gélido, Ígneo, Elétrico ou Trovejante (à sua escolha). Independentemente de você acertar, a esfera é gasta."
+        },
+        {
+          "t": "p",
+          "x": "A magia termina antecipadamente se você não tiver mais esferas restantes."
+        }
+      ],
+      "superior": "O número de esferas aumenta em 1 para cada círculo de espaço de magia acima de 6.",
+      "truque": "",
+      "fichas": [],
+      "fonte": "Heróis de Faerûn"
+    },
+    {
       "id": "espada-de-mordenkainen",
       "nome": "Espada de Mordenkainen",
       "nomeEn": "Mordenkainen's Sword",
@@ -5582,6 +6228,43 @@
       "truque": "",
       "fichas": [],
       "fonte": "site"
+    },
+    {
+      "id": "espelhos-fascinantes",
+      "nome": "Espelhos Fascinantes",
+      "nomeEn": "Entrancing Mirrors",
+      "circulo": 8,
+      "escola": "Ilusão",
+      "classes": [
+        "Bardo",
+        "Bruxo",
+        "Feiticeiro",
+        "Mago"
+      ],
+      "tempo": "Ação",
+      "alcance": "27 metros (18)",
+      "componentes": "V, S, M (um caco de espelho)",
+      "duracao": "Concentração, até 1 minuto",
+      "ritual": false,
+      "concentracao": true,
+      "desc": [
+        {
+          "t": "p",
+          "x": "Você cria dezenas de espelhos ilusórios para confundir até três criaturas à sua escolha que você possa ver no alcance da magia."
+        },
+        {
+          "t": "p",
+          "x": "Cada alvo realiza uma salvaguarda de Inteligência. Se falhar, o alvo sofre 7d6 pontos de dano Psíquico e tem a condição Atordoado. Enquanto o alvo estiver Atordoado, o Deslocamento dele é reduzido à metade. Em caso de sucesso, o alvo sofre apenas metade do dano."
+        },
+        {
+          "t": "p",
+          "x": "Um alvo Atordoado repete a salvaguarda de Inteligência no final de cada um dos turnos dele, encerrando a magia sobre si em caso de sucesso."
+        }
+      ],
+      "superior": "",
+      "truque": "",
+      "fichas": [],
+      "fonte": "Arcana Unleashed"
     },
     {
       "id": "espinho-mental",
@@ -5675,6 +6358,41 @@
       "truque": "",
       "fichas": [],
       "fonte": "site"
+    },
+    {
+      "id": "estrela-sagrada-de-mystra",
+      "nome": "Estrela Sagrada de Mystra",
+      "nomeEn": "Holy Star of Mystra",
+      "circulo": 8,
+      "escola": "Evocação",
+      "classes": [
+        "Clérigo",
+        "Mago"
+      ],
+      "tempo": "Ação Bônus",
+      "alcance": "Pessoal",
+      "componentes": "V, S",
+      "duracao": "Concentração, até 1 minuto",
+      "ritual": false,
+      "concentracao": true,
+      "desc": [
+        {
+          "t": "p",
+          "x": "Você cria uma partícula brilhante de energia que paira acima de você pela duração da magia. A partícula emite Luz Plena em um raio de 1,5 metro e Meia-luz por mais 1,5 metro."
+        },
+        {
+          "t": "p",
+          "x": "Quando você conjura esta magia e como uma Ação Bônus em turnos posteriores, pode disparar um raio brilhante da partícula, alvejando uma criatura a até 36 metros de você. Realize um ataque mágico à distância. Em caso de acerto, o alvo sofre dano Energético ou Radiante (à sua escolha) igual a 4d10 mais seu modificador de atributo de conjuração."
+        },
+        {
+          "t": "p",
+          "x": "Além disso, enquanto a partícula estiver presente, você tem Cobertura de Três Quartos, e se for bem-sucedido em uma salvaguarda contra uma magia de 7º círculo ou inferior que tenha alvejado apenas você e não tenha criado uma área de efeito, pode usar uma Reação para defletir essa magia de volta para o conjurador; o conjurador realiza uma salvaguarda contra essa magia usando a própria CD para evitar suas magias."
+        }
+      ],
+      "superior": "",
+      "truque": "",
+      "fichas": [],
+      "fonte": "Heróis de Faerûn"
     },
     {
       "id": "explosao-elemental",
@@ -5937,6 +6655,136 @@
       "truque": "",
       "fichas": [],
       "fonte": "site"
+    },
+    {
+      "id": "familiar-de-batalha",
+      "nome": "Familiar de Batalha",
+      "nomeEn": "Battle Familiar",
+      "circulo": 2,
+      "escola": "Invocação",
+      "classes": [
+        "Bruxo",
+        "Druida",
+        "Mago"
+      ],
+      "tempo": "Ação",
+      "alcance": "3 metros (2)",
+      "componentes": "V, S, M (um diamante no valor de 25 ou mais PO)",
+      "duracao": "1 hora",
+      "ritual": false,
+      "concentracao": false,
+      "desc": [
+        {
+          "t": "p",
+          "x": "Você invoca um familiar imbuído de poder mágico. O familiar aparece em um espaço desocupado no alcance da magia; assemelha-se a um animal à sua escolha, mas é um Celestial, Feérico ou Ínfero (à sua escolha); e usa o bloco de estatísticas do Familiar de Batalha. Ao conjurar esta magia, escolha a forma Bruto, Voador ou Espreitador. A escolha determina certos detalhes no bloco de estatísticas."
+        },
+        {
+          "t": "p",
+          "x": "Combate. O familiar é um aliado seu e de seus aliados. Ele rola a própria Iniciativa e age no próprio turno."
+        },
+        {
+          "t": "p",
+          "x": "Desaparecimento do Familiar. O familiar de batalha desaparece quando a magia termina, se for reduzido a 0 Pontos de Vida ou se você morrer. Quando ele desaparece, deixa no espaço dele tudo o que estava vestindo ou carregando. Se você conjurar esta magia novamente, decide se invoca o familiar que desapareceu ou um diferente."
+        },
+        {
+          "t": "p",
+          "x": "Um Familiar por Vez. Você não pode ter mais de um familiar ao mesmo tempo. Se conjurar esta magia enquanto já tiver um familiar proveniente dela, esse familiar é substituído pelo novo."
+        },
+        {
+          "t": "p",
+          "x": "Se você tiver um familiar da magia Convocar Familiar ao conjurar esta magia, você fortalece o familiar existente em vez de invocar um novo. Pela duração, seu familiar pode atacar além de realizar suas outras ações normais, e as estatísticas de jogo dele são substituídas pelo bloco de estatísticas do Familiar de Batalha, mas ele mantém seu tipo de criatura, alinhamento, Pontos de Vida, Dados de Vida e quaisquer características concedidas pela magia Convocar Familiar. Seu familiar ganha um número de Pontos de Vida Temporários igual aos Pontos de Vida do familiar de batalha. Familiar de Batalha termina antecipadamente se o familiar não tiver mais Pontos de Vida Temporários, e esses Pontos de Vida Temporários desaparecem se ainda restarem quando Familiar de Batalha terminar. Seu familiar retorna à forma anterior quando Familiar de Batalha termina."
+        }
+      ],
+      "superior": "Use o círculo do espaço de magia para o círculo da magia no bloco de estatísticas.",
+      "truque": "",
+      "fichas": [
+        {
+          "nome": "Familiar de Batalha",
+          "tipo": "Celestial, Feérico ou Ínfero Médio (à Sua Escolha), Neutro",
+          "ca": "11 + o círculo da magia + 2 (apenas Bruto); Iniciativa +3 (13)",
+          "pv": "30 (apenas Bruto) ou 20 (apenas Voador ou Espreitador) + 5 para cada círculo de magia acima de 2",
+          "deslocamento": "12 m, Voo 9 m (pairar; apenas Voador), Natação 9 m",
+          "atr": {
+            "For": [
+              "16",
+              "+3",
+              "+3"
+            ],
+            "Des": [
+              "16",
+              "+3",
+              "+3"
+            ],
+            "Con": [
+              "12",
+              "+1",
+              "+1"
+            ],
+            "Int": [
+              "8",
+              "-1",
+              "-1"
+            ],
+            "Sab": [
+              "13",
+              "+1",
+              "+1"
+            ],
+            "Car": [
+              "10",
+              "+0",
+              "+0"
+            ]
+          },
+          "props": [
+            [
+              "Imunidades",
+              "Enfeitiçado, Amedrontado"
+            ],
+            [
+              "Sentidos",
+              "Percepção Passiva 11"
+            ],
+            [
+              "Idiomas",
+              "Compreende os idiomas que você conhece"
+            ]
+          ],
+          "secoes": [
+            {
+              "titulo": "Traços",
+              "itens": [
+                {
+                  "nome": "Sobrevoo (Apenas Voador)",
+                  "texto": "O familiar não provoca Ataques de Oportunidade quando voa para fora do alcance de um inimigo."
+                },
+                {
+                  "nome": "Talentoso",
+                  "texto": "Adicione metade do círculo da magia (arredondado para baixo) a qualquer teste de atributo ou salvaguarda que o familiar realizar."
+                }
+              ]
+            },
+            {
+              "titulo": "Ações",
+              "itens": [
+                {
+                  "nome": "Ataques Múltiplos",
+                  "texto": "O familiar realiza um número de ataques de Dilacerar igual à metade do círculo desta magia (arredondado para baixo). O familiar pode substituir um desses ataques por Espreitar, se disponível."
+                },
+                {
+                  "nome": "Dilacerar",
+                  "texto": "Jogada de Ataque Corpo a Corpo: Bônus é igual ao seu modificador de ataque mágico, alcance 1,5 m. Dano: 1d8 + 3 + o círculo da magia em pontos de dano Energético."
+                },
+                {
+                  "nome": "Espreitar (Apenas Espreitador)",
+                  "texto": "O familiar se move até metade do seu Deslocamento sem provocar Ataques de Oportunidade. Ao final desse movimento, o familiar pode executar a ação Esconder."
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "fonte": "Arcana Unleashed"
     },
     {
       "id": "favor-divino",
@@ -6574,6 +7422,33 @@
       "fonte": "site"
     },
     {
+      "id": "homunculos-uteis-de-deryan",
+      "nome": "Homúnculos Úteis de Deryan",
+      "nomeEn": "Deryan’s Helpful Homunculi",
+      "circulo": 2,
+      "escola": "Invocação",
+      "classes": [
+        "Clérigo",
+        "Mago"
+      ],
+      "tempo": "Ação ou Ritual",
+      "alcance": "Pessoal",
+      "componentes": "V, S, M (pedras preciosas em pó no valor de 100 ou mais PO, que a magia consome, e um conjunto de Ferramentas de Artesão com o qual você tenha proficiência)",
+      "duracao": "8 horas",
+      "ritual": true,
+      "concentracao": false,
+      "desc": [
+        {
+          "t": "p",
+          "x": "Você convoca um grupo de espíritos prestativos, que dura pela duração da magia. Os espíritos aparecem como homúnculos ou como outro Constructo à sua escolha, mas são intangíveis e invulneráveis, e são considerados proficientes na perícia Arcanismo e com o conjunto de Ferramentas de Artesão usado na conjuração da magia. Se você estiver criando um item, os espíritos funcionam como um único assistente para sua criação, reduzindo pela metade o tempo de criação."
+        }
+      ],
+      "superior": "",
+      "truque": "",
+      "fichas": [],
+      "fonte": "Heróis de Faerûn"
+    },
+    {
       "id": "identificar",
       "nome": "Identificar",
       "nomeEn": "identify",
@@ -6787,6 +7662,35 @@
       "fonte": "site"
     },
     {
+      "id": "infligir-duvida",
+      "nome": "Infligir Dúvida",
+      "nomeEn": "Inflict Doubt",
+      "circulo": 3,
+      "escola": "Encantamento",
+      "classes": [
+        "Bardo",
+        "Bruxo",
+        "Feiticeiro",
+        "Mago"
+      ],
+      "tempo": "Ação",
+      "alcance": "36 metros (24)",
+      "componentes": "V, S",
+      "duracao": "Concentração, até 1 minuto",
+      "ritual": false,
+      "concentracao": true,
+      "desc": [
+        {
+          "t": "p",
+          "x": "Você inflige autodúvida a uma criatura que você possa ver no alcance da magia. O alvo deve ser bem-sucedido em uma salvaguarda de Sabedoria ou tem Desvantagem em Testes de D20 pela duração da magia. No final de cada um dos turnos dele, o alvo repete a salvaguarda, encerrando a magia sobre si em caso de sucesso."
+        }
+      ],
+      "superior": "",
+      "truque": "",
+      "fichas": [],
+      "fonte": "Arcana Unleashed"
+    },
+    {
       "id": "infligir-ferimentos",
       "nome": "Infligir Ferimentos",
       "nomeEn": "Inflict Wounds",
@@ -6932,6 +7836,37 @@
         }
       ],
       "fonte": "site"
+    },
+    {
+      "id": "inundacao-de-energia-negativa",
+      "nome": "Inundação de Energia Negativa",
+      "nomeEn": "Negative Energy Flood",
+      "circulo": 5,
+      "escola": "Necromancia",
+      "classes": [
+        "Bruxo",
+        "Mago"
+      ],
+      "tempo": "Ação",
+      "alcance": "18 metros (12)",
+      "componentes": "V, M (um osso quebrado e um quadrado de seda preta)",
+      "duracao": "Instantânea",
+      "ritual": false,
+      "concentracao": false,
+      "desc": [
+        {
+          "t": "p",
+          "x": "Você envia fitas de energia negativa contra uma criatura que você possa ver no alcance da magia. Se o alvo não for um Morto-Vivo, ele realiza uma salvaguarda de Constituição, sofrendo 3d10 + 25 pontos de dano Necrótico se falhar ou metade desse dano em caso de sucesso. Um Humanoide morto por esta magia se levanta no início do seu próximo turno como um Zumbi que segue suas ordens verbais por 24 horas, após as quais passa a agir de acordo com a própria natureza."
+        },
+        {
+          "t": "p",
+          "x": "Se o alvo for um Morto-Vivo, ele ganha 3d10 Pontos de Vida Temporários."
+        }
+      ],
+      "superior": "O dano aumenta em 1d10 para cada círculo de espaço de magia acima de 5.",
+      "truque": "",
+      "fichas": [],
+      "fonte": "Arcana Unleashed"
     },
     {
       "id": "inverter-a-gravidade",
@@ -7414,6 +8349,122 @@
         }
       ],
       "fonte": "site"
+    },
+    {
+      "id": "invocar-dinossauro",
+      "nome": "Invocar Dinossauro",
+      "nomeEn": "Summon Dinosaur",
+      "circulo": 6,
+      "escola": "Invocação",
+      "classes": [
+        "Druida"
+      ],
+      "tempo": "Ação",
+      "alcance": "27 metros (18)",
+      "componentes": "V, S, M (uma escama polida no valor de 600 ou mais PO)",
+      "duracao": "Concentração, até 1 hora",
+      "ritual": false,
+      "concentracao": true,
+      "desc": [
+        {
+          "t": "p",
+          "x": "Você invoca o espírito de um dinossauro primitivo. Ele se manifesta em um espaço desocupado que você possa ver no alcance da magia e usa o bloco de estatísticas do Espírito de Dinossauro. Ao conjurar a magia, escolha Anquilossauro, Tricerátops ou Tiranossauro. A criatura se assemelha a um dinossauro do tipo escolhido, o que determina certos detalhes no bloco de estatísticas dela. A criatura desaparece quando é reduzida a 0 Pontos de Vida ou quando a magia termina."
+        },
+        {
+          "t": "p",
+          "x": "A criatura é uma aliada sua e de seus aliados. Em combate, a criatura compartilha sua contagem de Iniciativa, mas o turno dela é imediatamente após o seu. Ela obedece aos seus comandos verbais (nenhuma ação é necessária de sua parte). Se você não emitir nenhum, a criatura executa a ação Esquivar e usa o movimento dela para evitar o perigo."
+        }
+      ],
+      "superior": "Use o círculo do espaço de magia para o círculo da magia no bloco de estatísticas.",
+      "truque": "",
+      "fichas": [
+        {
+          "nome": "Espírito de Dinossauro",
+          "tipo": "Fera Enorme (Dinossauro), Neutra",
+          "ca": "11 + o círculo da magia + 2 (apenas Anquilossauro); Iniciativa +0 (10)",
+          "pv": "60 + 10 para cada círculo de magia acima de 6",
+          "deslocamento": "12 m",
+          "atr": {
+            "For": [
+              "21",
+              "+5",
+              "+5"
+            ],
+            "Des": [
+              "11",
+              "+0",
+              "+0"
+            ],
+            "Con": [
+              "15",
+              "+2",
+              "+2"
+            ],
+            "Int": [
+              "4",
+              "-3",
+              "-3"
+            ],
+            "Sab": [
+              "12",
+              "+1",
+              "+1"
+            ],
+            "Car": [
+              "9",
+              "-1",
+              "-1"
+            ]
+          },
+          "props": [
+            [
+              "Sentidos",
+              "Percepção Passiva 11"
+            ],
+            [
+              "Idiomas",
+              "Compreende os idiomas que você conhece"
+            ]
+          ],
+          "secoes": [
+            {
+              "titulo": "Traços",
+              "itens": [
+                {
+                  "nome": "Monstro de Cerco (Apenas Anquilossauro)",
+                  "texto": "O espírito causa o dobro de dano a objetos e estruturas."
+                },
+                {
+                  "nome": "Resistente",
+                  "texto": "Adicione metade do círculo da magia (arredondado para baixo) a qualquer salvaguarda de Força ou Constituição que o espírito realizar."
+                }
+              ]
+            },
+            {
+              "titulo": "Ações",
+              "itens": [
+                {
+                  "nome": "Ataques Múltiplos",
+                  "texto": "O espírito realiza um número de ataques igual à metade do círculo desta magia (arredondado para baixo)."
+                },
+                {
+                  "nome": "Mordida (Apenas Tiranossauro)",
+                  "texto": "Jogada de Ataque Corpo a Corpo: Bônus é igual ao seu modificador de ataque mágico, alcance 3 m. Dano: 2d10 + 5 + o círculo da magia em pontos de dano Perfurante. Se o alvo for uma criatura Grande ou menor, ele tem a condição Imobilizado (CD para escapar é igual à sua CD para evitar sua magia) e tem a condição Contido até que a imobilização termine."
+                },
+                {
+                  "nome": "Chifrada (Apenas Tricerátops)",
+                  "texto": "Jogada de Ataque Corpo a Corpo: Bônus é igual ao seu modificador de ataque mágico, alcance 1,5 m. Dano: 1d10 + 5 + o círculo da magia em pontos de dano Perfurante. Se o alvo for uma criatura Enorme ou menor e o espírito tiver se movido 6 metros ou mais em linha reta em direção a ela imediatamente antes do acerto, o alvo sofre 1d10 pontos de dano Perfurante adicionais e tem a condição Caído."
+                },
+                {
+                  "nome": "Pancada",
+                  "texto": "Jogada de Ataque Corpo a Corpo: Bônus é igual ao seu modificador de ataque mágico, alcance 3 m. Dano: 1d10 + 5 + o círculo da magia em pontos de dano Contundente."
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "fonte": "Arcana Unleashed"
     },
     {
       "id": "invocar-dragao",
@@ -8007,6 +9058,128 @@
       "fonte": "site"
     },
     {
+      "id": "invocar-planta",
+      "nome": "Invocar Planta",
+      "nomeEn": "Summon Plant",
+      "circulo": 5,
+      "escola": "Invocação",
+      "classes": [
+        "Druida",
+        "Guardião"
+      ],
+      "tempo": "Ação",
+      "alcance": "27 metros (18)",
+      "componentes": "V, S, M (ervas no valor de 500 ou mais PO)",
+      "duracao": "Concentração, até 1 hora",
+      "ritual": false,
+      "concentracao": true,
+      "desc": [
+        {
+          "t": "p",
+          "x": "Você invoca o espírito de uma planta animada. Ele se manifesta em um espaço desocupado que você possa ver no alcance da magia e usa o bloco de estatísticas do Espírito de Planta. Ao conjurar a magia, escolha Fungo, Árvore ou Vinha. A criatura se assemelha a uma planta do tipo escolhido, o que determina certos detalhes no bloco de estatísticas dela. A criatura desaparece quando é reduzida a 0 Pontos de Vida ou quando a magia termina."
+        },
+        {
+          "t": "p",
+          "x": "A criatura é uma aliada sua e de seus aliados. Em combate, a criatura compartilha sua contagem de Iniciativa, mas o turno dela é imediatamente após o seu. Ela obedece aos seus comandos verbais (nenhuma ação é necessária de sua parte). Se você não emitir nenhum, ela executa a ação Esquivar e usa o movimento dela para evitar o perigo."
+        }
+      ],
+      "superior": "Use o círculo do espaço de magia para o círculo da magia no bloco de estatísticas.",
+      "truque": "",
+      "fichas": [
+        {
+          "nome": "Espírito de Planta",
+          "tipo": "Planta Grande, Neutra",
+          "ca": "11 + o círculo da magia + 2 (apenas Árvore); Iniciativa +1 (11)",
+          "pv": "50 + 10 para cada círculo de magia acima de 5",
+          "deslocamento": "12 m; Escalada 12 m (Apenas Vinha)",
+          "atr": {
+            "For": [
+              "17",
+              "+3",
+              "+3"
+            ],
+            "Des": [
+              "13",
+              "+1",
+              "+1"
+            ],
+            "Con": [
+              "14",
+              "+2",
+              "+2"
+            ],
+            "Int": [
+              "10",
+              "+0",
+              "+0"
+            ],
+            "Sab": [
+              "13",
+              "+1",
+              "+1"
+            ],
+            "Car": [
+              "10",
+              "+0",
+              "+0"
+            ]
+          },
+          "props": [
+            [
+              "Vulnerabilidades",
+              "Ígneo (apenas Árvore), Cortante (apenas Fungo ou Vinha)"
+            ],
+            [
+              "Sentidos",
+              "Percepção Passiva 11"
+            ],
+            [
+              "Idiomas",
+              "Compreende os idiomas que você conhece"
+            ]
+          ],
+          "secoes": [
+            {
+              "titulo": "Traços",
+              "itens": [
+                {
+                  "nome": "Monstro de Cerco (Apenas Árvore)",
+                  "texto": "O espírito causa o dobro de dano a objetos e estruturas."
+                }
+              ]
+            },
+            {
+              "titulo": "Ações",
+              "itens": [
+                {
+                  "nome": "Ataques Múltiplos",
+                  "texto": "O espírito realiza um número de ataques igual à metade do círculo desta magia (arredondado para baixo)."
+                },
+                {
+                  "nome": "Pancada (Apenas Árvore ou Vinha)",
+                  "texto": "Jogada de Ataque Corpo a Corpo: Bônus é igual ao seu modificador de ataque mágico, alcance 1,5 m. Dano: 1d10 + 3 + o círculo da magia em pontos de dano Contundente."
+                },
+                {
+                  "nome": "Jato de Esporos (Apenas Fungo)",
+                  "texto": "Jogada de Ataque Corpo a Corpo ou à Distância: Bônus é igual ao seu modificador de ataque mágico, alcance 1,5 m ou distância 9 m. Dano: 1d4 + o círculo da magia em pontos de dano Venenoso, e o alvo tem a condição Envenenado até o final do próximo turno dele. Se o alvo já tiver a condição Envenenado, ele sofre 3d4 pontos de dano Venenoso adicionais."
+                }
+              ]
+            },
+            {
+              "titulo": "Ações Bônus",
+              "itens": [
+                {
+                  "nome": "Retorcer-se (Apenas Vinha)",
+                  "texto": "O espírito executa a ação Correr ou Desengajar."
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "fonte": "Arcana Unleashed"
+    },
+    {
       "id": "invocar-saraivada",
       "nome": "Invocar Saraivada",
       "nomeEn": "Conjure Volley",
@@ -8068,6 +9241,32 @@
       "fonte": "site"
     },
     {
+      "id": "invulnerabilidade",
+      "nome": "Invulnerabilidade",
+      "nomeEn": "Invulnerability",
+      "circulo": 9,
+      "escola": "Abjuração",
+      "classes": [
+        "Mago"
+      ],
+      "tempo": "Ação",
+      "alcance": "Pessoal",
+      "componentes": "V, S, M (um pedaço de adamantina no valor de 500 ou mais PO, que a magia consome)",
+      "duracao": "Concentração, até 10 minutos",
+      "ritual": false,
+      "concentracao": true,
+      "desc": [
+        {
+          "t": "p",
+          "x": "Você tem Imunidade a todos os danos até que a magia termine."
+        }
+      ],
+      "superior": "",
+      "truque": "",
+      "fichas": [],
+      "fonte": "Arcana Unleashed"
+    },
+    {
       "id": "labirinto",
       "nome": "Labirinto",
       "nomeEn": "Maze",
@@ -8100,6 +9299,70 @@
       "truque": "",
       "fichas": [],
       "fonte": "site"
+    },
+    {
+      "id": "lamento-da-banshee",
+      "nome": "Lamento da Banshee",
+      "nomeEn": "Wail of the Banshee",
+      "circulo": 9,
+      "escola": "Necromancia",
+      "classes": [
+        "Bruxo",
+        "Feiticeiro",
+        "Mago"
+      ],
+      "tempo": "Ação",
+      "alcance": "18 metros (12)",
+      "componentes": "V",
+      "duracao": "Instantânea",
+      "ritual": false,
+      "concentracao": false,
+      "desc": [
+        {
+          "t": "p",
+          "x": "Você emite um grito terrível que pode matar aqueles que o ouvem. Escolha até dez criaturas no alcance da magia. Cada alvo com 50 Pontos de Vida ou menos morre. Alvos com mais de 50 Pontos de Vida realizam uma salvaguarda de Constituição. Se falhar, o alvo sofre 12d10 pontos de dano Psíquico e tem a condição Surdo por 1 hora. Em caso de sucesso, o alvo sofre apenas metade do dano. Um alvo não é afetado pela magia se não puder ouvir você."
+        }
+      ],
+      "superior": "",
+      "truque": "",
+      "fichas": [],
+      "fonte": "Arcana Unleashed"
+    },
+    {
+      "id": "lamina-do-desastre",
+      "nome": "Lâmina do Desastre",
+      "nomeEn": "Blade of Disaster",
+      "circulo": 9,
+      "escola": "Invocação",
+      "classes": [
+        "Bruxo",
+        "Feiticeiro",
+        "Mago"
+      ],
+      "tempo": "Ação Bônus",
+      "alcance": "18 metros (12)",
+      "componentes": "V, S",
+      "duracao": "Concentração, até 1 minuto",
+      "ritual": false,
+      "concentracao": true,
+      "desc": [
+        {
+          "t": "p",
+          "x": "Você cria uma fenda planar em forma de lâmina de 90 centímetros de comprimento que dura pela duração da magia. A fenda aparece no alcance da magia em um espaço de sua escolha, e você pode imediatamente realizar até dois ataques mágicos corpo a corpo, cada um contra uma criatura ou objeto a até 1,5 metro da fenda. Em caso de acerto, o alvo sofre 10d6 pontos de dano Energético. Este ataque causa um Acerto Crítico se o número no d20 for 18 ou superior."
+        },
+        {
+          "t": "p",
+          "x": "Como uma Ação Bônus em seus turnos posteriores, você pode mover a fenda até 18 metros e repetir os dois ataques contra uma criatura ou um objeto a até 1,5 metro dela. Você pode direcionar os ataques ao mesmo alvo ou a alvos diferentes."
+        },
+        {
+          "t": "p",
+          "x": "A lâmina pode passar inofensivamente por qualquer barreira, incluindo aquelas criadas por magias como Muralha de Energia."
+        }
+      ],
+      "superior": "",
+      "truque": "",
+      "fichas": [],
+      "fonte": "Heróis de Faerûn"
     },
     {
       "id": "lamina-flamejante",
@@ -8135,6 +9398,79 @@
       "truque": "",
       "fichas": [],
       "fonte": "site"
+    },
+    {
+      "id": "lanca-de-prata-de-laeral",
+      "nome": "Lança de Prata de Laeral",
+      "nomeEn": "Laeral’s Silver Lance",
+      "circulo": 3,
+      "escola": "Evocação",
+      "classes": [
+        "Clérigo",
+        "Feiticeiro",
+        "Mago"
+      ],
+      "tempo": "Ação",
+      "alcance": "Pessoal",
+      "componentes": "V, S, M (um alfinete de prata no valor de 250 ou mais PO)",
+      "duracao": "Instantânea",
+      "ritual": false,
+      "concentracao": false,
+      "desc": [
+        {
+          "t": "p",
+          "x": "Energia prateada irrompe de você em uma Linha de 36 metros de comprimento e 1,5 metro de largura. Cada criatura à sua escolha na Linha realiza uma salvaguarda de Força. Se falhar, a criatura sofre 3d10 pontos de dano Energético e fica com a condição Caído. Em caso de sucesso, a criatura sofre apenas metade do dano."
+        }
+      ],
+      "superior": "O dano aumenta em 1d10 para cada círculo de espaço de magia acima de 3.",
+      "truque": "",
+      "fichas": [],
+      "fonte": "Heróis de Faerûn"
+    },
+    {
+      "id": "lanterna-espiritual",
+      "nome": "Lanterna Espiritual",
+      "nomeEn": "Spirit Lantern",
+      "circulo": 5,
+      "escola": "Necromancia",
+      "classes": [
+        "Bruxo",
+        "Clérigo",
+        "Mago",
+        "Artífice"
+      ],
+      "tempo": "Ação",
+      "alcance": "Pessoal",
+      "componentes": "V, S, M (uma lanterna preta)",
+      "duracao": "10 minutos",
+      "ritual": false,
+      "concentracao": false,
+      "desc": [
+        {
+          "t": "p",
+          "x": "Você conjura uma lanterna preta fantasmagórica flutuante que paira acima de você e emite Meia-luz em um raio de 18 metros. Quando um inimigo morre dentro dessa Meia-luz, um fragmento da alma da criatura voa para dentro da lanterna. A lanterna pode conter um número de fragmentos de alma igual ao seu modificador de atributo de conjuração, e esses fragmentos se dissipam quando a magia termina."
+        },
+        {
+          "t": "p",
+          "x": "Como uma Ação Bônus, você pode gastar um fragmento de alma para criar um dos seguintes efeitos."
+        },
+        {
+          "t": "p",
+          "x": "Drenar Vida. O fragmento de alma dispara contra uma criatura à sua escolha que você possa ver a até 18 metros de você. O alvo realiza uma salvaguarda de Constituição, sofrendo pontos de dano Necrótico iguais a 4d8 mais seu modificador de atributo de conjuração se falhar ou metade desse dano em caso de sucesso."
+        },
+        {
+          "t": "p",
+          "x": "Reparar Morto-Vivo. O fragmento de alma voa para dentro de uma criatura Morta-Viva à sua escolha que você possa ver a até 18 metros de você. Essa criatura recupera Pontos de Vida iguais a 4d8 mais seu modificador de atributo de conjuração."
+        },
+        {
+          "t": "p",
+          "x": "Proteger Aliado. O fragmento de alma circula uma criatura à sua escolha que você possa ver a até 18 metros de você. Outras criaturas têm Desvantagem em jogadas de ataque contra a criatura escolhida até o início do seu próximo turno."
+        }
+      ],
+      "superior": "",
+      "truque": "",
+      "fichas": [],
+      "fonte": "Arcana Unleashed"
     },
     {
       "id": "lendas-e-historias",
@@ -8490,6 +9826,32 @@
       "fonte": "site"
     },
     {
+      "id": "lucubracao-de-mordenkainen",
+      "nome": "Lucubração de Mordenkainen",
+      "nomeEn": "Mordenkainen’s Lucubration",
+      "circulo": 5,
+      "escola": "Adivinhação",
+      "classes": [
+        "Mago"
+      ],
+      "tempo": "Ação",
+      "alcance": "Pessoal",
+      "componentes": "V, S",
+      "duracao": "Instantânea",
+      "ritual": false,
+      "concentracao": false,
+      "desc": [
+        {
+          "t": "p",
+          "x": "Você recupera até dois espaços de magia gastos de 2º círculo ou inferior."
+        }
+      ],
+      "superior": "O círculo máximo dos espaços de magia que você pode recuperar aumenta para o 3º círculo (se conjurada com um espaço de magia de 6º ou 7º círculo) ou para o 4º círculo (se conjurada com um espaço de magia de 8º círculo ou superior).",
+      "truque": "",
+      "fichas": [],
+      "fonte": "Arcana Unleashed"
+    },
+    {
       "id": "lufada-de-vento",
       "nome": "Lufada de Vento",
       "nomeEn": "gust of wind",
@@ -8738,6 +10100,47 @@
       "fonte": "site"
     },
     {
+      "id": "manto-lunar-de-alustriel",
+      "nome": "Manto Lunar de Alustriel",
+      "nomeEn": "Alustriel’s Mooncloak",
+      "circulo": 5,
+      "escola": "Abjuração",
+      "classes": [
+        "Bardo",
+        "Druida",
+        "Guardião",
+        "Mago"
+      ],
+      "tempo": "Ação",
+      "alcance": "Pessoal",
+      "componentes": "V, S, M (uma pedra da lua no valor de 50 ou mais PO)",
+      "duracao": "Concentração, até 1 minuto",
+      "ritual": false,
+      "concentracao": true,
+      "desc": [
+        {
+          "t": "p",
+          "x": "Pela duração da magia, luar preenche uma Emanação de 6 metros originada em você com Meia-luz. Enquanto estiverem nessa área, você e seus aliados têm Cobertura Parcial e Resistência a dano Gélido, Elétrico e Radiante."
+        },
+        {
+          "t": "p",
+          "x": "Enquanto a magia durar, você pode usar uma das seguintes opções, encerrando a magia imediatamente:"
+        },
+        {
+          "t": "p",
+          "x": "Libertação. Quando você falhar em uma salvaguarda para evitar ou encerrar a condição Amedrontado, Imobilizado ou Contido, pode usar uma Reação para ser bem-sucedido na salvaguarda."
+        },
+        {
+          "t": "p",
+          "x": "Respiro. Como uma ação Usar Magia, você ou um aliado dentro da área recupera Pontos de Vida iguais a 4d10 mais seu modificador de atributo de conjuração."
+        }
+      ],
+      "superior": "",
+      "truque": "",
+      "fichas": [],
+      "fonte": "Heróis de Faerûn"
+    },
+    {
       "id": "mao-de-bigby",
       "nome": "Mão de Bigby",
       "nomeEn": "Bigby’s Hand",
@@ -8893,6 +10296,46 @@
       "fonte": "site"
     },
     {
+      "id": "mare-da-perdicao",
+      "nome": "Maré da Perdição",
+      "nomeEn": "Doomtide",
+      "circulo": 4,
+      "escola": "Invocação",
+      "classes": [
+        "Bardo",
+        "Bruxo",
+        "Clérigo"
+      ],
+      "tempo": "Ação",
+      "alcance": "36 metros (24)",
+      "componentes": "V, S, M (fuligem e uma enguia seca)",
+      "duracao": "Concentração, até 1 minuto",
+      "ritual": false,
+      "concentracao": true,
+      "desc": [
+        {
+          "t": "p",
+          "x": "Você cria uma Esfera de 6 metros de raio de névoa negra no alcance da magia. A névoa é Escuridão mágica e dura pela duração da magia ou até que um vento forte (como o criado pela magia Lufada de Vento) a disperse, encerrando a magia."
+        },
+        {
+          "t": "p",
+          "x": "Cada criatura na Esfera quando ela aparece realiza uma salvaguarda de Sabedoria. Se falhar, a criatura sofre 5d6 pontos de dano Psíquico e subtrai 1d6 de suas salvaguardas até o final do seu próximo turno. Em caso de sucesso, a criatura sofre apenas metade do dano. Uma criatura também realiza esta salvaguarda quando a Esfera se move para o espaço dela, quando ela entra na Esfera ou quando termina o turno dela dentro da Esfera. Uma criatura realiza esta salvaguarda apenas uma vez por turno."
+        },
+        {
+          "t": "p",
+          "x": "A Esfera se move 3 metros para longe de você no início de cada um dos seus turnos."
+        },
+        {
+          "t": "p",
+          "x": "Conjuração como Magia de Círculo. Conjurar isto como uma magia de Círculo requer no mínimo cinco conjuradores secundários. Além dos componentes usuais da magia, você deve fornecer um componente especial (um colar de três pérolas negras do Pandemônio), que a magia consome. O alcance da magia aumenta para 1,5 quilômetro, e sua duração aumenta para até ser dissipada (sem necessidade de Concentração). A magia termina antecipadamente se qualquer conjurador que participou desta conjuração contribuir para outra conjuração de Maré da Perdição como magia de Círculo. Quando a magia é conjurada, cada conjurador secundário deve gastar um espaço de magia de 3º círculo ou superior; caso contrário, a magia falha."
+        }
+      ],
+      "superior": "",
+      "truque": "",
+      "fichas": [],
+      "fonte": "Heróis de Faerûn"
+    },
+    {
       "id": "mau-olhado",
       "nome": "Mau Olhado",
       "nomeEn": "Eyebite",
@@ -8969,6 +10412,34 @@
       "truque": "",
       "fichas": [],
       "fonte": "site"
+    },
+    {
+      "id": "melodia-disruptiva",
+      "nome": "Melodia Disruptiva",
+      "nomeEn": "Disruptive Tune",
+      "circulo": 2,
+      "escola": "Abjuração",
+      "classes": [
+        "Bardo",
+        "Feiticeiro",
+        "Mago"
+      ],
+      "tempo": "Ação",
+      "alcance": "36 metros (24)",
+      "componentes": "V, S",
+      "duracao": "Concentração, até 1 minuto",
+      "ritual": false,
+      "concentracao": true,
+      "desc": [
+        {
+          "t": "p",
+          "x": "Uma melodia perturbadora preenche momentaneamente uma Esfera de 6 metros de raio centrada em um ponto à sua escolha no alcance da magia. Cada criatura na Esfera realiza uma salvaguarda de Constituição. Se falhar, o alvo perde a Concentração e tem Desvantagem em salvaguardas de Constituição para manter a Concentração pela duração da magia."
+        }
+      ],
+      "superior": "",
+      "truque": "",
+      "fichas": [],
+      "fonte": "Arcana Unleashed"
     },
     {
       "id": "mensageiro-animal",
@@ -9321,6 +10792,32 @@
       "truque": "",
       "fichas": [],
       "fonte": "site"
+    },
+    {
+      "id": "momento-de-presciencia",
+      "nome": "Momento de Presciência",
+      "nomeEn": "Moment of Prescience",
+      "circulo": 8,
+      "escola": "Adivinhação",
+      "classes": [
+        "Mago"
+      ],
+      "tempo": "Reação, que você executa quando falha em um Teste de D20 ou quando uma criatura o atinge com uma jogada de ataque",
+      "alcance": "Pessoal",
+      "componentes": "V, S",
+      "duracao": "Instantânea",
+      "ritual": false,
+      "concentracao": false,
+      "desc": [
+        {
+          "t": "p",
+          "x": "Você tem um poderoso sexto sentido que o guia no momento exato. Transforme o resultado do seu Teste de D20 fracassado em um 20, ou transforme o resultado da jogada de ataque desencadeadora em um 1."
+        }
+      ],
+      "superior": "",
+      "truque": "",
+      "fichas": [],
+      "fonte": "Arcana Unleashed"
     },
     {
       "id": "montaria-fantasmagorica",
@@ -10012,6 +11509,38 @@
       "fonte": "site"
     },
     {
+      "id": "ondas-de-exaustao",
+      "nome": "Ondas de Exaustão",
+      "nomeEn": "Waves of Exhaustion",
+      "circulo": 5,
+      "escola": "Necromancia",
+      "classes": [
+        "Bruxo",
+        "Feiticeiro",
+        "Mago"
+      ],
+      "tempo": "Ação Bônus",
+      "alcance": "Pessoal",
+      "componentes": "V, S, M (um pedaço de carne seca)",
+      "duracao": "Concentração, até 1 minuto",
+      "ritual": false,
+      "concentracao": true,
+      "desc": [
+        {
+          "t": "p",
+          "x": "Você evoca uma auréola de luz cinzenta tremulante ao redor do seu corpo. Pela duração, você pode executar uma ação Usar Magia para emitir uma onda de luz cinzenta em um Cone de 18 metros. As criaturas nessa área devem ser bem-sucedidas em uma salvaguarda de Constituição ou ganham 1 nível de Exaustão. Esta magia não pode aumentar o nível de Exaustão de uma criatura acima de 4."
+        },
+        {
+          "t": "p",
+          "x": "Os níveis de Exaustão obtidos desta magia são removidos quando a magia termina."
+        }
+      ],
+      "superior": "",
+      "truque": "",
+      "fichas": [],
+      "fonte": "Arcana Unleashed"
+    },
+    {
       "id": "oracao-de-cura",
       "nome": "Oração de Cura",
       "nomeEn": "prayer of healing",
@@ -10217,6 +11746,43 @@
       "truque": "",
       "fichas": [],
       "fonte": "site"
+    },
+    {
+      "id": "palavra-de-poder-dor",
+      "nome": "Palavra de Poder Dor",
+      "nomeEn": "Power Word Pain",
+      "circulo": 7,
+      "escola": "Encantamento",
+      "classes": [
+        "Bardo",
+        "Bruxo",
+        "Feiticeiro",
+        "Mago"
+      ],
+      "tempo": "Ação",
+      "alcance": "18 metros (12)",
+      "componentes": "V",
+      "duracao": "1 minuto",
+      "ritual": false,
+      "concentracao": false,
+      "desc": [
+        {
+          "t": "p",
+          "x": "Você pronuncia uma palavra de poder que faz ondas de dor intensa assolarem uma criatura que você possa ver no alcance da magia. Se o alvo tiver 100 Pontos de Vida ou menos, ele sofre 6d8 pontos de dano Energético e tem a condição Enfeitiçado pela duração. Caso contrário, ele sofre apenas 6d8 pontos de dano Energético."
+        },
+        {
+          "t": "p",
+          "x": "Enquanto o alvo estiver Enfeitiçado, o Deslocamento dele não pode ser maior que 3 metros, e ele tem Desvantagem em Testes de D20, exceto salvaguardas de Constituição. Além disso, quando o alvo tentar conjurar uma magia, ele deve primeiro ser bem-sucedido em uma salvaguarda de Constituição, ou a magia se dissipa sem efeito, e a ação, Ação Bônus ou Reação usada para conjurá-la é desperdiçada. Se essa magia foi conjurada com um espaço de magia, o espaço não é gasto."
+        },
+        {
+          "t": "p",
+          "x": "No final de cada um dos turnos dele, o alvo Enfeitiçado realiza uma salvaguarda de Constituição, encerrando a magia sobre si em caso de sucesso."
+        }
+      ],
+      "superior": "",
+      "truque": "",
+      "fichas": [],
+      "fonte": "Arcana Unleashed"
     },
     {
       "id": "palavra-de-poder-fortificar",
@@ -10588,6 +12154,35 @@
       "truque": "",
       "fichas": [],
       "fonte": "site"
+    },
+    {
+      "id": "passos-incertos",
+      "nome": "Passos Incertos",
+      "nomeEn": "Uncertain Footing",
+      "circulo": 2,
+      "escola": "Ilusão",
+      "classes": [
+        "Bardo",
+        "Bruxo",
+        "Mago",
+        "Artífice"
+      ],
+      "tempo": "Ação",
+      "alcance": "36 metros (24)",
+      "componentes": "V, S, M (uma lente distorcida)",
+      "duracao": "Concentração, até 1 minuto",
+      "ritual": false,
+      "concentracao": true,
+      "desc": [
+        {
+          "t": "p",
+          "x": "Você cria obstáculos ilusórios, como rochas ou espinhos, na tentativa de confundir até três criaturas que você possa ver no alcance da magia, afetando a capacidade delas de se mover. Cada alvo realiza uma salvaguarda de Inteligência. Se falhar, o Deslocamento do alvo é reduzido à metade, e ele não pode executar a ação Correr. Um alvo prejudicado repete a salvaguarda no final de cada um dos turnos dele, encerrando a magia sobre si em caso de sucesso."
+        }
+      ],
+      "superior": "",
+      "truque": "",
+      "fichas": [],
+      "fonte": "Arcana Unleashed"
     },
     {
       "id": "passos-largos",
@@ -11936,6 +13531,68 @@
       "fonte": "site"
     },
     {
+      "id": "rajada-purulenta",
+      "nome": "Rajada Purulenta",
+      "nomeEn": "Festering Blast",
+      "circulo": 4,
+      "escola": "Necromancia",
+      "classes": [
+        "Bruxo",
+        "Druida",
+        "Feiticeiro",
+        "Mago"
+      ],
+      "tempo": "Ação",
+      "alcance": "Pessoal",
+      "componentes": "V, S",
+      "duracao": "1 minuto",
+      "ritual": false,
+      "concentracao": false,
+      "desc": [
+        {
+          "t": "p",
+          "x": "Uma Linha de miasma de 18 metros de comprimento e 3 metros de largura é disparada de você em uma direção à sua escolha. Cada criatura na Linha deve realizar uma salvaguarda de Constituição. Se falhar, o alvo sofre 4d10 pontos de dano Necrótico e tem a condição Envenenado pela duração."
+        },
+        {
+          "t": "p",
+          "x": "Uma criatura Envenenada por esta magia sofre 2d10 pontos de dano Venenoso no início de cada um dos turnos dela. No final de cada um dos turnos dela, um alvo Envenenado repete a salvaguarda, encerrando a magia sobre si em caso de sucesso."
+        }
+      ],
+      "superior": "O dano inicial aumenta em 1d10 para cada círculo de espaço de magia acima de 4.",
+      "truque": "",
+      "fichas": [],
+      "fonte": "Arcana Unleashed"
+    },
+    {
+      "id": "rebote",
+      "nome": "Rebote",
+      "nomeEn": "Backlash",
+      "circulo": 4,
+      "escola": "Abjuração",
+      "classes": [
+        "Bardo",
+        "Bruxo",
+        "Feiticeiro",
+        "Mago"
+      ],
+      "tempo": "Reação, que você executa quando sofre dano",
+      "alcance": "18 metros (12)",
+      "componentes": "V",
+      "duracao": "Instantânea",
+      "ritual": false,
+      "concentracao": false,
+      "desc": [
+        {
+          "t": "p",
+          "x": "Você se protege contra energia destrutiva, reduzindo o dano sofrido em 4d6 mais seu modificador de atributo de conjuração. Se o dano desencadeador veio de uma criatura dentro do alcance da magia, você pode forçar a criatura a realizar uma salvaguarda de Constituição. A criatura sofre 4d6 pontos de dano Energético se falhar ou metade desse dano em caso de sucesso."
+        }
+      ],
+      "superior": "A redução de dano e o dano Energético desta magia aumentam em 1d6 para cada círculo de espaço de magia acima de 4.",
+      "truque": "",
+      "fichas": [],
+      "fonte": "Heróis de Faerûn"
+    },
+    {
       "id": "receptaculo-arcano",
       "nome": "Receptáculo Arcano",
       "nomeEn": "magic jar",
@@ -12554,6 +14211,35 @@
       "fonte": "site"
     },
     {
+      "id": "retecer-o-destino",
+      "nome": "Retecer o Destino",
+      "nomeEn": "Reweave Fate",
+      "circulo": 7,
+      "escola": "Adivinhação",
+      "classes": [
+        "Bardo",
+        "Bruxo",
+        "Clérigo",
+        "Mago"
+      ],
+      "tempo": "Reação, que você executa quando uma criatura que você possa ver a até 18 metros de você falha em um Teste de D20",
+      "alcance": "18 metros (12)",
+      "componentes": "S",
+      "duracao": "Instantânea",
+      "ritual": false,
+      "concentracao": false,
+      "desc": [
+        {
+          "t": "p",
+          "x": "Você desembaraça um único fio do destino para estimular um resultado diferente. A criatura que falhou no Teste de D20 pode jogá-lo novamente com Vantagem, e a criatura deve usar a nova jogada. Se o Teste de D20 for bem-sucedido, a criatura ganha 6d10 Pontos de Vida Temporários de seu destino fortalecido."
+        }
+      ],
+      "superior": "",
+      "truque": "",
+      "fichas": [],
+      "fonte": "Arcana Unleashed"
+    },
+    {
       "id": "retirada-acelerada",
       "nome": "Retirada Acelerada",
       "nomeEn": "expeditious retreat",
@@ -12581,6 +14267,32 @@
       "truque": "",
       "fichas": [],
       "fonte": "site"
+    },
+    {
+      "id": "retrospectiva",
+      "nome": "Retrospectiva",
+      "nomeEn": "Hindsight",
+      "circulo": 9,
+      "escola": "Adivinhação",
+      "classes": [
+        "Mago"
+      ],
+      "tempo": "10 minutos",
+      "alcance": "150 metros (100)",
+      "componentes": "V, S, M (uma minúscula ampulheta no valor de 500 ou mais PO, que a magia consome)",
+      "duracao": "Concentração, até 1 hora",
+      "ritual": false,
+      "concentracao": true,
+      "desc": [
+        {
+          "t": "p",
+          "x": "Você espia para trás através do tecido do tempo. Você vê visões de eventos que ocorreram no alcance da magia ao longo dos últimos 10 anos, passando em velocidade de aproximadamente 1 dia por segundo. Durante a duração da magia, você pode livremente desacelerar, pausar, retroceder ou avançar rapidamente essas visões."
+        }
+      ],
+      "superior": "",
+      "truque": "",
+      "fichas": [],
+      "fonte": "Arcana Unleashed"
     },
     {
       "id": "reviver-os-mortos",
@@ -13205,6 +14917,65 @@
       "fonte": "site"
     },
     {
+      "id": "sinostodweomer-da-simbul",
+      "nome": "Sinostodweomer da Simbul",
+      "nomeEn": "Simbul’s Synostodweomer",
+      "circulo": 7,
+      "escola": "Transmutação",
+      "classes": [
+        "Feiticeiro",
+        "Mago"
+      ],
+      "tempo": "Ação",
+      "alcance": "Toque",
+      "componentes": "V, S",
+      "duracao": "1 hora",
+      "ritual": false,
+      "concentracao": false,
+      "desc": [
+        {
+          "t": "p",
+          "x": "Você imbui uma criatura que tocar com energia curativa mágica pela duração da magia. Sempre que o alvo conjurar uma magia usando um espaço de magia, o alvo pode imediatamente jogar um número de Dados de Vida não gastos igual ao círculo do espaço de magia e recuperar Pontos de Vida iguais ao total da jogada mais seu modificador de atributo de conjuração; esses dados são então gastos."
+        }
+      ],
+      "superior": "",
+      "truque": "",
+      "fichas": [],
+      "fonte": "Heróis de Faerûn"
+    },
+    {
+      "id": "solo-sepulcral",
+      "nome": "Solo Sepulcral",
+      "nomeEn": "Grave Ground",
+      "circulo": 5,
+      "escola": "Necromancia",
+      "classes": [
+        "Bruxo",
+        "Clérigo",
+        "Mago"
+      ],
+      "tempo": "Ação",
+      "alcance": "36 metros (24)",
+      "componentes": "V, S, M (um punhado de terra de sepultura)",
+      "duracao": "Concentração, até 1 minuto",
+      "ritual": false,
+      "concentracao": true,
+      "desc": [
+        {
+          "t": "p",
+          "x": "Mãos esqueléticas irrompem de uma área do chão no alcance da magia. A área consiste em até quatro quadrados de 3 metros de lado, que você organiza como quiser. Cada quadrado deve ser contíguo a pelo menos um outro quadrado. Essa área é Terreno Difícil para seus inimigos."
+        },
+        {
+          "t": "p",
+          "x": "Qualquer inimigo nessa área quando as mãos esqueléticas aparecem realiza uma salvaguarda de Força. Se falhar, a criatura sofre 6d6 pontos de dano Necrótico e, até o final do próximo turno dela, subtrai 1d6 de todas as suas jogadas de dano. Um inimigo também realiza essa salvaguarda se entrar na área ou terminar o turno dele lá. Uma criatura realiza essa salvaguarda apenas uma vez por turno."
+        }
+      ],
+      "superior": "O dano aumenta em 1d6 para cada círculo de espaço de magia acima de 5.",
+      "truque": "",
+      "fichas": [],
+      "fonte": "Arcana Unleashed"
+    },
+    {
       "id": "sonho",
       "nome": "Sonho",
       "nomeEn": "dream",
@@ -13303,6 +15074,50 @@
       "truque": "",
       "fichas": [],
       "fonte": "site"
+    },
+    {
+      "id": "sufusao-elemental-de-songal",
+      "nome": "Sufusão Elemental de Songal",
+      "nomeEn": "Songal’s Elemental Suffusion",
+      "circulo": 5,
+      "escola": "Transmutação",
+      "classes": [
+        "Druida",
+        "Feiticeiro",
+        "Mago"
+      ],
+      "tempo": "Ação",
+      "alcance": "Pessoal",
+      "componentes": "V, S, M (uma pérola no valor de 100 ou mais PO)",
+      "duracao": "Concentração, até 1 minuto",
+      "ritual": false,
+      "concentracao": true,
+      "desc": [
+        {
+          "t": "p",
+          "x": "Você se imbui com o poder elemental dos gênios. Você ganha os seguintes benefícios até o fim da magia:"
+        },
+        {
+          "t": "p",
+          "x": "Imunidade Elemental. Quando você conjurar esta magia, escolha um dos seguintes tipos de dano: Ácido, Gélido, Ígneo, Elétrico ou Trovejante. Você tem Resistência ao tipo de dano escolhido."
+        },
+        {
+          "t": "p",
+          "x": "Pulso Elemental. Quando você conjurar esta magia e no início de cada um dos seus turnos subsequentes, você libera uma explosão de energia elemental em uma Emanação de 4,5 metros originada em você. Cada criatura à sua escolha nessa área realiza uma salvaguarda de Destreza. Se falhar, a criatura sofre 2d6 pontos de dano Ácido, Gélido, Ígneo, Elétrico ou Trovejante (à sua escolha) e fica com a condição Caído. Em caso de sucesso, a criatura sofre apenas metade do dano."
+        },
+        {
+          "t": "p",
+          "x": "Voo. Você ganha um Deslocamento de Voo de 9 metros e pode pairar."
+        },
+        {
+          "t": "p",
+          "x": "Conjuração como Magia de Círculo. Se a magia for conjurada como magia de Círculo, seu tempo de conjuração aumenta para 1 minuto, e sua duração aumenta para Concentração, até 10 minutos. Para cada conjurador secundário que participar da conjuração, você pode escolher uma criatura adicional, até um máximo de nove criaturas adicionais. As criaturas escolhidas também ganham os benefícios da magia pela duração dela. Quando a magia é conjurada, cada conjurador secundário deve gastar um espaço de magia de 2º círculo ou superior; caso contrário, a magia falha."
+        }
+      ],
+      "superior": "",
+      "truque": "",
+      "fichas": [],
+      "fonte": "Heróis de Faerûn"
     },
     {
       "id": "sugestao",
@@ -13847,6 +15662,78 @@
       "fonte": "site"
     },
     {
+      "id": "tempestade-de-fogo-magico",
+      "nome": "Tempestade de Fogo Mágico",
+      "nomeEn": "Spellfire Storm",
+      "circulo": 4,
+      "escola": "Evocação",
+      "classes": [
+        "Feiticeiro",
+        "Mago"
+      ],
+      "tempo": "Ação",
+      "alcance": "18 metros (12)",
+      "componentes": "V, S",
+      "duracao": "Concentração, até 1 minuto",
+      "ritual": false,
+      "concentracao": true,
+      "desc": [
+        {
+          "t": "p",
+          "x": "Você conjura um pilar de fogo mágico em um Cilindro de 6 metros de raio e 6 metros de altura centrado em um ponto no alcance da magia. A área do Cilindro é Luz Plena, e cada criatura nele quando ele aparece realiza uma salvaguarda de Constituição, sofrendo 4d10 pontos de dano Radiante se falhar ou metade desse dano em caso de sucesso. Uma criatura também realiza esta salvaguarda quando entra na área da magia pela primeira vez em um turno ou termina o turno dela lá. Uma criatura realiza esta salvaguarda apenas uma vez por turno."
+        },
+        {
+          "t": "p",
+          "x": "Além disso, sempre que uma criatura no Cilindro conjurar uma magia, essa criatura realiza uma salvaguarda de Constituição. Se falhar, a magia se dissipa sem efeito, e a ação, Ação Bônus ou Reação usada para conjurá-la é desperdiçada. Se essa magia foi conjurada com um espaço de magia, o espaço não é gasto."
+        },
+        {
+          "t": "p",
+          "x": "Quando você conjura esta magia, pode designar criaturas para não serem afetadas por ela."
+        },
+        {
+          "t": "p",
+          "x": "Conjuração como Magia de Círculo. Além dos componentes usuais da magia, você deve fornecer um componente especial (uma safira-estrela azul no valor de 25.000 ou mais PO), que a magia consome. O alcance da magia aumenta para 1,5 quilômetro, e ela não requer mais Concentração. Quando a magia é conjurada, cada conjurador secundário deve gastar um espaço de magia de 3º círculo ou superior; caso contrário, a magia falha."
+        },
+        {
+          "t": "p",
+          "x": "O número de conjuradores secundários determina a área de efeito e a duração da magia, conforme mostrado na tabela abaixo. A magia termina antecipadamente se qualquer conjurador que participou desta conjuração contribuir para outra conjuração de Tempestade de Fogo Mágico como magia de Círculo."
+        },
+        {
+          "t": "p",
+          "x": "Tempestade de Fogo Mágico"
+        },
+        {
+          "t": "table",
+          "rows": [
+            [
+              "Conjuradores Secundários",
+              "Área de Efeito",
+              "Duração"
+            ],
+            [
+              "1–3",
+              "Cilindro de 12 metros de raio e 12 metros de altura",
+              "1 hora"
+            ],
+            [
+              "4–6",
+              "Cilindro de 18 metros de raio e 18 metros de altura",
+              "8 horas"
+            ],
+            [
+              "7+",
+              "Cilindro de 30 metros de raio e 30 metros de altura",
+              "24 horas"
+            ]
+          ]
+        }
+      ],
+      "superior": "O dano aumenta em 1d10 para cada círculo de espaço de magia acima de 4.",
+      "truque": "",
+      "fichas": [],
+      "fonte": "Heróis de Faerûn"
+    },
+    {
       "id": "tempestade-glacial",
       "nome": "Tempestade Glacial",
       "nomeEn": "ice storm",
@@ -14140,6 +16027,46 @@
       "fonte": "site"
     },
     {
+      "id": "transfixar",
+      "nome": "Transfixar",
+      "nomeEn": "Transfix",
+      "circulo": 7,
+      "escola": "Encantamento",
+      "classes": [
+        "Bardo",
+        "Bruxo",
+        "Mago"
+      ],
+      "tempo": "Ação",
+      "alcance": "Pessoal",
+      "componentes": "V, S",
+      "duracao": "Concentração, até 1 minuto",
+      "ritual": false,
+      "concentracao": true,
+      "desc": [
+        {
+          "t": "p",
+          "x": "Pela duração da magia, sua aparência se torna sobrenatural e sedutora. Uma criatura à sua escolha que você possa ver a até 18 metros de você deve ser bem-sucedida em uma salvaguarda de Carisma ou tem a condição Enfeitiçado pela duração."
+        },
+        {
+          "t": "p",
+          "x": "Enquanto estiver Enfeitiçado, o alvo tem a condição Incapacitado e, se estiver a mais de 1,5 metro de você, move-se no turno dele em direção a você pela rota mais direta, tentando chegar a até 1,5 metro de você. Se a criatura Enfeitiçada terminar o turno dela a até 1,5 metro de você, ela sofre 4d8 pontos de dano Psíquico."
+        },
+        {
+          "t": "p",
+          "x": "O alvo não evita Ataques de Oportunidade ao se mover em sua direção, mas antes de entrar em terreno danoso (como lava ou um poço), o alvo repete a salvaguarda, encerrando a magia sobre si em caso de sucesso."
+        },
+        {
+          "t": "p",
+          "x": "Até que a magia termine, você pode executar uma ação Usar Magia em turnos subsequentes para escolher outra criatura como alvo, mas não pode escolher novamente uma criatura se ela tiver sido bem-sucedida em uma salvaguarda contra esta conjuração da magia."
+        }
+      ],
+      "superior": "O dano aumenta em 1d8 para cada círculo de espaço de magia acima de 7.",
+      "truque": "",
+      "fichas": [],
+      "fonte": "Arcana Unleashed"
+    },
+    {
       "id": "transicao-planar",
       "nome": "Transição Planar",
       "nomeEn": "Plane Shift",
@@ -14324,6 +16251,45 @@
       "truque": "",
       "fichas": [],
       "fonte": "site"
+    },
+    {
+      "id": "vibora-de-sylune",
+      "nome": "Víbora de Sylune",
+      "nomeEn": "Sylune’s Viper",
+      "circulo": 3,
+      "escola": "Invocação",
+      "classes": [
+        "Druida",
+        "Mago"
+      ],
+      "tempo": "Ação Bônus",
+      "alcance": "Pessoal",
+      "componentes": "V, S, M (uma presa de cobra)",
+      "duracao": "1 hora",
+      "ritual": false,
+      "concentracao": false,
+      "desc": [
+        {
+          "t": "p",
+          "x": "Uma cobra espectral e cintilante circunda seu corpo pela duração da magia. Você ganha 15 Pontos de Vida Temporários; a magia termina antecipadamente se você não tiver mais Pontos de Vida Temporários restantes."
+        },
+        {
+          "t": "p",
+          "x": "Enquanto a magia estiver ativa, você ganha os seguintes benefícios:"
+        },
+        {
+          "t": "p",
+          "x": "Escalada. Você ganha um Deslocamento de Escalada igual ao seu Deslocamento."
+        },
+        {
+          "t": "p",
+          "x": "Mordida Venenosa. Como uma ação Usar Magia, você pode realizar um ataque mágico à distância usando a cobra contra uma criatura a até 15 metros. Em caso de acerto, o alvo sofre 1d6 pontos de dano Energético e fica com a condição Envenenado até o início do seu próximo turno. Enquanto estiver Envenenado, o alvo fica com a condição Incapacitado."
+        }
+      ],
+      "superior": "Para cada círculo de espaço de magia acima de 3, o número de Pontos de Vida Temporários que você ganha com esta magia aumenta em 5, e o dano da Mordida Venenosa aumenta em 1d6.",
+      "truque": "",
+      "fichas": [],
+      "fonte": "Heróis de Faerûn"
     },
     {
       "id": "videncia",
@@ -14529,6 +16495,39 @@
       "fonte": "site"
     },
     {
+      "id": "visao-das-eras-transcorridas",
+      "nome": "Visão das Eras Transcorridas",
+      "nomeEn": "Vision of Elapsing Eons",
+      "circulo": 9,
+      "escola": "Ilusão",
+      "classes": [
+        "Bardo",
+        "Bruxo",
+        "Feiticeiro",
+        "Mago"
+      ],
+      "tempo": "Ação",
+      "alcance": "36 metros (24)",
+      "componentes": "V, S",
+      "duracao": "1 minuto",
+      "ritual": false,
+      "concentracao": false,
+      "desc": [
+        {
+          "t": "p",
+          "x": "Você engana uma criatura que possa ver no alcance da magia, fazendo-a acreditar que está assistindo a si mesma e ao seu entorno se desfazerem, como se eras passassem em instantes. O alvo deve ser bem-sucedido em uma salvaguarda de Inteligência ou sofre 10d12 pontos de dano Psíquico e tem a condição Paralisado pela duração."
+        },
+        {
+          "t": "p",
+          "x": "Enquanto estiver Paralisado, o alvo repete a salvaguarda no final de cada um dos turnos dele. Se falhar, ele ganha 1 nível de Exaustão. Em caso de sucesso, a magia termina. A magia termina antecipadamente se alguém a até 1,5 metro do alvo executar uma ação para libertá-lo da ilusão."
+        }
+      ],
+      "superior": "",
+      "truque": "",
+      "fichas": [],
+      "fonte": "Arcana Unleashed"
+    },
+    {
       "id": "visao-no-escuro",
       "nome": "Visão no Escuro",
       "nomeEn": "darkvision",
@@ -14672,6 +16671,33 @@
       "truque": "",
       "fichas": [],
       "fonte": "site"
+    },
+    {
+      "id": "zona-de-cordialidade",
+      "nome": "Zona de Cordialidade",
+      "nomeEn": "Zone of Amicability",
+      "circulo": 4,
+      "escola": "Encantamento",
+      "classes": [
+        "Bardo",
+        "Bruxo"
+      ],
+      "tempo": "Ação",
+      "alcance": "Pessoal",
+      "componentes": "V, S",
+      "duracao": "10 minutos",
+      "ritual": false,
+      "concentracao": false,
+      "desc": [
+        {
+          "t": "p",
+          "x": "Uma zona mágica de cordialidade irradia de você em uma Emanação de 18 metros pela duração da magia. Quando você realiza um teste de atributo para influenciar uma criatura nessa área, você pode tratar uma jogada de d20 de 9 ou menos como um 10."
+        }
+      ],
+      "superior": "",
+      "truque": "",
+      "fichas": [],
+      "fonte": "Arcana Unleashed"
     }
   ]
 }

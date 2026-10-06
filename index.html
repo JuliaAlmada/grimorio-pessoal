@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inclusive+Sans:ital,wght@0,300..700;1,300..700&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=notes-print-2">
+<link rel="stylesheet" href="styles.css?v=fonte-livro-1">
 </head>
 <body>
 <header class="top">
@@ -41,6 +41,7 @@
       <label>Círculo<select id="fcirc"><option value="">Todos</option><option value="0">Truque</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option></select></label>
       <label>Escola<select id="fesc"><option value="">Todas</option></select></label>
       <label>Classe<select id="fcls"><option value="">Todas</option></select></label>
+      <label>Livro<select id="ffonte"><option value="">Todos</option></select></label>
       <label>Ordenar<select id="ford"><option value="circ">Círculo</option><option value="az">A–Z (português)</option><option value="za">Z–A (português)</option><option value="en">A–Z (inglês)</option></select></label>
       <label class="chk"><input type="checkbox" id="frit"> Ritual</label>
       <label class="chk"><input type="checkbox" id="fcon"> Concentração</label>
@@ -98,6 +99,16 @@
   <!-- DADOS -->
   <section id="v-data" hidden>
     <h1 class="view-title">Importar e backup</h1>
+    <div class="card" id="baseCard">
+      <h3>Biblioteca base (magias.json)</h3>
+      <p class="lead compact">As magias da biblioteca vêm do arquivo <b>magias.json</b>, que fica na mesma pasta do <b>index.html</b>. Para trocar ou acrescentar magias, edite só esse arquivo e recarregue a página. O campo <b>fonte</b> de cada magia define a etiqueta do livro: <code>site</code> (livro base), <code>Heróis de Faerûn</code> ou <code>Arcana Unleashed</code>.</p>
+      <div id="baseStatus" role="status"></div>
+      <div class="datarow">
+        <button class="btn" type="button" id="baseReload">Recarregar o magias.json</button>
+        <label class="btn ghost sm file-trigger outline-accent">Escolher magias.json deste computador<input type="file" id="baseFile" accept=".json,application/json" class="sr"></label>
+      </div>
+      <div id="baseMsg" role="status"></div>
+    </div>
     <div class="card" id="impCard">
       <h3>Trazer as magias do site</h3>
       <p class="lead compact">A biblioteca padrão já carrega automaticamente do arquivo <b>magias.json</b> que fica junto do <b>index.html</b>. Para atualizar a sua biblioteca com uma versão mais recente, copie o texto do site e cole abaixo; a atualização fica salva neste navegador:</p>
@@ -156,763 +167,6 @@
 <!-- Banco de dados: preencha url e key (veja o LEIA-ME). Vazio = funciona só neste navegador, como antes. -->
 <script>window.GRIMORIO_CONFIG = { url: '', key: '' };</script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<!-- Amostra do site (formato copiado da página). O importador usa o mesmo formato. -->
-<script type="text/plain" id="seed">
-Acudir os Moribundos
-
-spare the dying
-
- *Truque de Necromancia (Clérigo, Druida, Artífice)*
-
-Tempo de Conjuração: Ação
-
-Alcance:  4,5 metros (3)
-
-Componentes:  V, S
-
-Duração:  Instantânea
-
-Escolha uma criatura no alcance da magia que tenha 0 Pontos de Vida e não esteja morta. A criatura fica Estável.
-
-**Aprimoramento de Truque.** O alcance da magia dobra quando você atinge os níveis 5 (9 metros), 11 (18 metros) e 17 (36 metros).
-
-Alarme
-
-Alarm
-
- *1º Círculo, Abjuração (Guardião, Mago, Artífice)*
-
-Tempo de Conjuração: 1 minuto ou Ritual
-
-Alcance:  9 metros (6)
-
-Componentes:  V, S, M (um sino e um fio de prata)
-
-Duração:  8 horas
-
-Você define um alarme contra intrusão. Escolha uma porta, uma janela ou uma área no alcance da magia que não seja maior do que um Cubo de 6 metros de lados. Até que a magia termine, um alarme o avisa sempre que uma criatura tocar ou entrar na área protegida. Ao conjurar a magia, você pode designar criaturas que não disparam o alarme. Você também escolhe se o alarme é audível ou mental:
-
-**Alarme Mental.** Você é alertado por um bipe mental se estiver a menos de 1,5 quilômetro da área protegida. Este bipe o acorda se você estiver dormindo.
-
-**Alarme Sonoro.** O alarme produz o som de uma sineta por 10 segundos a até 18 metros da área protegida.
-
-Amigos
-
-friends
-
- *Truque de Encantamento (Bardo, Bruxo, Feiticeiro, Mago)*
-
-Tempo de Conjuração: Ação
-
-Alcance:  3 metros (2)
-
-Componentes:  S, M (um pouco de maquiagem)
-
-Duração:  Concentração,
- até 1 minuto
-
-Você emana magicamente um sentimento de amizade em relação a uma criatura à sua vista e no alcance da magia. O alvo deve ser bem-sucedido em uma salvaguarda de Sabedoria ou tem a condição Enfeitiçado pela duração da magia. O alvo é bem-sucedido automaticamente se não for um Humanoide, se você estiver lutando contra ele ou se tiver conjurado esta magia nele nas últimas 24 horas.
-
-A magia encerra se o alvo sofrer dano ou se você realizar uma jogada de ataque, causar dano ou forçar alguém a realizar uma salvaguarda. Quando a magia termina, o alvo sabe que foi Enfeitiçado por você.
-
-Animar Mortos
-
-Animate Dead
-
- *3º Círculo, Necromancia (Clérigo, Mago)*
-
-Tempo de Conjuração: 1 minuto
-
-Alcance:  3 metros (2)
-
-Componentes:  V, S, M (uma gota de sangue, um pedaço de carne e uma pitada de pó de osso)
-
-Duração:  Instantânea
-
-Escolha uma pilha de ossos ou um cadáver de um Humanoide Médio ou Pequeno no alcance da magia. O alvo se torna um Morto-vivo: um **Esqueleto** se tiver escolhido ossos ou um **Zumbi** se tiver escolhido um cadáver (veja o apêndice B para os blocos de estatística).
-
-Em cada um dos seus turnos, você pode executar uma Ação Bônus para comandar mentalmente qualquer criatura que tenha animado com essa magia se a criatura estiver a até 18 metros de você (se você controlar várias criaturas, pode comandar qualquer uma delas ao mesmo tempo, emitindo o mesmo comando para cada uma). Você decide qual ação a criatura realiza e para onde ela se move no próximo turno dela, ou pode emitir um comando geral, como proteger uma câmara ou um corredor. Se você não der nenhum comando, a criatura executa a ação Esquivar e move-se apenas para evitar dano. Uma vez dada uma ordem, a criatura continua a segui-la até que a tarefa seja concluída.
-
-A criatura fica sob seu controle por 24 horas, após as quais ela deixa de obedecer a qualquer comando que você tenha dado a ela. Para manter o controle da criatura por mais 24 horas, é necessário conjurar essa magia na criatura novamente antes que o período atual de 24 horas termine. Esse uso da magia reafirma seu controle sobre até quatro criaturas que você animou com essa magia em vez de animar uma nova criatura.
-
-**Usando um Espaço de Magia de Círculo Superior.** Você anima ou reafirma o controle sobre duas criaturas Mortas-vivas adicionais para cada círculo de espaço de magia acima de 3. Cada uma das criaturas deve vir de um cadáver ou pilha de ossos diferente.
-
-Animar Objetos
-
-Animate Objects
-
- *5º Círculo, Transmutação (Bardo, Feiticeiro, Mago, Artífice)*
-
-Tempo de Conjuração: Ação
-
-Alcance:  36 metros (24)
-
-Componentes:  V, S
-
-Duração:  Concentração,
- até 1 minuto
-
-Objetos são animados ao seu comando. Escolha uma série de objetos não mágicos no alcance da magia que não estejam sendo usados ou carregados, não estejam fixados a uma superfície e não sejam Colossais. O número máximo de objetos é igual ao seu modificador de atributo de conjuração. Para este número, um tamanho Médio ou menor conta como um objeto, um alvo Grande conta como dois e um alvo Enorme conta como três.
-
-Cada alvo se anima, faz brotar pernas e se torna um Constructo que usa o bloco de estatísticas do **Objeto Animado**; esta criatura está sob seu controle até que a magia termine ou até que ela seja reduzida a 0 Pontos de Vida. Cada criatura que você anima com esta magia é uma aliada sua e de seus aliados. Em combate, ele compartilha a contagem de Iniciativa com você e tem o turno dela imediatamente após o seu.
-
-Até que a magia encerre, você pode executar uma Ação Bônus para comandar mentalmente qualquer criatura que tenha animado com essa magia se a criatura estiver a até 150 metros de você (se você controlar várias criaturas, pode comandar quaisquer delas ao mesmo tempo, emitindo o mesmo comando para cada uma). Se você não der nenhum comando, a criatura executa a ação Esquivar e se move apenas para evitar danos. Quando a criatura é reduzida a 0 Pontos de Vida, ela reverte para sua forma de objeto, e qualquer dano restante é transferido para essa forma.
-
-**Usando um Espaço de Magia de Círculo Superior.** O dano de Pancada da criatura aumenta em 1d4 (Médio ou menor), 1d6 (Grande) ou 1d12 (Enorme) para cada círculo de espaço de magia acima de 5.
-
-Objetos Animados
-
-Construto Grande ou Menor, Sem Alinhamento
-
-**CA** 15
-
-**PV** 10 (Médio ou menor), 20 (Grande), 40 (Enorme)
-
-**Deslocamento** 9 m
-
-|         |    | **Mod** | **SG** |         |    | **Mod** | **SG** |         |    | **Mod** | **SG** |
-| ------- | --- | ------- | ------ | ------- | --- | ------- | ------ | ------- | --- | ------- | ------ |
-| **For** | 16 | +3      | +3     | **Des** | 10 | +0      | +0     | **Con** | 10 | +0      | +0     |
-| **Int** | 3  | -4      | -4     | **Sab** | 3  | -4      | -4     | **Car** | 1  | -5      | -5     |
-
-**Imunidades** Psíquico, Venenoso; Amedrontado, Enfeitiçado, Envenenado, Exaustão, Paralisado
-
-**Sentidos** Visão às Cegas 9 m, Percepção Passiva 6
-
-**Idiomas** Compreende os idiomas que você conhece
-
-**ND** Nenhum (XP 0; BP é igual ao seu Bônus de Proficiência)
-
-**Ações**
-
-**Pancada.** Jogada de Ataque Corpo a Corpo: Bônus igual ao seu modificador de ataque mágico, alcance 1,5 m. *Dano:* Energético igual a 1d4 + 3 (Médio ou menor), 2d6 + 3 + seu modificador de atributo de conjuração (Grande) ou 2d12 + 3 + seu modificador de atributo de conjuração (Enorme).
-
-Arca Secreta de Leomund
-
-Leomund’s Secret Chest
-
- *4º Círculo, Invocação (Mago, Artífice)*
-
-Tempo de Conjuração: Ação
-
-Alcance:  Toque
-
-Componentes:  V, S, M (um baú de 1 m por 60 cm por 60 cm, construído com materiais raros no valor de 5.000 ou mais PO, e uma réplica minúscula do baú fabricada com os mesmos materiais no valor de 50 ou mais PO)
-
-Duração:  Até ser dissipada
-
-Você esconde um baú e todo o seu conteúdo no Plano Etéreo. Você deve tocar no baú e na réplica em miniatura que servem como componentes Materiais para a magia. O baú pode armazenar até 340 litros de material não vivo (1 m por 60 cm por 60 cm).
-
-Enquanto o baú permanecer no Plano Etéreo, você pode executar uma ação Usar Magia e tocar na réplica para recuperar o baú. Ele aparece em um espaço desocupado no chão a até 1,5 metro de você. Você pode enviar o baú de volta ao Plano Etéreo como uma ação Usar Magia para tocar o baú e a réplica.
-
-Após 60 dias, há uma chance cumulativa de 5% no final de cada dia de que a magia encerre. A magia também se encerra se você conjurá-la novamente ou se a réplica Minúscula for destruída. Se a magia encerrar e o baú maior estiver no Plano Etéreo, o baú permanece lá para você ou outra pessoa encontrar.
-
-Armadura de Agathys
-
-Armor of Agathys
-
- *1º Círculo, Abjuração (Bruxo)*
-
-Tempo de Conjuração: Ação Bônus
-
-Alcance:  Pessoal
-
-Componentes:  V, S, M (um caco de vidro azul)
-
-Duração:  1 hora
-
-Um frio mágico protetor envolve você. Você recebe 5 Pontos de Vida Temporários. Se uma criatura acertar você com uma jogada de ataque corpo a corpo antes que a magia termine, a criatura sofre 5 pontos de dano Gélido. A magia encerra se você não tiver Pontos de Vida Temporários.
-
-**Usando um Espaço de Magia de Círculo Superior.** Os Pontos de Vida Temporários e o dano Gélido aumentam em 5 para cada círculo de espaço de magia acima de 1.
-
-Augúrio
-
-Augury
-
- *2º Círculo, Adivinhação (Clérigo, Druida, Mago)*
-
-Tempo de Conjuração: 1 minuto ou Ritual
-
-Alcance:  Pessoal
-
-Componentes:  V, S, M (varetas, ossos, cartas ou símbolos semelhantes especialmente marcados no valor de 25 ou mais PO)
-
-Duração:  Instantânea
-
-Você recebe um presságio de uma entidade sobrenatural a respeito dos resultados de um curso de ação que você planeja realizar nos próximos 30 minutos. O Mestre escolhe o presságio da tabela Presságios.
-
- **Presságios**
-
-| **Presságios**            | **Para Resultados Que Serão…** |
-| ------------------------- | ------------------------------ |
-| Prosperidade              | Bons                           |
-| Infortúnio                | Maus                           |
-| Prosperidade e Infortúnio | Bons e ruins                   |
-| Nada                      | Nem bons, nem ruins            |
-
-A magia não leva em conta circunstâncias, como outras magias, que podem alterar os resultados.
-
-Se você conjurar a magia mais de uma vez antes de terminar um Descanso Longo, há uma chance cumulativa de 25% para cada conjuração após a primeira de que você não receba resposta.
-
-Bênção
-
-bless
-
- *1º Círculo, Encantamento (Clérigo, Paladino)*
-
-Tempo de Conjuração: Ação
-
-Alcance:  9 metros (6)
-
-Componentes:  V, S, M (um Símbolo Sagrado no valor de 5 ou mais PO)
-
-Duração:  Concentração,
- até 1 minuto
-
-Você abençoa até três criaturas no alcance da magia. Sempre que um alvo realiza uma jogada de ataque ou uma salvaguarda antes que a magia termine, o alvo adiciona 1d4 à jogada de ataque ou salvaguarda.
-
-**Usando um Espaço de Magia de Círculo Superior.** Você pode escolher uma criatura adicional para cada círculo de espaço de magia acima de 1.
-
-Bola de Fogo
-
-fireball
-
- *3º Círculo, Evocação (Feiticeiro, Mago)*
-
-Tempo de Conjuração: Ação
-
-Alcance:  45 metros (30)
-
-Componentes:  V, S, M (uma bola de guano de morcego e enxofre)
-
-Duração:  Instantânea
-
-Uma faixa brilhante emerge de você até um ponto à sua escolha no alcance da magia e, em seguida, desabrocha com um estrondo baixo em uma explosão de fogo. Cada criatura em uma Esfera de 6 metros de raio centrada nesse ponto realiza uma salvaguarda de Destreza, sofrendo 8d6 pontos de dano Ígneo se falhar, ou metade desse dano em caso de sucesso.
-
-Objetos inflamáveis na área que não estão sendo usados ou carregados entram em combustão.
-
-**Usando um Espaço de Magia de Círculo Superior.** O dano aumenta em 1d6 para cada círculo de espaço de magia acima de 3.
-
-Bolha Ácida
-
-Acid Splash
-
- *Truque de Evocação (Feiticeiro, Mago, Artífice)*
-
-Tempo de Conjuração: Ação
-
-Alcance:  18 metros (12)
-
-Componentes:  V, S
-
-Duração:  Instantânea
-
-Você cria uma bolha ácida em um ponto no alcance da magia, onde ela explode em uma Esfera de 1,5 metro de raio. Cada criatura nessa Esfera deve ser bem-sucedida em uma salvaguarda de Destreza ou sofre 1d6 pontos de dano Ácido.
-
-**Aprimoramento de Truque.** O dano aumenta em 1d6 quando você atinge os níveis 5 (2d6), 11 (3d6) e 17 (4d6).
-
-Bom Fruto
-
-Goodberry
-
- *1º Círculo, Invocação (Druida, Guardião)*
-
-Tempo de Conjuração: Ação
-
-Alcance:  Pessoal
-
-Componentes:  V, S, M (um ramo de visco)
-
-Duração:  24 horas
-
-Dez frutos aparecem em sua mão e são infundidos magicamente pela duração da magia. Uma criatura pode executar uma Ação Bônus para comer um fruto. Comer um fruto restaura 1 Ponto de Vida e fornece alimento suficiente para sustentar uma criatura por um dia. Frutos não comidos desaparecem quando a magia termina.
-
-Braços de Hadar
-
-Arms of Hadar
-
- *1º Círculo, Invocação (Bruxo)*
-
-Tempo de Conjuração: Ação
-
-Alcance:  Pessoal
-
-Componentes:  V, S
-
-Duração:  Instantânea
-
-Clamando por Hadar, você faz com que tentáculos irrompam em você. Cada criatura em uma Emanação de 3 metros originada em você realiza uma salvaguarda de Força. Se falhar, um alvo sofre 2d6 pontos de dano Necrótico e não pode executar Reações até o início do próximo turno dele. Em caso de sucesso, um alvo sofre apenas metade do dano.
-
-**Usando um Espaço de Magia de Círculo Superior.** O dano aumenta em 1d6 pontos para cada círculo de espaço de magia acima de 1.
-
-Caldeirão Borbulhante de Tasha
-
-Tasha's Bubbling Cauldron
-
- *6º Círculo, Invocação (Bruxo, Mago)*
-
-Tempo de Conjuração: Ação
-
-Alcance:  1,5 metros (1)
-
-Componentes:  V, S, M (uma colher de mexer caldeirão dourada no valor de 500 ou mais PO)
-
-Duração:  10 minutos
-
-Você conjura um caldeirão com pés de garra cheio de líquido borbulhante. O caldeirão aparece em um espaço desocupado no chão a até 1,5 metro de você e permanece pela duração da magia. O caldeirão não pode ser movido e desaparece quando a magia termina, junto com o líquido borbulhante dentro dele.
-
-O líquido no caldeirão copia as propriedades de uma poção Comum ou Incomum à sua escolha (como uma *Poção de Cura*). Como uma Ação Bônus, você ou um aliado pode alcançar o caldeirão e retirar dele uma poção desse tipo. A poção está contida em um frasco que desaparece quando a poção é consumida. O caldeirão pode produzir um número dessas poções igual ao seu modificador de atributo de conjuração (mínimo 1). Quando a última dessas poções é retirada do caldeirão, o caldeirão desaparece e a magia termina.
-
-Poções obtidas do caldeirão que não são consumidas desaparecem quando você conjura esta magia novamente.
-
-Cão Fiel de Mordenkainen
-
-Mordenkainen’s Faithful Hound
-
- *4º Círculo, Invocação (Mago, Artífice)*
-
-Tempo de Conjuração: Ação
-
-Alcance:  9 metros (6)
-
-Componentes:  V, S, M (um apito de prata)
-
-Duração:  8 horas
-
-Você conjura um cão de guarda fantasmagórico em um espaço desocupado à sua vista e no alcance da magia. O cão permanece pela duração da magia ou até que vocês dois estejam separados por mais de 90 metros.
-
-Ninguém além de você pode ver o cão, e ele é intangível e invulnerável. Quando uma criatura de tamanho Pequeno ou maior se aproxima a 9 metros dele sem antes falar a senha que você especificou ao conjurar essa magia, o cão começa a latir alto. O cão possui Visão Verdadeira com alcance de 9 metros.
-
-No início de cada um dos seus turnos, o cão tenta morder um inimigo a até 1,5 metro dele. Esse inimigo deve ser bem-sucedido em uma salvaguarda de Destreza ou sofre 4d8 pontos de dano Energético.
-
-Nos seus turnos subsequentes, você pode executar uma ação Usar Magia para mover o cão até 9 metros.
-
-Chama Sagrada
-
-Sacred Flame
-
- *Truque de Evocação (Clérigo)*
-
-Tempo de Conjuração: Ação
-
-Alcance:  18 metros (12)
-
-Componentes:  V, S
-
-Duração:  Instantânea
-
-Um brilho semelhante a uma chama desce sobre uma criatura à sua vista e no alcance da magia. O alvo deve ser bem-sucedido em uma salvaguarda de Destreza ou sofre 1d8 pontos de dano Radiante. O alvo não recebe nenhum benefício de Cobertura Parcial ou Cobertura de Três Quartos para esta salvaguarda.
-
-**Aprimoramento de Truque.** O dano aumenta em 1d8 quando você atinge os níveis 5 (2d8), 11 (3d8) e 17 (4d8).
-
-Círculo Mágico
-
-Magic Circle
-
- *3º Círculo, Abjuração (Clérigo, Bruxo, Mago, Paladino)*
-
-Tempo de Conjuração: 1 minuto
-
-Alcance:  3 metros (2)
-
-Componentes:  V, S, M (sal e prata em pó no valor de 100 ou mais PO, que a magia consome)
-
-Duração:  1 hora
-
-Você cria um Cilindro de energia mágica com 3 metros de raio e 6 metros de altura, centrado em um ponto visível e ao alcance no chão. Runas brilhantes surgem onde o Cilindro toca o chão ou outra superfície.
-
-Escolha um ou mais dos seguintes tipos de criaturas: Celestiais, Elementais, Feéricos, Ínferos ou Mortos-Vivos. O círculo afeta uma criatura do tipo escolhido das seguintes maneiras:
-
-- A criatura não pode entrar voluntariamente no Cilindro por meios não mágicos. Se a criatura tentar usar teleporte ou viagem interplanar para fazer isso, ela deve primeiro ser bem-sucedida em uma salvaguarda de Carisma.
-
-- A criatura tem Desvantagem nas jogadas de ataque contra alvos dentro do Cilindro.
-
-- Alvos dentro do Cilindro não podem ser possuídos ou ter a condição Amedrontado ou Enfeitiçado pela criatura.
-
-     Ao conjurar essa magia, você pode fazer com que ela funcione na direção inversa, impedindo que uma criatura do tipo especificado saia do Cilindro e protegendo alvos fora dele.
-
-     **Usando um Espaço de Magia de Círculo Superior.** A duração aumenta em 1 hora para cada círculo de espaço de magia acima de 3.
-
-Confusão
-
-confusion
-
- *4º Círculo, Encantamento (Bardo, Druida, Feiticeiro, Mago)*
-
-Tempo de Conjuração: Ação
-
-Alcance:  27 metros (18)
-
-Componentes:  V, S, M (três cascas de nozes)
-
-Duração:  Concentração,
- até 1 minuto
-
-Cada criatura em uma Esfera de 3 metros de raio centrada em um ponto à sua escolha no alcance da magia deve ser bem-sucedida em uma salvaguarda de Sabedoria, ou esse alvo não pode executar Ações Bônus ou Reações, e deve jogar 1d10 no início de cada um dos turnos dele para determinar o comportamento nesse turno, consultando a tabela abaixo.
-
-| **1d10** | **Comportamento para o Turno**                                                                                                                                                             |
-| -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| 1        | O alvo não executa uma ação e usa todo o deslocamento para se mover. Jogue 1d4 para a direção: 1, norte; 2, leste; 3, sul; ou 4, oeste.                                                    |
-| 2-6      | O alvo não se move ou executa ações.                                                                                                                                                       |
-| 7-8      | O alvo não se move e executa a ação Atacar para realizar um ataque corpo a corpo contra uma criatura aleatória ao alcance. Se nenhuma estiver ao alcance, o alvo não executa nenhuma ação. |
-| 9-10     | O alvo escolhe o comportamento dele.                                                                                                                                                       |
-
-Ao final de cada um dos turnos dele, um alvo afetado repete a salvaguarda, encerrando a magia em caso de sucesso.
-
-**Usando um Espaço de Magia de Círculo Superior.** O raio da Esfera aumenta em 1,5 metro para cada círculo de espaço de magia acima de 4.
-
-Contramagia
-
-Counterspell
-
- *3º Círculo, Abjuração (Bruxo, Feiticeiro, Mago)*
-
-Tempo de Conjuração: Reação, que você executa quando vê uma criatura a até 18 metros de você conjurando uma magia com componentes Verbais, Somáticos
-
-Alcance:  18 metros (12)
-
-Componentes:  S
-
-Duração:  Instantânea
-
-Você tenta interromper uma criatura no processo de conjurar uma magia. A criatura realiza uma salvaguarda de Constituição. Se falhar, a magia se dissipa sem efeito, e a ação, Ação Bônus ou Reação usada para conjurá-la é desperdiçada. Se a magia do alvo foi conjurada com um espaço de magia, o espaço de magia da criatura não é gasto.
-
-Convocar Celestial
-
-Summon Celestial
-
- *5º Círculo, Invocação (Clérigo, Paladino)*
-
-Tempo de Conjuração: Ação
-
-Alcance:  27 metros (18)
-
-Componentes:  V, S, M (um relicário no valor de 500 ou mais PO)
-
-Duração:  Concentração,
- até 1 hora
-
-Você invoca um Espírito Celestial. Ele se manifesta em uma forma angelical em um espaço desocupado à sua vista e no alcance da magia e usa o bloco de estatísticas do **Espírito Celestial**. Ao conjurar a magia, escolha Defensor ou Vingador. Sua escolha determina certos detalhes no bloco de estatísticas da criatura. A criatura desaparece ao ser reduzida a 0 Pontos de Vida ou quando a magia termina.
-
-A criatura é uma aliada sua e de seus aliados. Em combate, ela compartilha sua contagem de Iniciativa, mas o turno dela é imediatamente após o seu. Ele obedece aos seus comandos verbais (nenhuma ação é necessária). Se você não emitir nenhum, ela executa a ação Esquivar e usa o movimento dela para evitar o perigo.
-
-**Usando um Espaço de Magia de Círculo Superior.** Use o círculo do espaço de magia para o círculo da magia no bloco de estatísticas.
-
-Espírito Celestial
-
-Celestial Grande, Neutro
-
-**AC** 11 + o círculo da magia + 2 (apenas Defensor)
-
-**PV** 40 + 10 para cada círculo de magia acima de 5
-
-**Deslocamento** 9 m, Voo 12 m
-
-|         |    | **Mod** | **SG** |         |    | **Mod** | **SG** |         |    | **Mod** | **SG** |
-| ------- | --- | ------- | ------ | ------- | --- | ------- | ------ | ------- | --- | ------- | ------ |
-| **For** | 16 | +3      | +3     | **Des** | 14 | +2      | +2     | **Con** | 16 | +3      | +3     |
-| **Int** | 10 | +0      | +0     | **Sab** | 14 | +2      | +2     | **Car** | 16 | +3      | +3     |
-
-**Resistências:** Radiante
-
-**Imunidades:** Amedrontado, Enfeitiçado
-
-**Sentidos:** Visão no Escuro 18 m, Percepção Passiva 12
-
-**Idiomas:** Celestial, compreende os idiomas que você fala
-
-**ND** Nenhum (XP 0; BP é igual ao seu Bônus de Proficiência)
-
-Ações
-
-**Ataques Múltiplos.** O espírito realiza um número de ataques igual à metade do círculo da magia (arredondado para baixo).
-
-**Arco Radiante (Apenas Vingador).** *Jogada de Ataque à Distância:* Bônus é igual ao seu modificador de ataque mágico, alcance 180 m. *Dano:* 2d6 + 2 + o círculo da magia pontos de dano Radiante.
-
-**Maça Radiante (Apenas Defensor).** *Jogada de Ataque Corpo a Corpo:* Bônus é igual ao seu modificador de ataque mágico, alcance 1,5 m. *Dano:* 1d10 + 3 + o círculo da magia pontos de dano Radiante, e o espírito pode escolher a si mesmo ou outra criatura à vista dele a até 3 metros do alvo. A criatura escolhida obtém 1d10 Pontos de Vida Temporários.
-
-**Toque Curativo (1/Dia).** O espírito toca outra criatura. O alvo recupera Pontos de Vida iguais a 2d8 + o círculo da magia.
-
-Convocar Elemental
-
-Summon Elemental
-
- *4º Círculo, Invocação (Druida, Guardião, Mago)*
-
-Tempo de Conjuração: Ação
-
-Alcance:  27 metros (18)
-
-Componentes:  V, S, M (ar, uma pedra, cinzas e água dentro de um frasco incrustado de ouro no valor de 400 ou mais PO)
-
-Duração:  Concentração,
- até 1 hora
-
-Você invoca um Espírito Elemental. Ele se manifesta em um espaço desocupado à sua vista e no alcance da magia e usa o bloco de estatísticas do **Espírito Elemental**. Ao conjurar a magia, escolha um elemento: Água, Ar, Fogo ou Terra. A criatura se assemelha a uma forma bípede envolta no elemento escolhido, o que determina certas características no bloco de estatísticas da criatura. A criatura desaparece ao ser reduzida a 0 Pontos de Vida ou quando a magia termina.
-
-A criatura é uma aliada sua e de seus aliados. Em combate, ela compartilha sua contagem de Iniciativa, mas o turno dela é imediatamente após o seu. Ela obedece aos seus comandos verbais (nenhuma ação é necessária). Se você não emitir nenhum, ela executa a ação Esquivar e usa o movimento dela para evitar o perigo.
-
-**Usando um Espaço de Magia de Círculo Superior.** Use o círculo do espaço de magia para o círculo da magia no bloco de estatísticas.
-
-Espírito Elemental
-
-Elemental Médio, Neutro
-
-**CA** 11 + o círculo da magia
-
-**PV** 50 + 10 para cada círculo de magia acima de 4
-
-**Deslocamento** 12 m; Escavação 12 m (apenas Terra); Natação 12 m (apenas Água); Voo 12 m (pairar; apenas Ar)
-
-|         |    | **Mod** | **SG** |         |    | **Mod** | **SG** |         |    | **Mod** | **SG** |
-| ------- | --- | ------- | ------ | ------- | --- | ------- | ------ | ------- | --- | ------- | ------ |
-| **For** | 18 | +4      | +4     | **Des** | 15 | +2      | +2     | **Con** | 17 | +3      | +3     |
-| **Int** | 4  | -3      | -3     | **Sab** | 10 | +0      | +0     | **Car** | 16 | +3      | +3     |
-
-**Resistências** Ácido (apenas Água), Cortante e Perfurante (apenas Terra), Elétrico e Trovejante (apenas Ar)
-
-**Imunidades** Ígneo (somente Fogo), Venenoso; Envenenado, Exaustão, Paralisado, Petrificado
-
-**Sentidos** Visão no Escuro 18 m, Percepção Passiva 10
-
-**Idiomas** Primordial, compreende os idiomas que você fala
-
-**ND** Nenhum (XP 0; BP é igual ao seu Bônus de Proficiência)
-
-Traços
-
-**Estado Amorfo (Apenas Água, Ar e Fogo).** O espírito pode se mover por um espaço tão estreito quanto 2,5 centímetros de largura sem contá-lo como Terreno Difícil.
-
-Ações
-
-**Ataques Múltiplos.** O espírito realiza um número de ataques de Pancada igual à metade do círculo da magia (arredondado para baixo).
-
-**Pancada.** *Jogada de Ataque Corpo a Corpo:* Bônus é igual ao seu modificador de ataque mágico, alcance 1,5 m. *Dano:* 1d10 + 4 + o círculo da magia pontos de dano Contundente (apenas Terra), Elétrico (apenas Ar), Gélido (apenas Água) ou Ígneo (apenas Fogo).
-
-Convocar Familiar
-
-find familiar
-
- *1º Círculo, Invocação (Mago)*
-
-Tempo de Conjuração: 1 hora ou Ritual
-
-Alcance:  3 metros (2)
-
-Componentes:  V, S, M (incenso queimando no valor de 10 ou mais PO, que a magia consome)
-
-Duração:  Instantânea
-
-Você adquire o serviço de um familiar, um espírito que assume uma forma animal que você escolhe: **Aranha, Coruja, Corvo, Doninha, Falcão, Gato, Lagarto, Morcego, Polvo, Rato, Sapo** ou outra Fera que tenha um Nível de Desafio 0. Aparecendo em um espaço desocupado no alcance da magia, o familiar tem as estatísticas da forma escolhida (veja o apêndice B), embora seja um Celestial, Feérico ou Ínfero (à sua escolha) em vez de uma Fera. Seu familiar age independentemente de você, mas obedece aos seus comandos.
-
-**Conexão Telepática.** Enquanto seu familiar estiver a até 30 metros de você, você pode se comunicar telepaticamente com ele. Além disso, como uma Ação Bônus, você pode ver através dos olhos do familiar e ouvir o que ele ouve até o início do seu próximo turno, obtendo os benefícios de quaisquer sentidos especiais que ele tenha.
-
-Por fim, ao conjurar uma magia com um alcance de toque, seu familiar pode entregar o toque. Seu familiar deve estar a até 30 metros de você, e ele deve executar uma Reação para entregar o toque quando você conjurar a magia.
-
-**Combate.** O familiar é um aliado seu e de seus aliados. Ele joga a Iniciativa dele e age no turno dele. Um familiar não pode atacar, mas pode realizar outras ações normalmente.
-
-**Desaparecimento do Familiar.** Quando o familiar é reduzido a 0 Pontos de Vida, ele desaparece. Ele reaparece depois que você conjura esta magia novamente. Como uma ação Usar Magia, você pode descartar temporariamente o familiar para uma mini dimensão. Como alternativa, você pode descartá-lo para sempre. Como uma ação Usar Magia enquanto está temporariamente descartado, você pode fazer com que ele reapareça em um espaço desocupado a até 9 metros de você. Sempre que o familiar é reduzido a 0 Pontos de Vida ou desaparece na mini dimensão, ele deixa para trás no espaço que ocupava qualquer coisa que estivesse vestindo ou carregando.
-
-**Apenas um Familiar.** Você não pode ter mais de um familiar ao mesmo tempo. Ao conjurar esta magia enquanto você tem um familiar, você faz com que ele adote uma nova forma elegível.
-
-Convocar Feérico
-
-Summon Fey
-
- *3º Círculo, Invocação (Bruxo, Druida, Guardião, Mago)*
-
-Tempo de Conjuração: Ação
-
-Alcance:  27 metros (18)
-
-Componentes:  V, S, M (uma flor dourada no valor de 300 ou mais PO)
-
-Duração:  Concentração,
- até 1 hora
-
-Você invoca um Espírito Feérico. Ele se manifesta em um espaço desocupado à sua vista e no alcance da magia e usa o bloco de estatísticas do **Espírito Feérico**. Ao conjurar a magia, escolha um humor: Alegre, Enfurecido ou Malandro. A criatura se assemelha a uma criatura Feérica à sua escolha definida pelo humor escolhido, o que determina certos detalhes no bloco de estatísticas da criatura. A criatura desaparece se reduzida a 0 Pontos de Vida ou quando a magia termina.
-
-A criatura é uma aliada sua e de seus aliados. Em combate, ela compartilha sua contagem de Iniciativa, mas o turno dela é imediatamente após o seu. Ela obedece aos seus comandos verbais (nenhuma ação é necessária). Se você não emitir nenhum, ela executa a ação Esquivar e usa o movimento dela para evitar o perigo.
-
-**Usando um Espaço de Magia de Círculo Superior.** Use o círculo do espaço de magia para o círculo da magia no bloco de estatísticas.
-
-Espírito Feérico
-
-Feérico Pequeno, Neutro
-
-**CA** 12 + o círculo da magia
-
-**PV** 30 + 10 para cada círculo de magia acima de 3
-
-**Deslocamento** 9 m, Voo 9 m
-
-|         |    | **Mod** | **SG** |         |    | **Mod** | **SG** |         |    | **Mod** | **SG** |
-| ------- | --- | ------- | ------ | ------- | --- | ------- | ------ | ------- | --- | ------- | ------ |
-| **For** | 13 | +1      | +1     | **Des** | 16 | +3      | +3     | **Con** | 14 | +2      | +2     |
-| **Int** | 14 | +2      | +2     | **Sab** | 11 | +0      | +0     | **Car** | 16 | +3      | +3     |
-
-**Imunidades** Enfeitiçado
-
-**Sentidos** Visão no Escuro 18 m, Percepção Passiva 10
-
-**Idiomas** Silvestre, compreende os idiomas que você fala
-
-**ND** Nenhum (XP 0; BP é igual ao seu Bônus de Proficiência)
-
-**Ações**
-
-**Ataques Múltiplos.** O espírito realiza um número de ataques com Lâmina Feérica igual à metade do círculo da magia (arredondado para baixo).
-
-**Lâmina Feérica.** *Jogada de Ataque Corpo a Corpo:* Bônus é igual ao seu modificador de ataque mágico, alcance 1,5 m. *Dano:* 3d6 + 3 + o círculo da magia pontos de dano Energético.
-
-**Ações Bônus**
-
-**Passo Feérico.** O espírito se teleporta magicamente até 9 metros para um espaço desocupado à vista dele. Em seguida, ocorre um dos seguintes efeitos, com base no humor escolhido para o espírito:
-
-**Alegre.** *Salvaguarda de Sabedoria:* CD é igual a CD para evitar sua magia, uma criatura à vista do espírito e a até 3 metros dele. *Falha:* O alvo fica Enfeitiçado por você e pelo espírito por 1 minuto ou até que o alvo sofra qualquer dano.
-
-**Enfurecido.** O espírito tem Vantagem na próxima jogada de ataque que realizar antes do final deste turno.
-
-**Malandro.** O espírito preenche um Cubo de 3 metros de lado a até 1,5 metro dele com Escuridão mágica, que dura até o final do próximo turno dele.
-
-Convocar Montaria
-
-find steed
-
- *2º Círculo, Invocação (Paladino)*
-
-Tempo de Conjuração: Ação
-
-Alcance:  9 metros (6)
-
-Componentes:  V, S
-
-Duração:  Instantânea
-
-Você convoca um ser sobrenatural que aparece como uma montaria leal em um espaço desocupado à sua escolha no alcance da magia. Essa criatura usa o bloco de estatísticas de **Montaria Sobrenatural**. Se você já tem uma montaria desta magia, a montaria é substituída pela nova.
-
-A montaria se assemelha a um animal grande e que se pode montar à sua escolha, como um alce, um camelo, um cavalo ou um lobo atroz. Sempre que conjurar a magia, escolha o tipo de criatura da montaria — Celestial, Feérico ou Ínfero — que determina certas características no bloco de estatísticas.
-
-**Combate.** A montaria é um aliado seu e de seus aliados. Em combate, ela compartilha sua contagem de Iniciativa e funciona como uma montaria controlada enquanto você a monta (conforme definido nas regras sobre combate montado). Se você tem a condição Incapacitado, a montaria age no turno dela imediatamente após o seu, de forma independente, concentrando-se em protegê-lo.
-
-**Desaparecimento da Montaria.** A montaria desaparece se é reduzida a 0 Pontos de Vida ou se você morrer. Quando desaparece, deixa para trás qualquer coisa que estivesse vestindo ou carregando. Se você conjurar esta magia novamente, você decide se invoca a montaria que desapareceu ou uma diferente.
-
-**Usando um Espaço de Magia de Círculo Superior.** Use o círculo do espaço de magia para o círculo da magia no bloco de estatísticas.
-
-Montaria Sobrenatural
-
-Celestial Grande, Feérico ou Ínfero (À Sua Escolha), Neutro
-
-**CA** 10 + 1 por círculo de magia
-
-**PV** 5 + 10 por círculo de magia (a montaria tem um número de Dados de Vida [d10s] igual ao círculo da magia)
-
-**Deslocamento** 18 m, Voo 18 m (requer magia de 4º círculo ou superior)
-
-|         |    | **Mod** | **SG** |         |    | **Mod** | **SG** |         |    | **Mod** | **SG** |
-| ------- | --- | ------- | ------ | ------- | --- | ------- | ------ | ------- | --- | ------- | ------ |
-| **For** | 18 | +4      | +4     | **Des** | 12 | +1      | +1     | **Con** | 14 | +2      | +2     |
-| **Int** | 6  | -2      | -2     | **Sab** | 12 | +1      | +1     | **Car** | 8  | -1      | -1     |
-
-**Sentidos** Percepção Passiva 11
-
-**Idiomas** Telepatia 1,5 km (funciona apenas com você)
-
-**ND** Nenhum (XP 0; BP é igual ao seu Bônus de Proficiência)
-
-**Traços**
-
-**Vínculo Vital.** Ao recuperar Pontos de Vida de uma magia 1º círculo ou superior, a montaria recupera o mesmo número de Pontos de Vida se você estiver a até 1,5 metro dela.
-
-**Ações**
-
-**Pancada Sobrenatural.** *Jogada de Ataque Corpo a Corpo:* Bônus é igual ao seu modificador de ataque mágico, alcance 1,5 m. *Dano:* 1d8 mais o círculo da magia de pontos de dano Radiante (Celestial), Psíquico (Feérico) ou Necrótico (Ínfero).
-
-**Ações Bônus**
-
-**Derrubar Brilho (Apenas Ínfero; Recarrega após um Descanso Longo).** *Salvaguarda de Sabedoria:* CD é igual a CD para evitar sua magia, uma criatura a até 18 metros à vista da montaria. *Falha:* O alvo tem a condição Amedrontado até o final do seu próximo turno.
-
-**Passo Feérico (Apenas Feérico; Recarrega após um Descanso Longo).** A montaria se teleporta, junto com seu cavaleiro, para um espaço desocupado à sua escolha a até 18 metros de distância de onde está.
-
-**Toque Curativo (Apenas Celestial; Recarrega após um Descanso Longo).** Uma criatura a até 1,5 metro da montaria recupera um número de Pontos de Vida igual a 2d8 mais o círculo da magia.
-
-Criar Chamas
-
-produce flame
-
- *Truque de Invocação (Druida)*
-
-Tempo de Conjuração: Ação Bônus
-
-Alcance:  Pessoal
-
-Componentes:  V, S
-
-Duração:  10 minutos
-
-Uma chama bruxuleante surge em sua mão e permanece lá pela duração da magia. Enquanto estiver lá, a chama não emite calor, não queima nada, e emite Luz Plena em um raio de 6 metros e Meia-luz por mais 6 metros. A magia se encerra se você a conjurar novamente.
-
-Até que a magia termine, você pode executar uma ação Usar Magia para arremessar a chama em uma criatura ou objeto a até 18 metros de você. Realize um ataque mágico à distância. Em caso de acerto, o alvo sofre 1d8 pontos de dano Ígneo.
-
-**Aprimoramento de Truque.** O dano aumenta em 1d8 quando você atinge os níveis 5 (2d8), 11 (3d8) e 17 (4d8).
-
-Curar Ferimentos
-
-cure wounds
-
- *1º Círculo, Abjuração (Bardo, Clérigo, Druida, Guardião, Paladino, Artífice)*
-
-Tempo de Conjuração: Ação
-
-Alcance:  Toque
-
-Componentes:  V, S
-
-Duração:  Instantânea
-
-Uma criatura que você toca recupera um número de Pontos de Vida igual a 2d8 mais seu modificador de atributo de conjuração.
-
-**Usando um Espaço de Magia de Círculo Superior.** A cura aumenta em 2d8 para cada círculo de espaço de magia acima de 1.
-
-Danação
-
-Hex
-
- *1º Círculo, Encantamento (Bruxo)*
-
-Tempo de Conjuração: Ação Bônus
-
-Alcance:  27 metros (18)
-
-Componentes:  V, S, M (o olho petrificado de uma salamandra)
-
-Duração:  Concentração,
- até 1 hora
-
-Você coloca uma maldição em uma criatura à sua vista e no alcance da magia. Até que a magia termine, você causa 1d6 pontos de dano Necrótico adicional ao alvo sempre que o acertar com uma jogada de ataque. Além disso, escolha um atributo ao conjurar a magia. O alvo tem Desvantagem nos testes de atributo realizados com o atributo escolhido.
-
-Se o alvo é reduzido a 0 Pontos de Vida antes que esta magia termine, você pode executar uma ação Bônus em um turno posterior para amaldiçoar uma nova criatura.
-
-**Usando um Espaço de Magia de Círculo Superior.** Sua Concentração pode durar mais com um espaço de magia de 2º círculo (em até 4 horas), 3º–4º círculo (em até 8 horas) ou 5º círculo ou superior (em até 24 horas).
-
-Defensor da Fé
-
-Guardian of Fate
-
- *4º Círculo, Invocação (Clérigo)*
-
-Tempo de Conjuração: Ação
-
-Alcance:  9 metros (6)
-
-Componentes:  V
-
-Duração:  8 horas
-
-Um defensor espectral Grande aparece e paira pela duração da magia em um espaço desocupado à sua vista e no alcance da magia. O defensor ocupa esse espaço e não pode ser atingido, e aparece em uma forma apropriada para sua divindade ou panteão.
-
-Qualquer inimigo que se mova para um espaço a até 3 metros do defensor pela primeira vez em um turno ou inicie o turno lá realiza uma salvaguarda de Destreza, sofrendo 20 pontos de dano Radiante se falhar, ou metade desse dano em caso de sucesso. O defensor desaparece quando causa um total de 60 pontos de dano.
-</script>
 
 <script>
 (() => {
@@ -1070,7 +324,6 @@ const uid = p => p + Date.now().toString(36) + Math.random().toString(36).slice(
 
 const CLASSES = ['Artífice','Bardo','Bruxo','Clérigo','Druida','Feiticeiro','Guardião','Mago','Paladino'];
 let SEED = [], LIB = [], BY = {};
-try { SEED = parseSiteText(document.getElementById('seed').textContent); } catch(e){ console.error(e); }
 function rebuild(){
   const m = new Map();
   SEED.forEach(s=>m.set(s.id,s)); S.imported.forEach(s=>m.set(s.id,s)); S.custom.forEach(s=>m.set(s.id,s));
@@ -1084,6 +337,28 @@ const $$ = (s,r=document) => [...r.querySelectorAll(s)];
 const esc = s => String(s??'').replace(/[&<>"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const fmt = s => esc(s).replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/\*(.+?)\*/g,'<em>$1</em>');
 const circLabel = n => n===0 ? 'Truque' : n+'º círculo';
+/* livros / fontes das magias */
+const FONTES = {
+  'site':             { curto:'Base',   nome:'Livro base',       cls:'src-base' },
+  'Heróis de Faerûn': { curto:'Faerûn', nome:'Heróis de Faerûn', cls:'src-fae'  },
+  'Arcana Unleashed': { curto:'Arcana', nome:'Arcana Unleashed', cls:'src-arc'  }
+};
+const FONTES_ORDEM = ['site','Heróis de Faerûn','Arcana Unleashed'];
+function canonFonte(f){
+  const n = norm(f).trim();
+  if (!n || n==='site' || n==='base' || n==='livro base') return 'site';
+  if (n==='herois de faerun') return 'Heróis de Faerûn';
+  if (n==='arcana unleashed') return 'Arcana Unleashed';
+  return String(f).trim();
+}
+const fonteKey = s => s.custom ? 'personalizada' : (s.fonte || 'site');
+function fonteInfo(s){
+  const k = fonteKey(s);
+  if (FONTES[k]) return FONTES[k];
+  if (k==='personalizada') return null;
+  if (k==='importada') return { curto:'Importada', nome:'Importada', cls:'src-out' };
+  return { curto:k, nome:k, cls:'src-out' };
+}
 const ptSort = (a,b) => a.localeCompare(b,'pt-BR',{sensitivity:'base'});
 let toastT;
 function toast(msg){ const t=$('#toast'); t.textContent=msg; t.hidden=false; clearTimeout(toastT); toastT=setTimeout(()=>t.hidden=true,2600); }
@@ -1122,6 +397,7 @@ function spellHTML(s, o={}){
   const facts = [['Tempo de conjuração',s.tempo],['Alcance',s.alcance],['Componentes',s.componentes],['Duração',s.duracao]];
   let h = `<article class="spell"><h3>${esc(s.nome)}</h3>${s.nomeEn && s.nomeEn!==s.nome?`<p class="en">${esc(s.nomeEn)}</p>`:''}`;
   h += `<p class="lvl">${s.circulo===0?'Truque':s.circulo+'º círculo'} de ${esc(s.escola.toLowerCase())}${s.classes.length?` (${esc(s.classes.join(', '))})`:''}</p>`;
+  { const fi = fonteInfo(s); if (fi) h += `<p class="srcline">Fonte: <span class="pill src ${fi.cls}">${esc(fi.nome)}</span></p>`; }
   h += `<dl class="facts">${facts.map(f=>`<div><dt>${f[0]}</dt><dd>${esc(f[1]||'—')}</dd></div>`).join('')}</dl>`;
   h += `<div class="txt">${blocksHTML(s.desc)}`;
   if (s.truque) h += `<p class="sup"><strong>Aprimoramento de truque.</strong> ${fmt(s.truque)}</p>`;
@@ -1181,13 +457,14 @@ $('#cDel').addEventListener('click', ()=>{
 });
 
 /* ---------- biblioteca ---------- */
-const F = { q:'', circ:'', escola:'', classe:'', ord:'circ', rit:false, con:false, fic:false, cus:false };
+const F = { q:'', circ:'', escola:'', classe:'', fonte:'', ord:'circ', rit:false, con:false, fic:false, cus:false };
 const cur = { lib:null, book:null };
 function passes(s){
   if (F.q){ const q = norm(F.q); if (!norm(s.nome).includes(q) && !norm(s.nomeEn).includes(q)) return false; }
   if (F.circ!=='' && s.circulo!==+F.circ) return false;
   if (F.escola && s.escola!==F.escola) return false;
   if (F.classe && !s.classes.includes(F.classe)) return false;
+  if (F.fonte && fonteKey(s)!==F.fonte) return false;
   if (F.rit && !s.ritual) return false;
   if (F.con && !s.concentracao) return false;
   if (F.fic && !s.fichas.length) return false;
@@ -1267,6 +544,8 @@ function rowHTML(s, mode){
   const ch = activeChar(); const has = ch && ch.spells.includes(s.id);
   const sel = cur[mode]===s.id;
   let pills = '';
+  const fi = fonteInfo(s);
+  if (fi) pills += `<span class="pill src ${fi.cls}" title="${esc(fi.nome)}">${esc(fi.curto)}</span>`;
   if (s.concentracao) pills += '<span class="pill c">Concentração</span>';
   if (s.ritual) pills += '<span class="pill">Ritual</span>';
   if (s.fichas.length) pills += '<span class="pill p">Ficha</span>';
@@ -1294,13 +573,40 @@ function listHTML(arr, mode, grouped){
   }
   return h;
 }
+function baseNote(){
+  if (BASE.state==='ok') return 'Lista carregada do arquivo magias.json.';
+  if (BASE.state==='local') return 'Lista carregada do arquivo magias.json escolhido neste computador.';
+  if (BASE.state==='cache') return 'Não consegui ler o magias.json agora; usando a última cópia guardada neste navegador.';
+  if (BASE.state==='loading') return 'Carregando o magias.json…';
+  return '';
+}
+function baseEmptyMsg(){
+  if (BASE.state==='loading') return 'Carregando as magias do arquivo magias.json…';
+  return `Não consegui carregar o magias.json (${BASE.err||'arquivo não encontrado'}). Ele precisa ficar na mesma pasta do index.html, e o site precisa estar hospedado (por exemplo, no GitHub Pages): abrindo o index.html direto do computador, o navegador bloqueia essa leitura. Para usar assim mesmo, vá em “Importar e backup” e escolha o arquivo magias.json.`;
+}
 function renderLib(){
+  if (!LIB.length){
+    $('#list').innerHTML = `<li class="empty">${esc(baseEmptyMsg())}</li>`;
+    $('#fcount').textContent = ''; $('#libLead').textContent = '';
+    $('#detail-lib').innerHTML = '<p class="placeholder">Escolha uma magia na lista para ver o texto completo.</p>';
+    return;
+  }
   const arr = sortSpells(LIB.filter(passes), F.ord);
   $('#list').innerHTML = listHTML(arr,'lib',F.ord==='circ');
   $('#fcount').textContent = `${arr.length} de ${LIB.length} magias`;
-  const doSite = LIB.filter(s=>!s.custom).length;
-  $('#libLead').textContent = `${LIB.length} magias na biblioteca (${doSite} do site, ${S.custom.length} personalizadas).` + ' Para atualizar a lista, use “Importar e backup”.';
+  const cont = {}; LIB.forEach(s=>{ const k = fonteKey(s); cont[k] = (cont[k]||0)+1; });
+  const ks = Object.keys(cont).filter(k=>k!=='personalizada').sort((x,y)=>{ const i=FONTES_ORDEM.indexOf(x), j=FONTES_ORDEM.indexOf(y); return (i<0?99:i)-(j<0?99:j) || ptSort(x,y); });
+  const partes = ks.map(k=> k==='site' ? `${cont[k]} do livro base` : k==='importada' ? `${cont[k]} importadas` : `${cont[k]} de ${(FONTES[k]||{nome:k}).nome}`);
+  partes.push(`${cont.personalizada||0} personalizadas`);
+  $('#libLead').textContent = `${LIB.length} magias na biblioteca (${partes.join(', ')}). ` + baseNote();
   if (cur.lib && BY[cur.lib]) showDetail(cur.lib,'lib'); else $('#detail-lib').innerHTML = '<p class="placeholder">Escolha uma magia na lista para ver o texto completo.</p>';
+}
+function fillFontes(){
+  const sel = $('#ffonte'), v = sel.value, cont = new Map();
+  LIB.forEach(s=>{ const k = fonteKey(s); if (k!=='personalizada') cont.set(k,(cont.get(k)||0)+1); });
+  const ks = [...cont.keys()].sort((x,y)=>{ const i=FONTES_ORDEM.indexOf(x), j=FONTES_ORDEM.indexOf(y); return (i<0?99:i)-(j<0?99:j) || ptSort(x,y); });
+  sel.innerHTML = '<option value="">Todos</option>' + ks.map(k=>`<option value="${esc(k)}">${esc((FONTES[k]||{nome:k}).nome)} (${cont.get(k)})</option>`).join('');
+  sel.value = ks.includes(v) ? v : ''; F.fonte = sel.value;
 }
 const BY_SEED = id => SEED.some(s=>s.id===id);
 function showDetail(id, mode, open){
@@ -1352,7 +658,7 @@ function onListClick(e, mode){
   });
 });
 const bind = (id, key, ev='input', get=e=>e.target.value) => $(id).addEventListener(ev, e=>{ F[key]=get(e); renderLib(); });
-bind('#fq','q'); bind('#fcirc','circ','change'); bind('#fesc','escola','change'); bind('#fcls','classe','change'); bind('#ford','ord','change');
+bind('#fq','q'); bind('#fcirc','circ','change'); bind('#fesc','escola','change'); bind('#fcls','classe','change'); bind('#ffonte','fonte','change'); bind('#ford','ord','change');
 bind('#frit','rit','change',e=>e.target.checked); bind('#fcon','con','change',e=>e.target.checked); bind('#ffic','fic','change',e=>e.target.checked); bind('#fcus','cus','change',e=>e.target.checked);
 $('#fesc').insertAdjacentHTML('beforeend', ESCOLAS.map(e=>`<option>${e}</option>`).join(''));
 function fillClasses(){
@@ -1678,11 +984,11 @@ $('#impClear').addEventListener('click', ()=>{
   if (!confirm('Remover todas as atualizações importadas? A biblioteca padrão e as suas magias personalizadas continuam.')) return;
   S.imported = []; persist(); rebuild(); refresh(); say('#bkMsg','ok','Atualizações importadas removidas. Biblioteca padrão restaurada.');
 });
-function updateDataInfo(){ $('#impMsg').innerHTML=''; $('#bkMsg').innerHTML=''; }
+function updateDataInfo(){ $('#impMsg').innerHTML=''; $('#bkMsg').innerHTML=''; $('#baseMsg').innerHTML=''; showBaseStatus(); }
 
 /* ---------- atualização geral ---------- */
 function refresh(){
-  renderChars(); fillClasses();
+  renderChars(); fillClasses(); fillFontes();
   if (view==='lib') renderLib(); if (view==='book') renderBook(); if (view==='print') renderSheet();
 }
 
@@ -1740,17 +1046,83 @@ if (sb){
   });
 }
 
-/* ---------- biblioteca base (magias.json ou magias.txt ao lado do site) ---------- */
+/* ---------- biblioteca base: lê o magias.json que fica ao lado do index.html ---------- */
+const BASE_FILE = 'magias.json', BASE_CACHE = 'grimorio-base-v1';
+const BASE = { state:'loading', n:0, ign:0, err:'', quando:'' };
+function normSpell(x){
+  if (!x || typeof x!=='object' || !String(x.nome||'').trim()) return null;
+  const circ = Number(x.circulo); if (!Number.isInteger(circ) || circ<0 || circ>9) return null;
+  const arr = v => Array.isArray(v) ? v : [];
+  const sp = Object.assign({ nomeEn:'', escola:'', tempo:'', alcance:'', componentes:'', duracao:'', superior:'', truque:'' }, x);
+  sp.nome = String(x.nome).trim(); sp.circulo = circ; sp.id = String(x.id || slug(sp.nome));
+  sp.nomeEn = String(sp.nomeEn||''); sp.escola = String(sp.escola||'');
+  sp.classes = arr(x.classes);
+  sp.desc = typeof x.desc==='string' ? [{ t:'p', x:x.desc }] : arr(x.desc);
+  sp.fichas = arr(x.fichas);
+  sp.ritual = !!x.ritual; sp.concentracao = !!x.concentracao;
+  sp.fonte = canonFonte(x.fonte); delete sp.custom;
+  return sp;
+}
+function cacheSave(list){ try { localStorage.setItem(BASE_CACHE, JSON.stringify({ t:new Date().toISOString(), spells:list })); } catch(e){} }
+function cacheLoad(){ try { const j = JSON.parse(localStorage.getItem(BASE_CACHE)||'null'); return j && Array.isArray(j.spells) && j.spells.length ? j : null; } catch(e){ return null; } }
+function aplicarBase(list, quando, estado){
+  const vistos = new Set(), out = []; let ign = 0;
+  for (const x of list){ const sp = normSpell(x); if (!sp || vistos.has(sp.id)){ ign++; continue; } vistos.add(sp.id); out.push(sp); }
+  if (!out.length) throw new Error('nenhuma magia válida no arquivo');
+  SEED = out; Object.assign(BASE, { state:estado, n:out.length, ign, err:'', quando });
+  rebuild(); refresh(); showBaseStatus();
+  return out;
+}
+function showBaseStatus(){
+  if (!$('#baseStatus')) return;
+  const q = BASE.quando ? new Date(BASE.quando).toLocaleString('pt-BR') : '';
+  let cls = '', t = '';
+  if (BASE.state==='ok'){ cls='ok'; t = `Carregado do arquivo ${BASE_FILE}: ${BASE.n} magias (${q}).`; }
+  else if (BASE.state==='local'){ cls='ok'; t = `Carregado do arquivo escolhido neste computador: ${BASE.n} magias. Uma cópia fica guardada neste navegador.`; }
+  else if (BASE.state==='cache'){ cls='err'; t = `Não consegui ler o ${BASE_FILE} agora (${BASE.err||'sem resposta'}). Usando a última cópia guardada neste navegador: ${BASE.n} magias (${q}).`; }
+  else if (BASE.state==='none'){ cls='err'; t = `Nenhuma biblioteca carregada (${BASE.err||'arquivo não encontrado'}).`; }
+  else t = 'Carregando…';
+  if (BASE.ign) t += ` ${BASE.ign} entradas foram ignoradas (sem nome, sem círculo válido ou com id repetido).`;
+  if (S.imported.length) t += ` Atenção: há ${S.imported.length} magias importadas manualmente que têm prioridade sobre o ${BASE_FILE} quando o id é o mesmo; para valer só o arquivo, use “Remover magias importadas”.`;
+  say('#baseStatus', cls, t);
+}
 async function loadBase(){
-  for (const [url, json] of [['magias.json',true],['magias.txt',false]]){
-    try {
-      const r = await fetch(url, { cache:'no-cache' }); if (!r.ok) continue;
-      const d = json ? await r.json() : parseSiteText(await r.text());
-      const arr = Array.isArray(d) ? d : (d.spells || []);
-      if (arr.length){ SEED = arr.map(x => Object.assign({ fonte:'site' }, x)); rebuild(); refresh(); return; }
-    } catch(e){}
+  try {
+    const r = await fetch(BASE_FILE + '?v=' + Date.now(), { cache:'no-store' });
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    const d = await r.json();
+    const arr = Array.isArray(d) ? d : (d.spells || d.magias || []);
+    const out = aplicarBase(arr, new Date().toISOString(), 'ok');
+    cacheSave(out);
+    return true;
+  } catch(e){
+    BASE.err = (e && e.message) || String(e);
+    if (BASE.state!=='cache' && BASE.state!=='local'){
+      const c = cacheLoad();
+      if (c){ try { aplicarBase(c.spells, c.t, 'cache'); BASE.err = (e && e.message) || String(e); showBaseStatus(); return false; } catch(_){} }
+      BASE.state = 'none';
+    } else if (BASE.state==='local') { /* mantém o arquivo escolhido manualmente */ }
+    refresh(); showBaseStatus();
+    return false;
   }
 }
+$('#baseReload').addEventListener('click', async ()=>{
+  say('#baseMsg','','Recarregando…');
+  const ok = await loadBase();
+  say('#baseMsg', ok?'ok':'err', ok ? `Pronto: ${BASE.n} magias.` : `Não consegui recarregar: ${BASE.err}`);
+});
+$('#baseFile').addEventListener('change', e=>{
+  const f = e.target.files[0]; if (!f) return;
+  const rd = new FileReader();
+  rd.onload = ()=>{
+    try {
+      const d = JSON.parse(String(rd.result));
+      const out = aplicarBase(Array.isArray(d) ? d : (d.spells || d.magias || []), new Date().toISOString(), 'local');
+      cacheSave(out); say('#baseMsg','ok',`Pronto: ${out.length} magias carregadas de ${f.name}.`);
+    } catch(err){ say('#baseMsg','err','Não consegui ler esse arquivo: ' + err.message); }
+  };
+  rd.readAsText(f); e.target.value = '';
+});
 
 /* ---------- início ---------- */
 if (!store.persistent()){
@@ -1759,8 +1131,9 @@ if (!store.persistent()){
 }
 if (S.active && !S.chars.some(c=>c.id===S.active)) S.active = S.chars[0]?.id || null;
 if (!S.active && S.chars.length) S.active = S.chars[0].id;
-renderChars(); fillClasses();
+renderChars(); fillClasses(); fillFontes();
 go((location.hash||'#lib').slice(1));
+{ const c0 = cacheLoad(); if (c0){ SEED = c0.spells; Object.assign(BASE, { state:'cache', n:c0.spells.length, quando:c0.t }); rebuild(); fillFontes(); refresh(); } }
 loadBase();
 bootCloud();
 })();
