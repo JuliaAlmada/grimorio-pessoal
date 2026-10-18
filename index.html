@@ -5,11 +5,21 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Grimório · D&amp;D 5e 2024</title>
 <meta name="theme-color" content="#2f5744">
+<meta name="color-scheme" content="light dark">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E📖%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inclusive+Sans:ital,wght@0,300..700;1,300..700&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=fonte-livro-1">
+<link rel="stylesheet" href="styles.css?v=impressao-2">
+<script>
+/* escolhe o tema antes da página aparecer, para não piscar branco */
+(function(){
+  var t = null;
+  try { t = localStorage.getItem('grimorio-tema'); } catch(e){}
+  if (t !== 'dark' && t !== 'light') t = (window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+  document.documentElement.setAttribute('data-theme', t);
+})();
+</script>
 </head>
 <body>
 <header class="top">
@@ -20,6 +30,7 @@
     <button class="btn ghost sm" id="charNew" type="button">Novo personagem</button>
     <button class="btn ghost sm" id="charEdit" type="button">Editar</button>
   </div>
+  <button class="btn ghost sm" id="themeBtn" type="button"></button>
   <nav class="tabs" id="tabs" aria-label="Seções">
     <button type="button" data-go="lib">Biblioteca</button>
     <button type="button" data-go="book">Meu grimório</button>
@@ -99,39 +110,12 @@
   <!-- DADOS -->
   <section id="v-data" hidden>
     <h1 class="view-title">Importar e backup</h1>
-    <div class="card" id="baseCard">
-      <h3>Biblioteca base (magias.json)</h3>
-      <p class="lead compact">As magias da biblioteca vêm do arquivo <b>magias.json</b>, que fica na mesma pasta do <b>index.html</b>. Para trocar ou acrescentar magias, edite só esse arquivo e recarregue a página. O campo <b>fonte</b> de cada magia define a etiqueta do livro: <code>site</code> (livro base), <code>Heróis de Faerûn</code> ou <code>Arcana Unleashed</code>.</p>
-      <div id="baseStatus" role="status"></div>
-      <div class="datarow">
-        <button class="btn" type="button" id="baseReload">Recarregar o magias.json</button>
-        <label class="btn ghost sm file-trigger outline-accent">Escolher magias.json deste computador<input type="file" id="baseFile" accept=".json,application/json" class="sr"></label>
-      </div>
-      <div id="baseMsg" role="status"></div>
-    </div>
-    <div class="card" id="impCard">
-      <h3>Trazer as magias do site</h3>
-      <p class="lead compact">A biblioteca padrão já carrega automaticamente do arquivo <b>magias.json</b> que fica junto do <b>index.html</b>. Para atualizar a sua biblioteca com uma versão mais recente, copie o texto do site e cole abaixo; a atualização fica salva neste navegador:</p>
-      <div class="help"><ol>
-        <li>Abra <a href="https://simpleskans.com.br/dnd/2024/magias" target="_blank" rel="noopener">simpleskans.com.br/dnd/2024/magias</a> no Chrome.</li>
-        <li>Role até o final da página para carregar todas as magias.</li>
-        <li>Selecione tudo (Ctrl+A / Cmd+A), copie (Ctrl+C) e cole abaixo.</li>
-      </ol></div>
-      <label class="fld"><span>Texto do site (ou um arquivo .json de magias / backup)</span>
-        <textarea class="big" id="impText" placeholder="Cole aqui o texto copiado da página…"></textarea></label>
-      <div class="datarow">
-        <button class="btn" type="button" id="impGo">Importar magias</button>
-        <label class="btn ghost sm file-trigger outline-accent">Escolher arquivo<input type="file" id="impFile" accept=".txt,.json,.md,text/plain,application/json" class="sr"></label>
-      </div>
-      <div id="impMsg" role="status"></div>
-    </div>
     <div class="card">
       <h3>Backup</h3>
-      <p class="lead compact">Personagens, grimórios, magias personalizadas e magias importadas. O backup também restaura tudo em outro navegador.</p>
+      <p class="lead compact">Baixe um arquivo com os seus personagens, grimórios (com tags e anotações) e magias personalizadas. Para trazer tudo de volta, inclusive em outro aparelho, importe esse arquivo.</p>
       <div class="datarow">
-        <button class="btn" type="button" id="bkDown">Baixar backup (JSON)</button>
-        <button class="btn ghost sm outline-accent" type="button" id="libDown">Exportar biblioteca inteira (JSON)</button>
-        <button class="btn warn sm" type="button" id="impClear">Remover magias importadas</button>
+        <button class="btn" type="button" id="bkDown">Baixar backup</button>
+        <label class="btn ghost file-trigger outline-accent">Importar backup<input type="file" id="bkFile" accept=".json,application/json" class="sr"></label>
       </div>
       <div id="bkMsg" role="status"></div>
     </div>
@@ -172,18 +156,12 @@
 (() => {
 'use strict';
 
-// @@PARSER-START
-/* ---------- Leitura do texto do site (Simple Skans) ---------- */
+/* ---------- utilitários de texto (usados pelo formulário "Criar magia") ---------- */
 const ESCOLAS = ['Abjuração','Adivinhação','Encantamento','Evocação','Ilusão','Invocação','Necromancia','Transmutação'];
 const ATTRS = ['For','Des','Con','Int','Sab','Car'];
 const plain = s => String(s).replace(/\*/g,'');
 const norm = s => String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
 const slug = s => norm(s).replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');
-const HEAD_RE = /^(Truque|(\d)º\s*Círculo)\s*(?:,|de)\s*(Abjuração|Adivinhação|Encantamento|Evocação|Ilusão|Invocação|Necromancia|Transmutação)\s*(?:\(([^)]*)\))?\s*$/i;
-const TYPE_RE = /^(Aberração|Celestial|Constructo|Construto|Dragão|Elemental|Feérico|Ínfero|Gigante|Humanoide|Monstruosidade|Limo|Planta|Morto-vivo|Fera|Besta)\b.*,\s*[^,]+$/i;
-const SEC_RE = /^(Traços|Ações Bônus|Ações Lendárias|Ações|Reações)$/;
-const PROP_RE = /^(Resistências|Imunidades|Vulnerabilidades|Sentidos|Idiomas|Perícias|Salvaguardas|Equipamento)\s*:?\s*(.*)$/;
-const KEY_RE = /^(Tempo de Conjuração|Alcance|Componentes|Duração)\s*:\s*(.*)$/;
 const UP = /^[A-ZÁÀÂÃÉÊÍÓÔÕÚÇ]/;
 
 function splitEntry(raw){
@@ -223,89 +201,6 @@ function parseDesc(lines){
   return { blocks, sup, tru };
 }
 
-function parseStat(lines){
-  const f = { nome: plain(lines[0]).trim(), tipo: plain(lines[1]||'').trim(), ca:'', pv:'', deslocamento:'', atr:null, props:[], secoes:[] };
-  const abil = []; let sec = null;
-  for (const raw of lines.slice(2)){
-    const p = plain(raw).trim(); let m;
-    if (!p) continue;
-    if (SEC_RE.test(p)){ sec = { titulo:p, itens:[] }; f.secoes.push(sec); continue; }
-    if (!sec){
-      if ((m = p.match(/^(CA|AC)\b\s*:?\s*(.*)$/))){ f.ca = m[2]; continue; }
-      if ((m = p.match(/^(PV|HP)\b\s*:?\s*(.*)$/))){ f.pv = m[2]; continue; }
-      if ((m = p.match(/^(Deslocamento|Velocidade)\b\s*:?\s*(.*)$/))){ f.deslocamento = m[2]; continue; }
-      if ((m = p.match(PROP_RE))){ f.props.push([m[1], m[2]]); continue; }
-      if ((m = p.match(/^ND\b\s*:?\s*(.*)$/))){ f.props.push(['ND', m[1]]); continue; }
-      abil.push(p); continue;
-    }
-    const e = splitEntry(raw.trim());
-    if (e) sec.itens.push(e);
-    else if (sec.itens.length) sec.itens[sec.itens.length-1].texto += ' ' + raw.trim();
-    else sec.itens.push({ nome:'', texto: raw.trim() });
-  }
-  const j = abil.join(' ').replace(/[−–]/g,'-'); const atr = {}; let n = 0;
-  for (const a of ATTRS){
-    const m = j.match(new RegExp('\\b'+a+'\\b[\\s|]+(\\d+)[\\s|]+([+-]?\\d+)[\\s|]+([+-]?\\d+)'));
-    if (m){ atr[a] = [m[1], m[2], m[3]]; n++; }
-  }
-  if (n) f.atr = atr;
-  return f;
-}
-
-function parseSiteText(text){
-  let raw = String(text).replace(/\r/g,'').replace(/\u00a0/g,' ').split('\n')
-    .map(l=>l.trim()).filter(l=>!/^(Documento gerado|Tradução realizada)/.test(plain(l)));
-  // O texto copiado do site traz o rodapé depois da última magia.
-  // Cortamos esse trecho para ele não virar parte da descrição de "Zona da Verdade".
-  const footer = raw.findIndex(l => /^(?:©.*Simple Skans|Feito com Jekyll\b)/i.test(plain(l).trim()));
-  if (footer >= 0) raw = raw.slice(0, footer);
-  const pl = raw.map(l=>plain(l).trim());
-  const starts = [];
-  for (let i=0;i<raw.length;i++){
-    if (!HEAD_RE.test(pl[i])) continue;
-    let en = i-1; while (en>=0 && !pl[en]) en--;
-    let pt = en-1; while (pt>=0 && !pl[pt]) pt--;
-    if (pt >= 0) starts.push({ h:i, en, pt });
-  }
-  const out = [];
-  starts.forEach((s,k)=>{
-    const end = k+1 < starts.length ? starts[k+1].pt : raw.length;
-    const hm = pl[s.h].match(HEAD_RE);
-    const body = raw.slice(s.h+1, end);
-    const F = {}; let j = 0;
-    for (; j<body.length && Object.keys(F).length<4; j++){
-      const p = plain(body[j]).trim(); if (!p) continue;
-      const m = p.match(KEY_RE); if (!m) break;
-      let v = m[2].trim();
-      while ((v==='' || /,$/.test(v)) && j+1<body.length){
-        let q = j+1; while (q<body.length && !plain(body[q]).trim()) q++;
-        if (q>=body.length || KEY_RE.test(plain(body[q]).trim())) break;
-        v = (v+' '+plain(body[q]).trim()).trim(); j = q;
-      }
-      F[m[1]] = v;
-    }
-    const rest = body.slice(j).filter(l=>plain(l).trim());
-    const sb = [];
-    for (let q=0;q+2<rest.length;q++){
-      if (TYPE_RE.test(plain(rest[q+1]).trim()) && /^(CA|AC)\b/.test(plain(rest[q+2]).trim())) sb.push(q);
-    }
-    const descLines = rest.slice(0, sb.length ? sb[0] : rest.length);
-    const fichas = sb.map((a,i)=>parseStat(rest.slice(a, i+1<sb.length ? sb[i+1] : rest.length)));
-    const d = parseDesc(descLines);
-    const nome = pl[s.pt], tempo = F['Tempo de Conjuração']||'', duracao = F['Duração']||'';
-    out.push({
-      id: slug(nome), nome, nomeEn: pl[s.en],
-      circulo: hm[2] ? +hm[2] : 0,
-      escola: ESCOLAS.find(e=>norm(e)===norm(hm[3])) || hm[3],
-      classes: hm[4] ? hm[4].split(',').map(c=>c.trim()).filter(Boolean) : [],
-      tempo, alcance: F['Alcance']||'', componentes: F['Componentes']||'', duracao,
-      ritual: /ritual/i.test(tempo), concentracao: /^concentra/i.test(duracao),
-      desc: d.blocks, superior: d.sup, truque: d.tru, fichas, fonte:'site'
-    });
-  });
-  return out;
-}
-// @@PARSER-END
 
 /* ---------- estado e armazenamento ---------- */
 const LS_KEY = 'grimorio-dnd2024-v1';
@@ -318,7 +213,8 @@ const store = (() => {
     save(d){ if (ok){ try { localStorage.setItem(LS_KEY, JSON.stringify(d)); return; } catch(e){ ok = false; } } mem = d; }
   };
 })();
-let S = Object.assign({ custom:[], imported:[], chars:[], active:null }, store.load()||{});
+let S = Object.assign({ custom:[], chars:[], active:null }, store.load()||{});
+delete S.imported; // magias importadas por texto não existem mais: a base vem do magias.json
 const persist = () => { store.save(S); cloudQueue(); };
 const uid = p => p + Date.now().toString(36) + Math.random().toString(36).slice(2,6);
 
@@ -326,7 +222,7 @@ const CLASSES = ['Artífice','Bardo','Bruxo','Clérigo','Druida','Feiticeiro','G
 let SEED = [], LIB = [], BY = {};
 function rebuild(){
   const m = new Map();
-  SEED.forEach(s=>m.set(s.id,s)); S.imported.forEach(s=>m.set(s.id,s)); S.custom.forEach(s=>m.set(s.id,s));
+  SEED.forEach(s=>m.set(s.id,s)); S.custom.forEach(s=>m.set(s.id,s));
   LIB = [...m.values()]; BY = Object.fromEntries(m);
 }
 rebuild();
@@ -575,14 +471,13 @@ function listHTML(arr, mode, grouped){
 }
 function baseNote(){
   if (BASE.state==='ok') return 'Lista carregada do arquivo magias.json.';
-  if (BASE.state==='local') return 'Lista carregada do arquivo magias.json escolhido neste computador.';
   if (BASE.state==='cache') return 'Não consegui ler o magias.json agora; usando a última cópia guardada neste navegador.';
   if (BASE.state==='loading') return 'Carregando o magias.json…';
   return '';
 }
 function baseEmptyMsg(){
   if (BASE.state==='loading') return 'Carregando as magias do arquivo magias.json…';
-  return `Não consegui carregar o magias.json (${BASE.err||'arquivo não encontrado'}). Ele precisa ficar na mesma pasta do index.html, e o site precisa estar hospedado (por exemplo, no GitHub Pages): abrindo o index.html direto do computador, o navegador bloqueia essa leitura. Para usar assim mesmo, vá em “Importar e backup” e escolha o arquivo magias.json.`;
+  return `Não consegui carregar o magias.json (${BASE.err||'arquivo não encontrado'}). Ele precisa ficar na mesma pasta do index.html, e o site precisa estar hospedado (por exemplo, no GitHub Pages): abrindo o index.html direto do computador, o navegador bloqueia essa leitura.`;
 }
 function renderLib(){
   if (!LIB.length){
@@ -772,6 +667,18 @@ $('#detail-book').addEventListener('keydown', e=>{
 $('#booklist').addEventListener('click', e=>{ if (e.target.closest('[data-newchar]')) openChar(null); if (e.target.closest('[data-go-lib]')) go('lib'); });
 
 /* ---------- impressão ---------- */
+/* Duas colunas: em vez das colunas do CSS (que o Safari do iOS não imprime direito),
+   as magias vão lado a lado numa tabela, duas por linha (ordem de leitura: A B / C D). */
+function duasColunas(cells){
+  if (!cells.length) return '';
+  const longa = c => /class="ps [^"]*long/.test(c);
+  let linhas = '';
+  for (let i = 0; i < cells.length; i += 2){
+    const a = cells[i], b = cells[i+1] || '';
+    linhas += `<tr class="par${longa(a) || longa(b) ? ' long' : ''}"><td>${a}</td><td>${b}</td></tr>`;
+  }
+  return `<table class="duas"><tbody>${linhas}</tbody></table>`;
+}
 function renderSheet(){
   const ch = activeChar(); const host = $('#sheet');
   if (!ch){ host.innerHTML = '<p>Crie um personagem e adicione magias ao grimório para imprimir.</p>'; return; }
@@ -788,22 +695,24 @@ function renderSheet(){
   if (!groups.length) h += '<p>Nenhuma magia para imprimir. Adicione magias ao grimório (ou ajuste “Só magias preparadas” e “Só a tag”).</p>';
   for (const g of groups){
     if (g.head) h += `<div class="gh">${ord==='tag' && g.num==='#' ? '#' : ''}${esc(g.head)}</div>`;
+    const cells = [];
     for (const s of g.items){
       const tg = showTags && ord!=='tag' && tagsOf(ch,s.id).length ? `<div class="tg">Tags: ${tagsOf(ch,s.id).map(esc).join(', ')}</div>` : '';
       const note = noteOf(ch,s.id).trim();
       const nt = note ? `<div class="print-note"><strong>Anotações</strong><div>${esc(note)}</div></div>` : '';
       if (mode==='completo'){
-        h += `<div class="ps ${s.desc.length>5||s.fichas.length||note?'long':''}"><h3>${esc(s.nome)}</h3>${s.nomeEn&&s.nomeEn!==s.nome?`<span class="en">${esc(s.nomeEn)}</span>`:''}` +
+        cells.push(`<div class="ps ${s.desc.length>5||s.fichas.length||note?'long':''}"><h3>${esc(s.nome)}</h3>${s.nomeEn&&s.nomeEn!==s.nome?`<span class="en">${esc(s.nomeEn)}</span>`:''}` +
           `<div class="mt">${esc(s.escola)} · ${esc(s.tempo)} · ${esc(s.alcance)} · ${esc(s.componentes)} · ${esc(s.duracao)}</div>${tg}` +
           `<div class="txt">${blocksHTML(s.desc)}${s.truque?`<p class="sup"><strong>Aprimoramento de truque.</strong> ${fmt(s.truque)}</p>`:''}${s.superior?`<p class="sup"><strong>Círculo superior.</strong> ${fmt(s.superior)}</p>`:''}</div>` +
-          (fic ? s.fichas.map(fichaHTML).join('') : '') + nt + '</div>';
+          (fic ? s.fichas.map(fichaHTML).join('') : '') + nt + '</div>');
       } else {
         const comp = (s.componentes||'').replace(/\s*\(.*$/,'');
-        h += `<div class="ps ${fic&&s.fichas.length||note?'long':''}"><div class="cp"><div><h3>${esc(s.nome)}</h3>${s.nomeEn&&s.nomeEn!==s.nome?`<span class="en">${esc(s.nomeEn)}</span>`:''}</div><span class="mt">${esc(s.escola)}</span></div>` +
+        cells.push(`<div class="ps ${fic&&s.fichas.length||note?'long':''}"><div class="cp"><div><h3>${esc(s.nome)}</h3>${s.nomeEn&&s.nomeEn!==s.nome?`<span class="en">${esc(s.nomeEn)}</span>`:''}</div><span class="mt">${esc(s.escola)}</span></div>` +
           `<div class="mt">${esc(s.tempo)} · ${esc(s.alcance)} · ${esc(comp)} · ${esc(s.duracao)}</div>${tg}` +
-          (fic ? s.fichas.map(fichaHTML).join('') : '') + nt + '</div>';
+          (fic ? s.fichas.map(fichaHTML).join('') : '') + nt + '</div>');
       }
     }
+    h += cols2 ? duasColunas(cells) : cells.join('');
   }
   host.innerHTML = h + '</div>';
 }
@@ -930,61 +839,34 @@ $('#form').addEventListener('click', e=>{
 
 /* ---------- importar e backup ---------- */
 function say(id, cls, t){ $(id).innerHTML = `<div class="msg ${cls}">${esc(t)}</div>`; }
-function mergeSpells(list, fonte){
-  let novas = 0, atual = 0;
-  for (const s of list){
-    if (!s || !s.nome || typeof s.circulo!=='number') continue;
-    const sp = Object.assign({ nomeEn:'', escola:'', classes:[], tempo:'', alcance:'', componentes:'', duracao:'', ritual:false, concentracao:false, desc:[], superior:'', truque:'', fichas:[] }, s);
-    sp.id = sp.id || slug(sp.nome); sp.fonte = sp.fonte || fonte; delete sp.custom;
-    if (sp.id.startsWith('c-')) sp.id = slug(sp.nome);
-    const i = S.imported.findIndex(x=>x.id===sp.id);
-    if (i>=0){ S.imported[i] = sp; atual++; } else { if (BY[sp.id]) atual++; else novas++; S.imported.push(sp); }
-  }
-  return { novas, atual };
-}
-function doImport(text){
-  text = text.trim(); if (!text) return say('#impMsg','err','Cole o texto do site ou escolha um arquivo antes de importar.');
-  try {
-    if (/^[\[{]/.test(text)){
-      const j = JSON.parse(text);
-      if (j && (j.chars || j.custom)){
-        (j.chars||[]).forEach(c=>{ if (!S.chars.some(x=>x.id===c.id)) S.chars.push(c); });
-        (j.custom||[]).forEach(c=>{ const i=S.custom.findIndex(x=>x.id===c.id); if(i>=0) S.custom[i]=c; else S.custom.push(c); });
-        const r = mergeSpells(j.imported||[], 'importada');
-        if (!S.active && S.chars.length) S.active = S.chars[0].id;
-        persist(); rebuild(); fillClasses(); refresh();
-        return say('#impMsg','ok',`Backup restaurado: ${(j.chars||[]).length} personagens, ${(j.custom||[]).length} magias personalizadas, ${r.novas+r.atual} magias importadas.`);
-      }
-      const arr = Array.isArray(j) ? j : (j.spells || j.magias || []);
-      const r = mergeSpells(arr, 'importada');
-      persist(); rebuild(); fillClasses(); refresh();
-      return say('#impMsg', r.novas+r.atual ? 'ok':'err', r.novas+r.atual ? `${r.novas} magias novas e ${r.atual} atualizadas. Total na biblioteca: ${LIB.length}.` : 'O JSON não tem magias no formato do grimório (nome e circulo são obrigatórios).');
-    }
-    const list = parseSiteText(text);
-    if (!list.length) return say('#impMsg','err','Não encontrei magias nesse texto. Confira se você copiou a página inteira (Ctrl+A) depois de rolar até o final.');
-    const r = mergeSpells(list, 'site');
-    persist(); rebuild(); fillClasses(); refresh();
-    const fic = list.filter(s=>s.fichas.length).length;
-    say('#impMsg','ok',`Encontrei ${list.length} magias (${fic} com ficha de invocação): ${r.novas} novas, ${r.atual} já existentes e atualizadas. Total na biblioteca: ${LIB.length}.`);
-  } catch(e){ say('#impMsg','err','Não consegui ler o conteúdo: '+e.message); }
-}
-$('#impGo').addEventListener('click', ()=>doImport($('#impText').value));
-$('#impFile').addEventListener('change', e=>{
-  const f = e.target.files[0]; if (!f) return;
-  const r = new FileReader(); r.onload = ()=>{ $('#impText').value = String(r.result).slice(0,3e6); doImport(String(r.result)); }; r.readAsText(f); e.target.value='';
-});
 function download(name, data){
   const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([JSON.stringify(data,null,1)],{type:'application/json'}));
   a.download = name; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(a.href),2000);
 }
-$('#bkDown').addEventListener('click', ()=>{ download('grimorio-backup.json',{ versao:1, chars:S.chars, custom:S.custom, imported:S.imported }); say('#bkMsg','ok','Backup gerado.'); });
-$('#libDown').addEventListener('click', ()=>{ download('grimorio-biblioteca.json', LIB); say('#bkMsg','ok',`Biblioteca exportada: ${LIB.length} magias.`); });
-$('#impClear').addEventListener('click', ()=>{
-  if (!S.imported.length) return say('#bkMsg','err','Não há magias importadas para remover.');
-  if (!confirm('Remover todas as atualizações importadas? A biblioteca padrão e as suas magias personalizadas continuam.')) return;
-  S.imported = []; persist(); rebuild(); refresh(); say('#bkMsg','ok','Atualizações importadas removidas. Biblioteca padrão restaurada.');
+$('#bkDown').addEventListener('click', ()=>{
+  const agora = new Date();
+  download(`grimorio-backup-${agora.toISOString().slice(0,10)}.json`, { versao:1, exportado:agora.toISOString(), chars:S.chars, custom:S.custom, active:S.active });
+  say('#bkMsg','ok',`Backup gerado: ${S.chars.length} ${S.chars.length===1?'personagem':'personagens'} e ${S.custom.length} ${S.custom.length===1?'magia personalizada':'magias personalizadas'}.`);
 });
-function updateDataInfo(){ $('#impMsg').innerHTML=''; $('#bkMsg').innerHTML=''; $('#baseMsg').innerHTML=''; showBaseStatus(); }
+function restoreBackup(text){
+  let j;
+  try { j = JSON.parse(text); } catch(e){ return say('#bkMsg','err','Não consegui ler esse arquivo. Escolha um backup baixado por este site.'); }
+  if (!j || (!Array.isArray(j.chars) && !Array.isArray(j.custom))) return say('#bkMsg','err','Esse arquivo não parece um backup do grimório.');
+  const chars = (j.chars||[]).filter(c=>c && c.id && c.nome).map(c=>Object.assign({ spells:[], prep:[] }, c));
+  const custom = (j.custom||[]).filter(c=>c && c.id && c.nome);
+  const conflitos = chars.filter(c=>S.chars.some(x=>x.id===c.id)).length;
+  if (conflitos && !confirm(`${conflitos} ${conflitos===1?'personagem deste backup já existe':'personagens deste backup já existem'} aqui e ${conflitos===1?'será substituído':'serão substituídos'} pela versão do backup. Continuar?`)) return;
+  chars.forEach(c=>{ const i = S.chars.findIndex(x=>x.id===c.id); if (i>=0) S.chars[i] = c; else S.chars.push(c); });
+  custom.forEach(c=>{ const i = S.custom.findIndex(x=>x.id===c.id); if (i>=0) S.custom[i] = c; else S.custom.push(c); });
+  if ((!S.active || !S.chars.some(c=>c.id===S.active)) && S.chars.length) S.active = (j.active && S.chars.some(c=>c.id===j.active)) ? j.active : S.chars[0].id;
+  persist(); rebuild(); fillClasses(); refresh();
+  say('#bkMsg','ok',`Backup importado: ${chars.length} ${chars.length===1?'personagem':'personagens'} e ${custom.length} ${custom.length===1?'magia personalizada':'magias personalizadas'}.`);
+}
+$('#bkFile').addEventListener('change', e=>{
+  const f = e.target.files[0]; if (!f) return;
+  const rd = new FileReader(); rd.onload = ()=>restoreBackup(String(rd.result)); rd.readAsText(f); e.target.value = '';
+});
+function updateDataInfo(){ $('#bkMsg').innerHTML=''; }
 
 /* ---------- atualização geral ---------- */
 function refresh(){
@@ -1042,7 +924,7 @@ if (sb){
     $('#dlgAuth').close(); bootCloud();
   });
   $('#logout').addEventListener('click', async () => {
-    await sb.auth.signOut(); store.save({ custom:[], imported:[], chars:[], active:null }); location.reload();
+    await sb.auth.signOut(); store.save({ custom:[], chars:[], active:null }); location.reload();
   });
 }
 
@@ -1070,21 +952,8 @@ function aplicarBase(list, quando, estado){
   for (const x of list){ const sp = normSpell(x); if (!sp || vistos.has(sp.id)){ ign++; continue; } vistos.add(sp.id); out.push(sp); }
   if (!out.length) throw new Error('nenhuma magia válida no arquivo');
   SEED = out; Object.assign(BASE, { state:estado, n:out.length, ign, err:'', quando });
-  rebuild(); refresh(); showBaseStatus();
+  rebuild(); refresh();
   return out;
-}
-function showBaseStatus(){
-  if (!$('#baseStatus')) return;
-  const q = BASE.quando ? new Date(BASE.quando).toLocaleString('pt-BR') : '';
-  let cls = '', t = '';
-  if (BASE.state==='ok'){ cls='ok'; t = `Carregado do arquivo ${BASE_FILE}: ${BASE.n} magias (${q}).`; }
-  else if (BASE.state==='local'){ cls='ok'; t = `Carregado do arquivo escolhido neste computador: ${BASE.n} magias. Uma cópia fica guardada neste navegador.`; }
-  else if (BASE.state==='cache'){ cls='err'; t = `Não consegui ler o ${BASE_FILE} agora (${BASE.err||'sem resposta'}). Usando a última cópia guardada neste navegador: ${BASE.n} magias (${q}).`; }
-  else if (BASE.state==='none'){ cls='err'; t = `Nenhuma biblioteca carregada (${BASE.err||'arquivo não encontrado'}).`; }
-  else t = 'Carregando…';
-  if (BASE.ign) t += ` ${BASE.ign} entradas foram ignoradas (sem nome, sem círculo válido ou com id repetido).`;
-  if (S.imported.length) t += ` Atenção: há ${S.imported.length} magias importadas manualmente que têm prioridade sobre o ${BASE_FILE} quando o id é o mesmo; para valer só o arquivo, use “Remover magias importadas”.`;
-  say('#baseStatus', cls, t);
 }
 async function loadBase(){
   try {
@@ -1097,32 +966,32 @@ async function loadBase(){
     return true;
   } catch(e){
     BASE.err = (e && e.message) || String(e);
-    if (BASE.state!=='cache' && BASE.state!=='local'){
+    if (BASE.state!=='cache'){
       const c = cacheLoad();
-      if (c){ try { aplicarBase(c.spells, c.t, 'cache'); BASE.err = (e && e.message) || String(e); showBaseStatus(); return false; } catch(_){} }
+      if (c){ try { aplicarBase(c.spells, c.t, 'cache'); BASE.err = (e && e.message) || String(e); return false; } catch(_){} }
       BASE.state = 'none';
-    } else if (BASE.state==='local') { /* mantém o arquivo escolhido manualmente */ }
-    refresh(); showBaseStatus();
+    }
+    refresh();
     return false;
   }
 }
-$('#baseReload').addEventListener('click', async ()=>{
-  say('#baseMsg','','Recarregando…');
-  const ok = await loadBase();
-  say('#baseMsg', ok?'ok':'err', ok ? `Pronto: ${BASE.n} magias.` : `Não consegui recarregar: ${BASE.err}`);
-});
-$('#baseFile').addEventListener('change', e=>{
-  const f = e.target.files[0]; if (!f) return;
-  const rd = new FileReader();
-  rd.onload = ()=>{
-    try {
-      const d = JSON.parse(String(rd.result));
-      const out = aplicarBase(Array.isArray(d) ? d : (d.spells || d.magias || []), new Date().toISOString(), 'local');
-      cacheSave(out); say('#baseMsg','ok',`Pronto: ${out.length} magias carregadas de ${f.name}.`);
-    } catch(err){ say('#baseMsg','err','Não consegui ler esse arquivo: ' + err.message); }
-  };
-  rd.readAsText(f); e.target.value = '';
-});
+/* ---------- tema claro/escuro ---------- */
+const THEME_KEY = 'grimorio-tema';
+const currentTheme = () => document.documentElement.getAttribute('data-theme')==='dark' ? 'dark' : 'light';
+function applyTheme(t, salvar){
+  document.documentElement.setAttribute('data-theme', t);
+  $('#themeBtn').textContent = t==='dark' ? '☀ Tema claro' : '☾ Tema escuro';
+  const m = document.querySelector('meta[name="theme-color"]'); if (m) m.setAttribute('content', t==='dark' ? '#1e2822' : '#2f5744');
+  if (salvar){ try { localStorage.setItem(THEME_KEY, t); } catch(e){} }
+}
+$('#themeBtn').addEventListener('click', ()=>applyTheme(currentTheme()==='dark' ? 'light' : 'dark', true));
+applyTheme(currentTheme(), false);
+try {
+  matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e=>{
+    let salvo = null; try { salvo = localStorage.getItem(THEME_KEY); } catch(_){}
+    if (!salvo) applyTheme(e.matches ? 'dark' : 'light', false);
+  });
+} catch(e){}
 
 /* ---------- início ---------- */
 if (!store.persistent()){
