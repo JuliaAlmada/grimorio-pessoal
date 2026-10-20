@@ -106,8 +106,8 @@ input,select,textarea{accent-color:var(--accent)}
 .brand{display:flex;align-items:baseline;gap:10px;white-space:nowrap}
 .brand b{font:700 20px/1 var(--title);color:#f7f8f4;letter-spacing:-.03em}
 .brand span{font-size:12.5px;color:#c5d0c7}
-.charpick{display:flex;gap:8px;align-items:center}
-.charpick select{min-width:180px;padding:7px 9px;background:var(--top-field);border:1px solid var(--top-field-line);border-radius:3px;color:#fff}
+.charpick{display:flex;flex-wrap:wrap;gap:8px;align-items:center;max-width:100%}
+.charpick select{flex:1 1 150px;min-width:0;padding:7px 9px;background:var(--top-field);border:1px solid var(--top-field-line);border-radius:3px;color:#fff}
 nav.tabs{display:flex;flex-wrap:wrap;gap:1px;margin-left:auto}
 nav.tabs button{padding:8px 10px;border:0;border-bottom:2px solid transparent;background:none;color:#c5d0c7;font-weight:600}
 nav.tabs button:hover{color:#fff}
@@ -284,14 +284,16 @@ button.tagchip.pick{color:var(--muted);border-style:dashed}
 .sheet table.duas{width:100%;table-layout:fixed;border-collapse:collapse;border-spacing:0}
 .sheet table.duas > tbody > tr > td{width:50%;padding:0 4.5mm 0 0;vertical-align:top}
 .sheet table.duas > tbody > tr > td + td{padding:0 0 0 4.5mm}
-.sheet table.duas tr.par{break-inside:avoid;page-break-inside:avoid}
-.sheet table.duas tr.par.long{break-inside:auto;page-break-inside:auto}
+.sheet table.duas tr{break-inside:avoid;page-break-inside:avoid}
+.sheet table.duas + table.duas{margin-top:0}
 .sheet.cols2 .ficha .vit{grid-template-columns:1fr}
 .sheet.cols2 .ficha table.abil{font-size:8.2pt}
 .sheet.cols2 .ficha table.abil th,.sheet.cols2 .ficha table.abil td{padding-left:1pt;padding-right:1pt}
-.sheet .gh{margin:11pt 0 4pt;padding-bottom:2pt;border-bottom:.7pt solid var(--g);color:var(--g);font:700 9.2pt/1.3 var(--title);break-after:avoid}
-.sheet .ps{padding:4pt 0;border-bottom:.4pt solid #c4c4c4;break-inside:avoid}
+.sheet .gh{margin:8pt 0 3pt;padding-bottom:2pt;border-bottom:.7pt solid var(--g);color:var(--g);font:700 9.2pt/1.3 var(--title);break-after:avoid}
+.sheet .ps{padding:3pt 0;border-bottom:.4pt solid #c4c4c4;break-inside:avoid}
 .sheet .ps.long{break-inside:auto}
+.sheet .ps.pf-cut{padding-bottom:0;border-bottom:0}
+.sheet .ps.pf-cont{padding-top:0}
 .sheet .ps h3{display:inline;color:var(--g);font:700 10.4pt/1.3 var(--title)}
 .sheet .ps .en{margin-left:6pt;color:#444;font-size:8.7pt;font-style:italic}
 .sheet .ps .mt{margin:1.5pt 0 2.5pt;color:#333;font-size:8.7pt}
@@ -349,7 +351,7 @@ textarea.big{width:100%;min-height:150px;padding:9px;border:1px solid var(--line
 .datarow{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
 .card{max-width:900px;margin-bottom:16px;padding:17px 19px;background:var(--surface);border:1px solid var(--line)}
 .card h3{margin-bottom:7px;font-size:16px}
-#userbox{display:flex;gap:8px;align-items:center}
+#userbox{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
 .usermail{max-width:190px;overflow:hidden;color:var(--muted);font-size:13px;text-overflow:ellipsis;white-space:nowrap}
 
 @media (max-width:860px){
@@ -359,6 +361,7 @@ textarea.big{width:100%;min-height:150px;padding:9px;border:1px solid var(--line
   .detail.open{display:block}
   .detail .close{display:inline-block;margin-bottom:10px}
   nav.tabs{width:100%;margin-left:0}
+  .charpick{width:100%}
   .top{padding:10px 14px}
   main{padding:16px 14px 48px}
   .abg{grid-template-columns:repeat(3,1fr)}
@@ -370,7 +373,8 @@ textarea.big{width:100%;min-height:150px;padding:9px;border:1px solid var(--line
 
 @page{size:A4;margin:13mm}
 @media print{
-  body{background:#fff}
+  :root[data-theme]{color-scheme:light}
+  html,body{background:#fff}
   .top,.banner,.opts,.toast,main>section:not(#v-print),#v-print .noprint{display:none!important}
   main{max-width:none;padding:0}
   .paper{max-width:none;min-height:0;margin:0;padding:0;border:0}

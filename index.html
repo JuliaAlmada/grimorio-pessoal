@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inclusive+Sans:ital,wght@0,300..700;1,300..700&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=impressao-2">
+<link rel="stylesheet" href="styles.css?v=impressao-7">
 <script>
 /* escolhe o tema antes da página aparecer, para não piscar branco */
 (function(){
@@ -667,17 +667,94 @@ $('#detail-book').addEventListener('keydown', e=>{
 $('#booklist').addEventListener('click', e=>{ if (e.target.closest('[data-newchar]')) openChar(null); if (e.target.closest('[data-go-lib]')) go('lib'); });
 
 /* ---------- impressão ---------- */
-/* Duas colunas: em vez das colunas do CSS (que o Safari do iOS não imprime direito),
-   as magias vão lado a lado numa tabela, duas por linha (ordem de leitura: A B / C D). */
-function duasColunas(cells){
-  if (!cells.length) return '';
-  const longa = c => /class="ps [^"]*long/.test(c);
-  let linhas = '';
-  for (let i = 0; i < cells.length; i += 2){
-    const a = cells[i], b = cells[i+1] || '';
-    linhas += `<tr class="par${longa(a) || longa(b) ? ' long' : ''}"><td>${a}</td><td>${b}</td></tr>`;
+/* Duas colunas: em vez das colunas do CSS (que o Safari do iOS não imprime direito), o site mesmo
+   distribui as magias. Ele mede a altura real de cada uma na largura de uma coluna e preenche
+   a coluna da esquerda, depois a da direita, página por página (como num jornal). Cada página
+   vira uma linha de tabela com duas células, então não sobra buraco entre as magias. */
+const PAG_ALTURA = 0.97 * (271 / 25.4 * 96);   // A4 com margem de 13 mm, com folga de 3%
+function pesoMagia(html){                        // plano B (sem layout): estima pelo tamanho do texto
+  const texto = html.replace(/<[^>]+>/g,'').length;
+  return (60 + texto + (html.match(/<(p|li|h5|tr)\b/g) || []).length*25 + (/class="ficha/.test(html) ? 150 : 0)) * 0.5;
+}
+/* Divide uma magia em "blocos": 1) título + linha de dados, 2) cada parágrafo/lista/tabela do texto,
+   3) fichas e anotações. É nesses pontos que uma magia pode continuar na coluna seguinte. */
+function blocosDaMagia(el){
+  const un = [], kids = [...el.children];
+  let i = 0; const cab = [];
+  while (i < kids.length && (kids[i].tagName === 'H3' || /\b(en|mt|tg|cp)\b/.test(kids[i].className))){ cab.push(kids[i]); i++; }
+  if (cab.length) un.push({ html: cab.map(k => k.outerHTML).join(''), txt: false, el: cab[0] });
+  for (; i < kids.length; i++){
+    const k = kids[i];
+    if (k.classList.contains('txt')) [...k.children].forEach(c => un.push({ html: c.outerHTML, txt: true, el: c }));
+    else un.push({ html: k.outerHTML, txt: false, el: k });
   }
-  return `<table class="duas"><tbody>${linhas}</tbody></table>`;
+  return un;
+}
+function medirItens(htmls, largura){
+  const m = document.createElement('div');
+  m.className = 'sheet cols2';
+  m.style.cssText = `position:absolute;left:-10000px;top:0;visibility:hidden;width:${largura}`;
+  m.innerHTML = htmls.join('');
+  document.body.appendChild(m);
+  const out = [...m.children].map(el => {
+    const c = getComputedStyle(el), r = el.getBoundingClientRect();
+    if (el.classList.contains('gh')) return { k:'gh', html: el.outerHTML, h: (r.height + (parseFloat(c.marginTop)||0) + (parseFloat(c.marginBottom)||0)) || 30 };
+    const padT = parseFloat(c.paddingTop)||0, padB = parseFloat(c.paddingBottom)||0, bord = parseFloat(c.borderBottomWidth)||0;
+    const un = blocosDaMagia(el);
+    const fim = r.bottom - padB - bord;
+    un.forEach((u, i) => {
+      const topo = u.el.getBoundingClientRect().top;
+      const prox = i + 1 < un.length ? un[i+1].el.getBoundingClientRect().top : fim;
+      u.h = (prox - topo) || pesoMagia(u.html);
+    });
+    const pad = padT + padB + bord;
+    return { k:'ps', open: el.outerHTML.slice(0, el.outerHTML.indexOf('>') + 1), units: un, pad, fh: un.reduce((s,u)=>s+u.h, 0) + pad };
+  });
+  m.remove();
+  return out;
+}
+function fragmentoHTML(open, units, marca){
+  let out = '', i = 0;
+  while (i < units.length){
+    if (units[i].txt){ let s = ''; while (i < units.length && units[i].txt){ s += units[i].html; i++; } out += `<div class="txt">${s}</div>`; }
+    else { out += units[i].html; i++; }
+  }
+  return (marca ? open.replace('class="', `class="${marca} `) : open) + out + '</div>';
+}
+function colunasPaginadas(itens, cabecalhoHTML){
+  if (!itens.length) return '';
+  const fila = medirItens(itens.map(i => i.html), '87.5mm');                // largura de uma coluna impressa
+  const alturaCab = (medirItens([cabecalhoHTML], '184mm')[0] || {}).h || 40;
+  const paginas = []; let cols = [[], []], col = 0, usado = 0, cap = PAG_ALTURA - alturaCab;
+  const novaColuna = () => {
+    if (col === 0) col = 1;
+    else { paginas.push(cols); cols = [[], []]; col = 0; cap = PAG_ALTURA; }
+    usado = 0;
+  };
+  while (fila.length){
+    const it = fila.shift();
+    if (it.k === 'gh'){                                    // título de grupo precisa caber junto do começo da próxima magia
+      const nx = fila[0];
+      const junto = !nx ? 0 : nx.k === 'gh' ? nx.h : Math.min(nx.fh, nx.pad + nx.units[0].h + (nx.units[1] ? nx.units[1].h : 0));
+      if (usado > 0 && usado + it.h + junto > cap) novaColuna();
+      cols[col].push(it.html); usado += it.h; continue;
+    }
+    const livre = cap - usado;
+    if (it.fh <= livre){ cols[col].push(fragmentoHTML(it.open, it.units)); usado += it.fh; continue; }
+    // não cabe inteira: coloca os blocos que couberem e continua na coluna seguinte
+    let soma = it.pad, n = 0;
+    for (const u of it.units){ if (soma + u.h > livre) break; soma += u.h; n++; }
+    if (n >= 2 && n < it.units.length){
+      cols[col].push(fragmentoHTML(it.open, it.units.slice(0, n), 'pf-cut'));
+      const resto = it.units.slice(n);
+      fila.unshift({ k:'ps', open: it.open.replace('class="', 'class="pf-cont '), units: resto, pad: it.pad, fh: resto.reduce((s,u)=>s+u.h, 0) + it.pad });
+      novaColuna(); continue;
+    }
+    if (usado > 0){ fila.unshift(it); novaColuna(); continue; }
+    cols[col].push(fragmentoHTML(it.open, it.units)); usado += it.fh;     // maior que a coluna inteira: deixa o navegador quebrar
+  }
+  paginas.push(cols);
+  return paginas.map(c => `<table class="duas"><tbody><tr><td>${c[0].join('')}</td><td>${c[1].join('')}</td></tr></tbody></table>`).join('');
 }
 function renderSheet(){
   const ch = activeChar(); const host = $('#sheet');
@@ -691,10 +768,12 @@ function renderSheet(){
   host.style.setProperty('--g2', printColor);
   const groups = bookGroups(ch, ord, tag, onlyPrep);
   const uniq = new Set(groups.flatMap(g=>g.items.map(s=>s.id))).size;
-  let h = `<div class="sh"><h2>${esc(ch.nome)}</h2><span>${esc([ch.classe, ch.nivel?'nível '+ch.nivel:''].filter(Boolean).join(', '))}${uniq?` — ${uniq} ${uniq===1?'magia':'magias'}`:''}${tag?` — tag: ${esc(tag)}`:''}</span></div><div class="body">`;
+  const cab = `<div class="sh"><h2>${esc(ch.nome)}</h2><span>${esc([ch.classe, ch.nivel?'nível '+ch.nivel:''].filter(Boolean).join(', '))}${uniq?` — ${uniq} ${uniq===1?'magia':'magias'}`:''}${tag?` — tag: ${esc(tag)}`:''}</span></div>`;
+  const flat = [];
+  let h = cab + `<div class="body">`;
   if (!groups.length) h += '<p>Nenhuma magia para imprimir. Adicione magias ao grimório (ou ajuste “Só magias preparadas” e “Só a tag”).</p>';
   for (const g of groups){
-    if (g.head) h += `<div class="gh">${ord==='tag' && g.num==='#' ? '#' : ''}${esc(g.head)}</div>`;
+    if (g.head){ const gh = `<div class="gh">${ord==='tag' && g.num==='#' ? '#' : ''}${esc(g.head)}</div>`; if (cols2) flat.push({ k:'gh', html:gh }); else h += gh; }
     const cells = [];
     for (const s of g.items){
       const tg = showTags && ord!=='tag' && tagsOf(ch,s.id).length ? `<div class="tg">Tags: ${tagsOf(ch,s.id).map(esc).join(', ')}</div>` : '';
@@ -712,8 +791,9 @@ function renderSheet(){
           (fic ? s.fichas.map(fichaHTML).join('') : '') + nt + '</div>');
       }
     }
-    h += cols2 ? duasColunas(cells) : cells.join('');
+    if (cols2) cells.forEach(c => flat.push({ k:'ps', html:c })); else h += cells.join('');
   }
+  if (cols2) h += colunasPaginadas(flat, cab);
   host.innerHTML = h + '</div>';
 }
 ['#pmode','#pcols','#pfic','#pprep','#pord','#ptag','#ptags','#pcolor'].forEach(id=>$(id).addEventListener('change', renderSheet));
