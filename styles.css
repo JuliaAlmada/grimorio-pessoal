@@ -115,6 +115,10 @@ nav.tabs button[aria-selected=true]{color:#fff;border-bottom-color:#a9baa9}
 
 #themeBtn{white-space:nowrap}
 
+/* Criar magia: campos que só existem para magia (ou só para habilidade) */
+#form[data-tipo="hab"] .so-magia{display:none!important}
+#form:not([data-tipo="hab"]) .so-hab{display:none!important}
+
 /* botões */
 .btn{padding:7px 13px;border:1px solid var(--accent);border-radius:3px;background:var(--accent);color:var(--on-accent);font-weight:600}
 .btn:hover{background:var(--accent-dark);border-color:var(--accent-dark)}
@@ -233,11 +237,16 @@ button.tagchip.pick{color:var(--muted);border-style:dashed}
 .ficha .tipo{margin:3px 0 8px;color:var(--muted);font-size:13.5px;font-style:italic}
 .ficha .vit{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:3px 14px;margin:0;padding:7px 0;border-top:1px solid var(--line);font-size:14px;line-height:1.4}
 .ficha .vit span{min-width:0;overflow-wrap:anywhere}
-.ficha table.abil{width:100%;table-layout:fixed;margin:7px 0;border-collapse:collapse;font-size:13.5px;line-height:1.3;text-align:center}
-.ficha table.abil th{padding:2px 4px;text-align:left;font-weight:700}
-.ficha table.abil thead th{color:var(--muted);font:600 11px var(--body);text-align:center}
-.ficha table.abil td{padding:2px 4px}
-.ficha table.abil td+th{padding-left:10px;border-left:1px solid var(--line)}
+.ficha table.abil{width:100%;table-layout:fixed;margin:7px 0;border-collapse:collapse;font-size:clamp(10px,3.3vw,13.5px);line-height:1.3;text-align:center}
+.ficha table.abil th{padding:2px 2px;overflow:hidden;text-align:left;font-weight:700}
+/* larguras fixas por coluna: nome do atributo mais largo; valor, Mod e SG mais estreitos */
+.ficha table.abil thead th:nth-child(4n+1){width:12%}
+.ficha table.abil thead th:nth-child(4n+2){width:5.7%}
+.ficha table.abil thead th:nth-child(4n+3){width:8%}
+.ficha table.abil thead th:nth-child(4n+4){width:7.6%}
+.ficha table.abil thead th{padding:2px 0;color:var(--muted);font:600 clamp(8px,2.5vw,11px) var(--body);text-align:center}
+.ficha table.abil td{padding:2px 1px}
+.ficha table.abil td+th{padding-left:4px;border-left:1px solid var(--line)}
 .ficha table.abil tbody tr:nth-child(odd){background:var(--surface-soft)}
 .ficha p.pr{margin:3px 0;font-size:14px;line-height:1.45}
 .ficha h5{margin:11px 0 4px;padding-bottom:3px;border-bottom:1px solid var(--line);color:var(--accent-dark);font-size:14px}

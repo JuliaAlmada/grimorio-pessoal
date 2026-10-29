@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inclusive+Sans:ital,wght@0,300..700;1,300..700&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=impressao-7">
+<link rel="stylesheet" href="styles.css?v=ficha-habilidade-1">
 <script>
 /* escolhe o tema antes da página aparecer, para não piscar branco */
 (function(){
@@ -49,7 +49,7 @@
     <p class="lead" id="libLead"></p>
     <div class="filters">
       <label>Buscar<input type="search" id="fq" placeholder="Nome em português ou inglês"></label>
-      <label>Círculo<select id="fcirc"><option value="">Todos</option><option value="0">Truque</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option></select></label>
+      <label>Círculo<select id="fcirc"><option value="">Todos</option><option value="0">Truque</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option value="10">Habilidade de classe</option></select></label>
       <label>Escola<select id="fesc"><option value="">Todas</option></select></label>
       <label>Classe<select id="fcls"><option value="">Todas</option></select></label>
       <label>Livro<select id="ffonte"><option value="">Todos</option></select></label>
@@ -83,8 +83,8 @@
 
   <!-- CRIAR MAGIA -->
   <section id="v-new" hidden>
-    <h1 class="view-title" id="newTitle">Criar magia personalizada</h1>
-    <p class="lead">A magia vai para a biblioteca e pode entrar no grimório de qualquer personagem. Se ela invocar uma criatura, adicione a ficha abaixo.</p>
+    <h1 class="view-title" id="newTitle">Criar magia ou habilidade</h1>
+    <p class="lead">O que você criar vai para a biblioteca e pode entrar no grimório de qualquer personagem. Se invocar ou transformar em uma criatura, adicione a ficha abaixo.</p>
     <div class="form" id="form"></div>
   </section>
 
@@ -219,6 +219,7 @@ const persist = () => { store.save(S); cloudQueue(); };
 const uid = p => p + Date.now().toString(36) + Math.random().toString(36).slice(2,6);
 
 const CLASSES = ['Artífice','Bardo','Bruxo','Clérigo','Druida','Feiticeiro','Guardião','Mago','Paladino'];
+const CLASSES_SO_HAB = ['Bárbaro','Guerreiro','Ladino','Monge'];   // não conjuram magias: só aparecem para habilidades
 let SEED = [], LIB = [], BY = {};
 function rebuild(){
   const m = new Map();
@@ -232,7 +233,12 @@ const $ = (s,r=document) => r.querySelector(s);
 const $$ = (s,r=document) => [...r.querySelectorAll(s)];
 const esc = s => String(s??'').replace(/[&<>"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const fmt = s => esc(s).replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/\*(.+?)\*/g,'<em>$1</em>');
-const circLabel = n => n===0 ? 'Truque' : n+'º círculo';
+const HAB = 10;   // "círculo" usado pelas habilidades de classe: elas vêm depois do 9º círculo
+const circLabel = n => n===0 ? 'Truque' : n===HAB ? 'Habilidade de classe' : n+'º círculo';
+const grupoNome = n => n===0 ? 'Truques' : n===HAB ? 'Habilidades de classe' : n+'º círculo';
+const grupoSigla = n => n===0 ? 'T' : n===HAB ? 'H' : String(n);
+const itemNome = (n, q) => n===HAB ? (q===1 ? 'habilidade' : 'habilidades') : (q===1 ? 'magia' : 'magias');
+const ehHab = s => s.circulo===HAB;
 /* livros / fontes das magias */
 const FONTES = {
   'site':             { curto:'Base',   nome:'Livro base',       cls:'src-base' },
@@ -292,9 +298,9 @@ function fichaHTML(f){
 function spellHTML(s, o={}){
   const facts = [['Tempo de conjuração',s.tempo],['Alcance',s.alcance],['Componentes',s.componentes],['Duração',s.duracao]];
   let h = `<article class="spell"><h3>${esc(s.nome)}</h3>${s.nomeEn && s.nomeEn!==s.nome?`<p class="en">${esc(s.nomeEn)}</p>`:''}`;
-  h += `<p class="lvl">${s.circulo===0?'Truque':s.circulo+'º círculo'} de ${esc(s.escola.toLowerCase())}${s.classes.length?` (${esc(s.classes.join(', '))})`:''}</p>`;
+  h += `<p class="lvl">${ehHab(s) ? 'Habilidade de classe' : (s.circulo===0?'Truque':s.circulo+'º círculo')+' de '+esc(s.escola.toLowerCase())}${s.classes.length?` (${esc(s.classes.join(', '))})`:''}</p>`;
   { const fi = fonteInfo(s); if (fi) h += `<p class="srcline">Fonte: <span class="pill src ${fi.cls}">${esc(fi.nome)}</span></p>`; }
-  h += `<dl class="facts">${facts.map(f=>`<div><dt>${f[0]}</dt><dd>${esc(f[1]||'—')}</dd></div>`).join('')}</dl>`;
+  if (!ehHab(s)) h += `<dl class="facts">${facts.map(f=>`<div><dt>${f[0]}</dt><dd>${esc(f[1]||'—')}</dd></div>`).join('')}</dl>`;
   h += `<div class="txt">${blocksHTML(s.desc)}`;
   if (s.truque) h += `<p class="sup"><strong>Aprimoramento de truque.</strong> ${fmt(s.truque)}</p>`;
   if (s.superior) h += `<p class="sup"><strong>Usando um espaço de magia de círculo superior.</strong> ${fmt(s.superior)}</p>`;
@@ -424,7 +430,7 @@ function bookGroups(ch, ord, tag, onlyPrep){
   const g = [];
   for (const s of sortSpells(arr,'circ')){
     let last = g[g.length-1];
-    if (!last || last.c!==s.circulo){ last = { c:s.circulo, num:s.circulo===0?'T':String(s.circulo), head:s.circulo===0?'Truques':s.circulo+'º círculo', items:[] }; last.lab = last.head; g.push(last); }
+    if (!last || last.c!==s.circulo){ last = { c:s.circulo, num:grupoSigla(s.circulo), head:grupoNome(s.circulo), items:[] }; last.lab = last.head; g.push(last); }
     last.items.push(s);
   }
   return g;
@@ -455,7 +461,7 @@ function rowHTML(s, mode){
   if (mode==='lib') act = `<button class="iconbtn ${has?'on':''}" data-toggle="${s.id}" aria-label="${has?'Remover do':'Adicionar ao'} grimório: ${esc(s.nome)}" title="${has?'No grimório — clique para remover':'Adicionar ao grimório'}">${has?'✓':'+'}</button>`;
   else { const pr = ch.prep.includes(s.id); act = `<label class="prep" title="Marcar como preparada"><input type="checkbox" data-prep="${s.id}" ${pr?'checked':''}> Preparada</label>`; }
   const noteRow = mode==='book' && note ? `<div class="row-note" data-note-row="${s.id}">${esc(note)}</div>` : '';
-  return `<li class="row" role="option" tabindex="0" data-id="${s.id}" aria-selected="${sel}"><span class="nm">${esc(s.nome)}${s.nomeEn&&s.nomeEn!==s.nome?`<em>${esc(s.nomeEn)}</em>`:''}</span><span class="act">${act}</span><span class="mt">${esc(s.escola)}${pills}</span>${noteRow}</li>`;
+  return `<li class="row" role="option" tabindex="0" data-id="${s.id}" aria-selected="${sel}"><span class="nm">${esc(s.nome)}${s.nomeEn&&s.nomeEn!==s.nome?`<em>${esc(s.nomeEn)}</em>`:''}</span><span class="act">${act}</span><span class="mt">${ehHab(s) ? 'Habilidade'+(s.classes.length?' · '+esc(s.classes.join(', ')):'') : esc(s.escola)}${pills}</span>${noteRow}</li>`;
 }
 function listHTML(arr, mode, grouped){
   if (!arr.length) return '<li class="empty">Nenhuma magia encontrada com esses filtros.</li>';
@@ -463,7 +469,7 @@ function listHTML(arr, mode, grouped){
   for (const s of arr){
     if (grouped && s.circulo!==last){
       last = s.circulo; const n = arr.filter(x=>x.circulo===last).length;
-      h += `<li class="grp" role="presentation"><span class="num">${last===0?'T':last}</span><span class="lab">${last===0?'Truques':last+'º círculo'} — ${n} ${n===1?'magia':'magias'}</span></li>`;
+      h += `<li class="grp" role="presentation"><span class="num">${grupoSigla(last)}</span><span class="lab">${grupoNome(last)} — ${n} ${itemNome(last,n)}</span></li>`;
     }
     h += rowHTML(s, mode);
   }
@@ -544,11 +550,11 @@ function onListClick(e, mode){
     const d = e.target.closest('[data-dup]'); if (d){ formBuilt = false; buildForm(BY[d.dataset.dup], true); det.classList.remove('open'); go('new'); return; }
     const ed = e.target.closest('[data-edit]'); if (ed){ formBuilt = false; buildForm(BY[ed.dataset.edit], false); det.classList.remove('open'); go('new'); return; }
     const del = e.target.closest('[data-del]'); if (del){
-      const s = BY[del.dataset.del]; if (!confirm(`Excluir a magia “${s.nome}”? Ela também sai dos grimórios.`)) return;
+      const s = BY[del.dataset.del]; if (!confirm(`Excluir ${ehHab(s)?'a habilidade':'a magia'} “${s.nome}”? ${ehHab(s)?'Ela também sai':'Ela também sai'} dos grimórios.`)) return;
       S.custom = S.custom.filter(x=>x.id!==s.id); S.chars.forEach(c=>{ c.spells = c.spells.filter(x=>x!==s.id); c.prep = c.prep.filter(x=>x!==s.id); dropSpellTags(c,s.id); if (c.notes) delete c.notes[s.id]; });
       if (cur.lib===s.id) cur.lib=null; if (cur.book===s.id) cur.book=null;
       det.classList.remove('open');
-      persist(); rebuild(); refresh(); toast('Magia excluída');
+      persist(); rebuild(); refresh(); toast(ehHab(s) ? 'Habilidade excluída' : 'Magia excluída');
     }
   });
 });
@@ -593,7 +599,7 @@ function renderBook(){
   else if (!groups.length) $('#booklist').innerHTML = '<li class="empty">Nenhuma magia com essa tag.</li>';
   else $('#booklist').innerHTML = groups.map(g=>{
     const n = g.items.length;
-    const hd = g.num==='A' ? '' : `<li class="grp" role="presentation"><span class="num">${esc(g.num)}</span><span class="lab">${esc(g.lab)} — ${n} ${n===1?'magia':'magias'}</span></li>`;
+    const hd = g.num==='A' ? '' : `<li class="grp" role="presentation"><span class="num">${esc(g.num)}</span><span class="lab">${esc(g.lab)} — ${n} ${g.c!==undefined ? itemNome(g.c,n) : (n===1?'magia':'magias')}</span></li>`;
     return hd + g.items.map(s=>rowHTML(s,'book')).join('');
   }).join('');
   if (cur.book && BY[cur.book] && ch.spells.includes(cur.book)) showDetail(cur.book,'book'); else $('#detail-book').innerHTML = '<p class="placeholder">Escolha uma magia para ver o texto completo.</p>';
@@ -781,13 +787,13 @@ function renderSheet(){
       const nt = note ? `<div class="print-note"><strong>Anotações</strong><div>${esc(note)}</div></div>` : '';
       if (mode==='completo'){
         cells.push(`<div class="ps ${s.desc.length>5||s.fichas.length||note?'long':''}"><h3>${esc(s.nome)}</h3>${s.nomeEn&&s.nomeEn!==s.nome?`<span class="en">${esc(s.nomeEn)}</span>`:''}` +
-          `<div class="mt">${esc(s.escola)} · ${esc(s.tempo)} · ${esc(s.alcance)} · ${esc(s.componentes)} · ${esc(s.duracao)}</div>${tg}` +
+          (ehHab(s) ? `<div class="mt">Habilidade de classe${s.classes.length?' · '+esc(s.classes.join(', ')):''}</div>${tg}` : `<div class="mt">${esc(s.escola)} · ${esc(s.tempo)} · ${esc(s.alcance)} · ${esc(s.componentes)} · ${esc(s.duracao)}</div>${tg}`) +
           `<div class="txt">${blocksHTML(s.desc)}${s.truque?`<p class="sup"><strong>Aprimoramento de truque.</strong> ${fmt(s.truque)}</p>`:''}${s.superior?`<p class="sup"><strong>Círculo superior.</strong> ${fmt(s.superior)}</p>`:''}</div>` +
           (fic ? s.fichas.map(fichaHTML).join('') : '') + nt + '</div>');
       } else {
         const comp = (s.componentes||'').replace(/\s*\(.*$/,'');
-        cells.push(`<div class="ps ${fic&&s.fichas.length||note?'long':''}"><div class="cp"><div><h3>${esc(s.nome)}</h3>${s.nomeEn&&s.nomeEn!==s.nome?`<span class="en">${esc(s.nomeEn)}</span>`:''}</div><span class="mt">${esc(s.escola)}</span></div>` +
-          `<div class="mt">${esc(s.tempo)} · ${esc(s.alcance)} · ${esc(comp)} · ${esc(s.duracao)}</div>${tg}` +
+        cells.push(`<div class="ps ${fic&&s.fichas.length||note?'long':''}"><div class="cp"><div><h3>${esc(s.nome)}</h3>${s.nomeEn&&s.nomeEn!==s.nome?`<span class="en">${esc(s.nomeEn)}</span>`:''}</div><span class="mt">${ehHab(s) ? 'Habilidade' : esc(s.escola)}</span></div>` +
+          (ehHab(s) ? `${s.classes.length?`<div class="mt">${esc(s.classes.join(', '))}</div>`:''}${tg}` : `<div class="mt">${esc(s.tempo)} · ${esc(s.alcance)} · ${esc(comp)} · ${esc(s.duracao)}</div>${tg}`) +
           (fic ? s.fichas.map(fichaHTML).join('') : '') + nt + '</div>');
       }
     }
@@ -820,23 +826,38 @@ function fichaForm(f){
     <div class="grid mt-10">${ta('Traços','Traços')}${ta('Ações','Ações')}${ta('Ações Bônus','Ações Bônus')}${ta('Reações','Reações')}</div>
     <div class="dbtn"><button type="button" class="btn warn sm" data-rmficha>Remover esta ficha</button></div></fieldset>`;
 }
+let formCtx = { asCopy:false, base:'' };
+function aplicarTipoForm(){
+  const hab = (document.querySelector('#form input[name="f-tipo"]:checked') || {}).value === 'hab';
+  const f = $('#form'); f.dataset.tipo = hab ? 'hab' : 'magia';
+  const t = hab ? 'habilidade' : 'magia';
+  $('#newTitle').textContent = editId ? `Editar ${t} personalizada` : (formCtx.asCopy ? `Nova ${t} a partir de “${formCtx.base}”` : `Criar ${t} personalizada`);
+  const b = $('#saveSpell'); if (b) b.textContent = `Salvar ${t}`;
+}
 function buildForm(s, asCopy){
   formBuilt = true;
   editId = s && !asCopy ? s.id : null;
-  $('#newTitle').textContent = editId ? 'Editar magia personalizada' : (asCopy ? 'Nova magia a partir de “'+s.nome+'”' : 'Criar magia personalizada');
+  formCtx = { asCopy: !!asCopy, base: s ? s.nome : '' };
   s = s || { nome:'', nomeEn:'', circulo:1, escola:'Evocação', classes:[], tempo:'Ação', alcance:'9 metros', componentes:'V, S', duracao:'Instantânea', desc:[], superior:'', truque:'', fichas:[] };
+  const hab = s.circulo===HAB;
   const comp = s.componentes || ''; const head = comp.split('(')[0];
   const mat = (comp.match(/M\s*\((.*)\)\s*$/)||[])[1] || '';
   const conc = /^concentra/i.test(s.duracao||''); const dur = conc ? (s.duracao||'').replace(/^Concentração,?\s*(até\s*)?/i,'') : (s.duracao||'');
+  const classesLista = [...CLASSES, ...CLASSES_SO_HAB].sort(ptSort);
   $('#form').innerHTML = `
+  <div class="fld"><span>O que você quer criar?</span><div class="checks" id="f-tipo">
+    <label><input type="radio" name="f-tipo" value="magia" ${hab?'':'checked'}> Magia</label>
+    <label><input type="radio" name="f-tipo" value="hab" ${hab?'checked':''}> Habilidade de classe</label>
+  </div></div>
   <h3>Identificação</h3>
   <div class="grid">
     <label class="fld"><span>Nome em português</span><input id="f-nome" maxlength="80" value="${esc(asCopy?s.nome+' (cópia)':s.nome)}"></label>
     <label class="fld"><span>Nome em inglês (opcional)</span><input id="f-en" maxlength="80" value="${esc(s.nomeEn)}"></label>
-    <label class="fld"><span>Círculo</span><select id="f-circ">${[0,1,2,3,4,5,6,7,8,9].map(n=>`<option value="${n}" ${n===s.circulo?'selected':''}>${circLabel(n)}</option>`).join('')}</select></label>
-    <label class="fld"><span>Escola</span><select id="f-esc">${ESCOLAS.map(e=>`<option ${e===s.escola?'selected':''}>${e}</option>`).join('')}</select></label>
+    <label class="fld so-magia"><span>Círculo</span><select id="f-circ">${[0,1,2,3,4,5,6,7,8,9].map(n=>`<option value="${n}" ${n===s.circulo?'selected':''}>${circLabel(n)}</option>`).join('')}</select></label>
+    <label class="fld so-magia"><span>Escola</span><select id="f-esc">${ESCOLAS.map(e=>`<option ${e===s.escola?'selected':''}>${e}</option>`).join('')}</select></label>
   </div>
-  <div class="fld mt-12"><span>Classes</span><div class="checks" id="f-cls">${CLASSES.map(c=>`<label><input type="checkbox" value="${c}" ${s.classes.includes(c)?'checked':''}> ${c}</label>`).join('')}</div></div>
+  <div class="fld mt-12"><span class="so-magia">Classes</span><span class="so-hab">Classe</span><div class="checks" id="f-cls">${classesLista.map(c=>`<label class="${CLASSES_SO_HAB.includes(c)?'so-hab':''}"><input type="checkbox" value="${c}" ${s.classes.includes(c)?'checked':''}> ${c}</label>`).join('')}</div></div>
+  <div class="so-magia">
   <h3>Conjuração</h3>
   <div class="grid">
     <label class="fld"><span>Tempo de conjuração</span><input id="f-tempo" list="dl-t" value="${esc((s.tempo||'').replace(/\s*ou Ritual/i,''))}"></label>
@@ -853,19 +874,22 @@ function buildForm(s, asCopy){
     <label><input type="checkbox" id="f-s" ${/\bS\b/.test(head)?'checked':''}> Somático</label>
     <label><input type="checkbox" id="f-m" ${/\bM\b/.test(head)?'checked':''}> Material</label></div></div>
   <label class="fld mt-8"><span>Material (se houver)</span><input id="f-mat" value="${esc(mat)}" placeholder="um pouco de enxofre; joia de 100 PO, que a magia consome"></label>
-  <h3>Texto da magia</h3>
+  </div>
+  <h3><span class="so-magia">Texto da magia</span><span class="so-hab">Descrição da habilidade</span></h3>
   <label class="fld"><span>Descrição</span><textarea id="f-desc" class="textarea-lg">${esc(blocksToText(s.desc))}</textarea><small>Uma linha em branco separa parágrafos. Comece a linha com “- ” para fazer lista. Use **negrito** e *itálico*. Tabelas: | col A | col B |</small></label>
-  <div class="grid mt-12">
+  <div class="grid mt-12 so-magia">
     <label class="fld"><span>Usando um espaço de magia de círculo superior (opcional)</span><textarea class="textarea-sm" id="f-sup">${esc(s.superior)}</textarea></label>
     <label class="fld"><span>Aprimoramento de truque (opcional)</span><textarea class="textarea-sm" id="f-tru">${esc(s.truque)}</textarea></label>
   </div>
-  <h3>Criatura invocada</h3>
-  <p class="lead compact-xs">Se a magia invoca uma criatura, adicione a ficha. Em Traços, Ações, Ações Bônus e Reações, escreva uma entrada por linha no formato “Nome. Texto”.</p>
+  <h3><span class="so-magia">Criatura invocada</span><span class="so-hab">Ficha de criatura</span></h3>
+  <p class="lead compact-xs">Se a magia ou a habilidade invoca ou transforma em uma criatura, adicione a ficha. Em Traços, Ações, Ações Bônus e Reações, escreva uma entrada por linha no formato “Nome. Texto”.</p>
   <div id="fichas">${s.fichas.map(fichaForm).join('')}</div>
-  <div class="datarow"><button type="button" class="btn ghost sm outline-accent" id="addFicha">Adicionar ficha de invocação</button></div>
+  <div class="datarow"><button type="button" class="btn ghost sm outline-accent" id="addFicha">Adicionar ficha de criatura</button></div>
   <div id="formMsg" role="alert"></div>
   <div class="datarow mt-16"><button type="button" class="btn" id="saveSpell">Salvar magia</button><button type="button" class="btn ghost sm text-ink" id="cancelSpell">Cancelar</button></div>`;
+  aplicarTipoForm();
 }
+$('#form').addEventListener('change', e=>{ if (e.target.name==='f-tipo') aplicarTipoForm(); });
 function collectFicha(fs){
   const g = k => (fs.querySelector(`[data-k="${k}"]`)?.value||'').trim();
   const f = { nome:g('nome'), tipo:g('tipo'), ca:g('ca'), pv:g('pv'), deslocamento:g('deslocamento'), atr:null, props:[], secoes:[] };
@@ -886,29 +910,39 @@ function collectFicha(fs){
 }
 function saveSpell(){
   const msg = t => { $('#formMsg').innerHTML = `<div class="msg err">${esc(t)}</div>`; };
+  const hab = $('#form').dataset.tipo === 'hab';
   const nome = $('#f-nome').value.trim();
-  if (!nome) return msg('Informe o nome da magia.');
-  const tempoBase = $('#f-tempo').value.trim(); if (!tempoBase) return msg('Informe o tempo de conjuração.');
-  const ritual = $('#f-rit').checked, conc = $('#f-con').checked;
-  const comps = [$('#f-v').checked&&'V', $('#f-s').checked&&'S'].filter(Boolean);
-  const mat = $('#f-mat').value.trim();
-  if ($('#f-m').checked) comps.push(mat ? `M (${mat})` : 'M');
-  const dur0 = $('#f-dur').value.trim() || 'Instantânea';
-  const d = parseDesc($('#f-desc').value.split('\n'));
+  if (!nome) return msg(hab ? 'Informe o nome da habilidade.' : 'Informe o nome da magia.');
   const fichas = $$('#fichas .ff').map(collectFicha).filter(f=>f.nome);
   const id = editId || uid('c-');
-  const s = {
-    id, nome, nomeEn: $('#f-en').value.trim(), circulo: +$('#f-circ').value, escola: $('#f-esc').value,
-    classes: $$('#f-cls input:checked').map(i=>i.value),
-    tempo: ritual && !/ritual/i.test(tempoBase) ? tempoBase+' ou Ritual' : tempoBase,
-    alcance: $('#f-alc').value.trim() || 'Pessoal', componentes: comps.join(', ') || '—',
-    duracao: conc ? 'Concentração, até '+dur0.replace(/^até\s*/i,'') : dur0,
-    ritual, concentracao: conc, desc: d.blocks, superior: $('#f-sup').value.trim() || d.sup, truque: $('#f-tru').value.trim() || d.tru,
-    fichas, custom:true, fonte:'personalizada'
-  };
+  const classes = $$('#f-cls input:checked').map(i=>i.value).filter(c => hab || !CLASSES_SO_HAB.includes(c));
+  let s;
+  if (hab){
+    const d = parseDesc($('#f-desc').value.split('\n'));
+    if (!d.blocks.length && !fichas.length) return msg('Escreva a descrição da habilidade ou adicione uma ficha.');
+    s = { id, nome, nomeEn: $('#f-en').value.trim(), circulo: HAB, escola:'', classes,
+      tempo:'', alcance:'', componentes:'', duracao:'', ritual:false, concentracao:false,
+      desc: d.blocks, superior:'', truque:'', fichas, custom:true, fonte:'personalizada' };
+  } else {
+    const tempoBase = $('#f-tempo').value.trim(); if (!tempoBase) return msg('Informe o tempo de conjuração.');
+    const ritual = $('#f-rit').checked, conc = $('#f-con').checked;
+    const comps = [$('#f-v').checked&&'V', $('#f-s').checked&&'S'].filter(Boolean);
+    const mat = $('#f-mat').value.trim();
+    if ($('#f-m').checked) comps.push(mat ? `M (${mat})` : 'M');
+    const dur0 = $('#f-dur').value.trim() || 'Instantânea';
+    const d = parseDesc($('#f-desc').value.split('\n'));
+    s = {
+      id, nome, nomeEn: $('#f-en').value.trim(), circulo: +$('#f-circ').value, escola: $('#f-esc').value, classes,
+      tempo: ritual && !/ritual/i.test(tempoBase) ? tempoBase+' ou Ritual' : tempoBase,
+      alcance: $('#f-alc').value.trim() || 'Pessoal', componentes: comps.join(', ') || '—',
+      duracao: conc ? 'Concentração, até '+dur0.replace(/^até\s*/i,'') : dur0,
+      ritual, concentracao: conc, desc: d.blocks, superior: $('#f-sup').value.trim() || d.sup, truque: $('#f-tru').value.trim() || d.tru,
+      fichas, custom:true, fonte:'personalizada'
+    };
+  }
   const i = S.custom.findIndex(x=>x.id===id); if (i>=0) S.custom[i] = s; else S.custom.push(s);
   persist(); rebuild(); fillClasses(); cur.lib = id; formBuilt = false; editId = null;
-  toast('Magia salva na biblioteca'); go('lib');
+  toast(hab ? 'Habilidade salva na biblioteca' : 'Magia salva na biblioteca'); go('lib');
 }
 $('#form').addEventListener('click', e=>{
   if (e.target.id==='saveSpell') saveSpell();
@@ -1013,7 +1047,7 @@ const BASE_FILE = 'magias.json', BASE_CACHE = 'grimorio-base-v1';
 const BASE = { state:'loading', n:0, ign:0, err:'', quando:'' };
 function normSpell(x){
   if (!x || typeof x!=='object' || !String(x.nome||'').trim()) return null;
-  const circ = Number(x.circulo); if (!Number.isInteger(circ) || circ<0 || circ>9) return null;
+  const circ = Number(x.circulo); if (!Number.isInteger(circ) || circ<0 || circ>HAB) return null;
   const arr = v => Array.isArray(v) ? v : [];
   const sp = Object.assign({ nomeEn:'', escola:'', tempo:'', alcance:'', componentes:'', duracao:'', superior:'', truque:'' }, x);
   sp.nome = String(x.nome).trim(); sp.circulo = circ; sp.id = String(x.id || slug(sp.nome));
