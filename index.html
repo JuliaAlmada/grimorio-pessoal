@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inclusive+Sans:ital,wght@0,300..700;1,300..700&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=ficha-habilidade-1">
+<link rel="stylesheet" href="styles.css?v=imagem-1">
 <script>
 /* escolhe o tema antes da página aparecer, para não piscar branco */
 (function(){
@@ -71,7 +71,9 @@
     <div class="bookhead"><h1 class="view-title" id="bookTitle">Meu grimório</h1><span class="meta" id="bookMeta"></span></div>
     <div class="opts" id="bookbar">
       <label>Organizar por <select id="bord"><option value="circ">Círculo</option><option value="tag">Tag</option><option value="az">A–Z</option></select></label>
+      <label>Mostrar <select id="btipo"><option value="">Magias e habilidades</option><option value="magia">Só magias</option><option value="hab">Só habilidades</option></select></label>
       <label>Só a tag <select id="btag"></select></label>
+      <label><input type="checkbox" id="bsem"> <span id="bsemTxt">Só sem tag</span></label>
       <button class="btn ghost sm outline-accent" type="button" id="btagRen">Renomear tag</button>
       <button class="btn warn sm" type="button" id="btagDel">Excluir tag</button>
     </div>
@@ -99,11 +101,19 @@
       <label><input type="checkbox" id="pfic" checked> Fichas de invocação</label>
       <label><input type="checkbox" id="pprep"> Só magias preparadas</label>
       <label>Organizar por <select id="pord" title="Com “Tag”, uma magia com várias tags aparece em cada uma"><option value="circ">Círculo</option><option value="tag">Tag</option><option value="az">A–Z</option></select></label>
+      <label>Mostrar <select id="ptipo"><option value="">Magias e habilidades</option><option value="magia">Só magias</option><option value="hab">Só habilidades</option></select></label>
       <label>Só a tag <select id="ptag"></select></label>
       <label><input type="checkbox" id="ptags"> Mostrar tags</label>
       <label class="colorpick">Cor dos títulos <input type="color" id="pcolor" value="#245a3d" aria-label="Cor dos títulos e subtítulos"></label>
-      <button class="btn" type="button" id="doPrint">Imprimir</button>
+      <button class="btn" type="button" id="doImg">Gerar imagens</button>
     </div>
+    <p class="lead compact">Escolha as opções e toque em <b>Gerar imagens</b>: o site cria uma imagem (PNG) de cada página A4, igual à prévia abaixo, para você baixar, compartilhar ou imprimir de onde preferir.</p>
+    <div id="imgStatus" role="status"></div>
+    <div id="imgOut" hidden>
+      <div class="datarow" id="imgActions"></div>
+      <div id="imgList"></div>
+    </div>
+    <h3 class="prev-title">Prévia</h3>
     <div class="paper"><div class="sheet" id="sheet"></div></div>
   </section>
 
@@ -382,7 +392,8 @@ function sortSpells(a, ord){
 }
 
 /* ---------- tags do grimório ---------- */
-const B = { ord:'circ', tag:'' };
+const B = { ord:'circ', tag:'', tipo:'' };
+const NONE = '__sem_tag__';   // valor especial do filtro "Sem tag"
 const normTag = t => String(t||'').trim().replace(/^#+/,'').replace(/\s+/g,' ').slice(0,30);
 const tagsOf = (ch,id) => (ch.tags && ch.tags[id]) || [];
 const noteOf = (ch,id) => (ch.notes && ch.notes[id]) || '';
@@ -411,10 +422,12 @@ function mapTags(ch, fn){
     if (out.length) ch.tags[id] = out; else delete ch.tags[id];
   }
 }
-function bookGroups(ch, ord, tag, onlyPrep){
+function bookGroups(ch, ord, tag, onlyPrep, tipo){
   let arr = ch.spells.map(id=>BY[id]).filter(Boolean);
   if (onlyPrep) arr = arr.filter(s=>ch.prep.includes(s.id));
-  if (tag) arr = arr.filter(s=>tagsOf(ch,s.id).includes(tag));
+  if (tipo==='hab') arr = arr.filter(ehHab); else if (tipo==='magia') arr = arr.filter(s=>!ehHab(s));
+  if (tag===NONE) arr = arr.filter(s=>!tagsOf(ch,s.id).length);
+  else if (tag) arr = arr.filter(s=>tagsOf(ch,s.id).includes(tag));
   if (ord==='az') return arr.length ? [{ num:'A', head:'', lab:'Ordem alfabética', items: arr.sort((x,y)=>ptSort(x.nome,y.nome)) }] : [];
   if (ord==='tag'){
     const map = new Map(), none = [];
@@ -423,8 +436,8 @@ function bookGroups(ch, ord, tag, onlyPrep){
       if (!t.length) none.push(s); else t.forEach(x=>{ if (!map.has(x)) map.set(x,[]); map.get(x).push(s); });
     }
     let g = [...map.entries()].sort((a,b)=>ptSort(a[0],b[0])).map(([k,v])=>({ num:'#', head:k, lab:k, items:v }));
-    if (tag) g = g.filter(x=>x.head===tag);
-    else if (none.length) g.push({ num:'–', head:'Sem tag', lab:'Sem tag', items:none });
+    if (tag===NONE) g = []; else if (tag) g = g.filter(x=>x.head===tag);
+    if (none.length && (!tag || tag===NONE)) g.push({ num:'–', head:'Sem tag', lab:'Sem tag', items:none });
     return g;
   }
   const g = [];
@@ -576,8 +589,9 @@ function renderBookMeta(){
 }
 function fillTagSel(sel, ch, val){
   const tags = allTags(ch);
-  sel.innerHTML = '<option value="">Todas</option>' + tags.map(([t,n])=>`<option value="${esc(t)}">${esc(t)} (${n})</option>`).join('');
-  sel.value = tags.some(([t])=>t===val) ? val : '';
+  const sem = ch.spells.filter(id=>BY[id] && !tagsOf(ch,id).length).length;
+  sel.innerHTML = '<option value="">Todas</option>' + `<option value="${NONE}">Sem tag (${sem})</option>` + tags.map(([t,n])=>`<option value="${esc(t)}">${esc(t)} (${n})</option>`).join('');
+  sel.value = (val===NONE ? sem>0 : tags.some(([t])=>t===val)) ? val : '';
   return sel.value;
 }
 function renderBook(){
@@ -593,10 +607,13 @@ function renderBook(){
   renderBookMeta();
   B.tag = fillTagSel($('#btag'), ch, B.tag);
   $('#bord').value = B.ord;
-  $('#btagRen').disabled = $('#btagDel').disabled = !B.tag;
-  const groups = bookGroups(ch, B.ord, B.tag, false);
+  $('#btagRen').disabled = $('#btagDel').disabled = !B.tag || B.tag===NONE;
+  $('#btipo').value = B.tipo;
+  $('#bsem').checked = B.tag===NONE;
+  $('#bsemTxt').textContent = `Só sem tag (${ch.spells.filter(id=>BY[id] && !tagsOf(ch,id).length && (B.tipo==='hab' ? ehHab(BY[id]) : B.tipo==='magia' ? !ehHab(BY[id]) : true)).length})`;
+  const groups = bookGroups(ch, B.ord, B.tag, false, B.tipo);
   if (!ch.spells.some(id=>BY[id])) $('#booklist').innerHTML = '<li class="empty">O grimório está vazio. Na biblioteca, use o botão + ao lado de cada magia.<br><br><button class="btn" type="button" data-go-lib>Abrir biblioteca</button></li>';
-  else if (!groups.length) $('#booklist').innerHTML = '<li class="empty">Nenhuma magia com essa tag.</li>';
+  else if (!groups.length) $('#booklist').innerHTML = (B.tag===NONE ? '<li class="empty">Nenhum item sem tag com esse filtro.</li>' : B.tipo==='hab' ? '<li class="empty">Nenhuma habilidade com esse filtro.</li>' : '<li class="empty">Nenhuma magia com esse filtro.</li>');
   else $('#booklist').innerHTML = groups.map(g=>{
     const n = g.items.length;
     const hd = g.num==='A' ? '' : `<li class="grp" role="presentation"><span class="num">${esc(g.num)}</span><span class="lab">${esc(g.lab)} — ${n} ${g.c!==undefined ? itemNome(g.c,n) : (n===1?'magia':'magias')}</span></li>`;
@@ -606,13 +623,15 @@ function renderBook(){
 }
 $('#bord').addEventListener('change', e=>{ B.ord = e.target.value; renderBook(); });
 $('#btag').addEventListener('change', e=>{ B.tag = e.target.value; renderBook(); });
+$('#btipo').addEventListener('change', e=>{ B.tipo = e.target.value; renderBook(); });
+$('#bsem').addEventListener('change', e=>{ B.tag = e.target.checked ? NONE : ''; renderBook(); });
 $('#btagRen').addEventListener('click', ()=>{
-  const ch = activeChar(); if (!ch || !B.tag) return;
+  const ch = activeChar(); if (!ch || !B.tag || B.tag===NONE) return;
   const n = normTag(prompt('Novo nome para a tag “'+B.tag+'”:', B.tag)); if (!n || n===B.tag) return;
   const old = B.tag; mapTags(ch, t=>t===old ? n : t); B.tag = n; persist(); renderBook(); toast('Tag renomeada');
 });
 $('#btagDel').addEventListener('click', ()=>{
-  const ch = activeChar(); if (!ch || !B.tag) return;
+  const ch = activeChar(); if (!ch || !B.tag || B.tag===NONE) return;
   if (!confirm(`Excluir a tag “${B.tag}” de todas as magias de ${ch.nome}? As magias continuam no grimório.`)) return;
   const old = B.tag; mapTags(ch, t=>t===old ? null : t); B.tag = ''; persist(); renderBook(); toast('Tag excluída');
 });
@@ -696,9 +715,9 @@ function blocosDaMagia(el){
   }
   return un;
 }
-function medirItens(htmls, largura){
+function medirItens(htmls, largura, duas = true){
   const m = document.createElement('div');
-  m.className = 'sheet cols2';
+  m.className = 'sheet' + (duas ? ' cols2' : '');
   m.style.cssText = `position:absolute;left:-10000px;top:0;visibility:hidden;width:${largura}`;
   m.innerHTML = htmls.join('');
   document.body.appendChild(m);
@@ -727,14 +746,14 @@ function fragmentoHTML(open, units, marca){
   }
   return (marca ? open.replace('class="', `class="${marca} `) : open) + out + '</div>';
 }
-function colunasPaginadas(itens, cabecalhoHTML){
-  if (!itens.length) return '';
-  const fila = medirItens(itens.map(i => i.html), '87.5mm');                // largura de uma coluna impressa
-  const alturaCab = (medirItens([cabecalhoHTML], '184mm')[0] || {}).h || 40;
-  const paginas = []; let cols = [[], []], col = 0, usado = 0, cap = PAG_ALTURA - alturaCab;
+function distribuir(itens, cabecalhoHTML, ncols, largura, alturaPagina){
+  const fila = medirItens(itens.map(i => i.html), largura, ncols === 2);
+  const alturaCab = (medirItens([cabecalhoHTML], '184mm', ncols === 2)[0] || {}).h || 40;
+  const novas = () => Array.from({ length: ncols }, () => []);
+  const paginas = []; let cols = novas(), col = 0, usado = 0, cap = alturaPagina - alturaCab;
   const novaColuna = () => {
-    if (col === 0) col = 1;
-    else { paginas.push(cols); cols = [[], []]; col = 0; cap = PAG_ALTURA; }
+    if (col < ncols - 1) col++;
+    else { paginas.push(cols); cols = novas(); col = 0; cap = alturaPagina; }
     usado = 0;
   };
   while (fila.length){
@@ -757,29 +776,27 @@ function colunasPaginadas(itens, cabecalhoHTML){
       novaColuna(); continue;
     }
     if (usado > 0){ fila.unshift(it); novaColuna(); continue; }
-    cols[col].push(fragmentoHTML(it.open, it.units)); usado += it.fh;     // maior que a coluna inteira: deixa o navegador quebrar
+    cols[col].push(fragmentoHTML(it.open, it.units)); usado += it.fh;     // maior que a coluna inteira: deixa passar
   }
   paginas.push(cols);
-  return paginas.map(c => `<table class="duas"><tbody><tr><td>${c[0].join('')}</td><td>${c[1].join('')}</td></tr></tbody></table>`).join('');
+  return paginas;
 }
-function renderSheet(){
-  const ch = activeChar(); const host = $('#sheet');
-  if (!ch){ host.innerHTML = '<p>Crie um personagem e adicione magias ao grimório para imprimir.</p>'; return; }
+function colunasPaginadas(itens, cabecalhoHTML){
+  if (!itens.length) return '';
+  return distribuir(itens, cabecalhoHTML, 2, '87.5mm', PAG_ALTURA).map(c => `<table class="duas"><tbody><tr><td>${c[0].join('')}</td><td>${c[1].join('')}</td></tr></tbody></table>`).join('');
+}
+function montarItens(){
+  const ch = activeChar(); if (!ch) return null;
   const mode = $('#pmode').value, cols2 = $('#pcols').value==='2', fic = $('#pfic').checked, onlyPrep = $('#pprep').checked;
-  const ord = $('#pord').value, showTags = $('#ptags').checked;
+  const ord = $('#pord').value, showTags = $('#ptags').checked, tipo = $('#ptipo').value;
   const tag = fillTagSel($('#ptag'), ch, $('#ptag').value);
-  host.className = 'sheet' + (cols2?' cols2':'');
   const printColor = $('#pcolor').value || '#245a3d';
-  host.style.setProperty('--g', printColor);
-  host.style.setProperty('--g2', printColor);
-  const groups = bookGroups(ch, ord, tag, onlyPrep);
+  const groups = bookGroups(ch, ord, tag, onlyPrep, tipo);
   const uniq = new Set(groups.flatMap(g=>g.items.map(s=>s.id))).size;
-  const cab = `<div class="sh"><h2>${esc(ch.nome)}</h2><span>${esc([ch.classe, ch.nivel?'nível '+ch.nivel:''].filter(Boolean).join(', '))}${uniq?` — ${uniq} ${uniq===1?'magia':'magias'}`:''}${tag?` — tag: ${esc(tag)}`:''}</span></div>`;
+  const cab = `<div class="sh"><h2>${esc(ch.nome)}</h2><span>${esc([ch.classe, ch.nivel?'nível '+ch.nivel:''].filter(Boolean).join(', '))}${uniq?` — ${uniq} ${tipo==='hab' ? itemNome(HAB,uniq) : (uniq===1?'magia':'magias')}`:''}${tag?` — ${tag===NONE?'sem tag':'tag: '+esc(tag)}`:''}</span></div>`;
   const flat = [];
-  let h = cab + `<div class="body">`;
-  if (!groups.length) h += '<p>Nenhuma magia para imprimir. Adicione magias ao grimório (ou ajuste “Só magias preparadas” e “Só a tag”).</p>';
   for (const g of groups){
-    if (g.head){ const gh = `<div class="gh">${ord==='tag' && g.num==='#' ? '#' : ''}${esc(g.head)}</div>`; if (cols2) flat.push({ k:'gh', html:gh }); else h += gh; }
+    if (g.head){ const gh = `<div class="gh">${ord==='tag' && g.num==='#' ? '#' : ''}${esc(g.head)}</div>`; flat.push({ k:'gh', html:gh }); }
     const cells = [];
     for (const s of g.items){
       const tg = showTags && ord!=='tag' && tagsOf(ch,s.id).length ? `<div class="tg">Tags: ${tagsOf(ch,s.id).map(esc).join(', ')}</div>` : '';
@@ -797,14 +814,95 @@ function renderSheet(){
           (fic ? s.fichas.map(fichaHTML).join('') : '') + nt + '</div>');
       }
     }
-    if (cols2) cells.forEach(c => flat.push({ k:'ps', html:c })); else h += cells.join('');
+    cells.forEach(c => flat.push({ k:'ps', html:c }));
   }
-  if (cols2) h += colunasPaginadas(flat, cab);
-  host.innerHTML = h + '</div>';
+  return { ch, cab, flat, cols2, printColor, vazio: !groups.length, uniq };
 }
-['#pmode','#pcols','#pfic','#pprep','#pord','#ptag','#ptags','#pcolor'].forEach(id=>$(id).addEventListener('change', renderSheet));
+function renderSheet(){
+  const host = $('#sheet'); const d = montarItens();
+  if (!d){ host.innerHTML = '<p>Crie um personagem e adicione magias ao grimório para gerar a imagem.</p>'; return; }
+  host.className = 'sheet' + (d.cols2?' cols2':'');
+  host.style.setProperty('--g', d.printColor); host.style.setProperty('--g2', d.printColor);
+  let html = d.cab + '<div class="body">';
+  if (d.vazio) html += '<p>Nenhuma magia para mostrar. Adicione magias ao grimório (ou ajuste “Só magias preparadas”, “Mostrar” e “Só a tag”).</p>';
+  html += d.cols2 ? colunasPaginadas(d.flat, d.cab) : d.flat.map(i=>i.html).join('');
+  host.innerHTML = html + '</div>';
+}
+['#pmode','#pcols','#pfic','#pprep','#pord','#ptipo','#ptag','#ptags','#pcolor'].forEach(id=>$(id).addEventListener('change', renderSheet));
 $('#pcolor').addEventListener('input', renderSheet);
-$('#doPrint').addEventListener('click', ()=>{ renderSheet(); window.print(); });
+/* o botão #doImg é ligado mais abaixo, junto do gerador de imagens */
+
+/* ---------- imagens das páginas (em vez de imprimir / PDF) ---------- */
+const H2C_URL = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+const IMG_ALTURA = 1020;               // área útil de uma página A4 (297 mm - 2×13 mm = 1024 px), com 4 px de folga
+let h2cPromise = null, imagensGeradas = [];
+function carregarH2C(){
+  if (window.html2canvas) return Promise.resolve(window.html2canvas);
+  if (!h2cPromise) h2cPromise = new Promise((ok, falha) => {
+    const s = document.createElement('script'); s.src = H2C_URL;
+    s.onload = () => window.html2canvas ? ok(window.html2canvas) : (h2cPromise = null, falha(new Error('a biblioteca de imagem não iniciou')));
+    s.onerror = () => { h2cPromise = null; falha(new Error('não consegui baixar a biblioteca de imagem (precisa de internet)')); };
+    document.head.appendChild(s);
+  });
+  return h2cPromise;
+}
+const aguardar = ms => new Promise(r => setTimeout(r, ms));
+const nomeArquivo = (nome, i) => `grimorio-${slug(nome) || 'personagem'}-pagina-${i}.png`;
+async function gerarImagens(){
+  const btn = $('#doImg');
+  const d = montarItens();
+  if (!d) return say('#imgStatus','err','Crie um personagem e adicione magias ao grimório primeiro.');
+  if (d.vazio) return say('#imgStatus','err','Nenhuma magia para gerar. Ajuste os filtros ou adicione magias ao grimório.');
+  btn.disabled = true; say('#imgStatus','','Preparando…');
+  let host;
+  try {
+    const h2c = await carregarH2C();
+    if (document.fonts && document.fonts.ready) await document.fonts.ready;
+    const duas = d.cols2;
+    const paginas = distribuir(d.flat, d.cab, duas ? 2 : 1, duas ? '87.5mm' : '184mm', IMG_ALTURA);
+    host = document.createElement('div');
+    host.style.cssText = 'position:absolute;left:-12000px;top:0';
+    document.body.appendChild(host);
+    imagensGeradas.forEach(i => URL.revokeObjectURL(i.url)); imagensGeradas = [];
+    for (let i = 0; i < paginas.length; i++){
+      say('#imgStatus','',`Gerando página ${i+1} de ${paginas.length}…`);
+      await aguardar(30);
+      const cols = paginas[i];
+      const corpo = duas ? `<table class="duas"><tbody><tr><td>${cols[0].join('')}</td><td>${cols[1].join('')}</td></tr></tbody></table>` : cols[0].join('');
+      host.innerHTML = `<div class="pg sheet${duas?' cols2':''}" style="--g:${d.printColor};--g2:${d.printColor}">${i===0 ? d.cab : ''}<div class="body">${corpo}</div></div>`;
+      const el = host.firstElementChild;
+      const canvas = await h2c(el, { scale:2, backgroundColor:'#fff', logging:false, useCORS:true,
+        onclone: (doc, clone) => { clone.style.position = 'static'; clone.style.left = '0'; } });
+      const blob = await new Promise(r => canvas.toBlob(r, 'image/png'));
+      if (!blob) throw new Error('o navegador não conseguiu criar a imagem');
+      imagensGeradas.push({ blob, url: URL.createObjectURL(blob), nome: nomeArquivo(d.ch.nome, i+1) });
+    }
+    mostrarImagens();
+    say('#imgStatus','ok',`Pronto: ${imagensGeradas.length} ${imagensGeradas.length===1?'imagem':'imagens'}.`);
+  } catch(e){
+    say('#imgStatus','err',`Não consegui gerar as imagens: ${e.message || e}. Você ainda pode usar o recurso Imprimir do navegador.`);
+  } finally { if (host) host.remove(); btn.disabled = false; }
+}
+function mostrarImagens(){
+  const n = imagensGeradas.length;
+  $('#imgOut').hidden = !n;
+  let acoes = `<button class="btn" type="button" data-img="todas">${n===1?'Baixar imagem':'Baixar todas'}</button>`;
+  if (navigator.canShare && navigator.canShare({ files: imagensGeradas.map(i => new File([i.blob], i.nome, { type:'image/png' })) }))
+    acoes += `<button class="btn ghost outline-accent" type="button" data-img="compartilhar">Compartilhar / salvar nas Fotos</button>`;
+  $('#imgActions').innerHTML = acoes;
+  $('#imgList').innerHTML = imagensGeradas.map((im, i) => `<figure class="imgpg"><img src="${im.url}" alt="Página ${i+1} de ${n}"><figcaption>Página ${i+1} de ${n} <a class="btn ghost sm" href="${im.url}" download="${esc(im.nome)}">Baixar</a></figcaption></figure>`).join('');
+}
+$('#doImg').addEventListener('click', gerarImagens);
+$('#imgOut').addEventListener('click', async e => {
+  const b = e.target.closest('[data-img]'); if (!b) return;
+  if (b.dataset.img === 'todas'){
+    for (const im of imagensGeradas){ const a = document.createElement('a'); a.href = im.url; a.download = im.nome; document.body.appendChild(a); a.click(); a.remove(); await aguardar(350); }
+  } else {
+    try { await navigator.share({ files: imagensGeradas.map(i => new File([i.blob], i.nome, { type:'image/png' })), title:'Grimório' }); }
+    catch(err){ if (err && err.name !== 'AbortError') say('#imgStatus','err','Não consegui abrir o compartilhamento. Toque e segure uma imagem para salvá-la.'); }
+  }
+});
+['#pmode','#pcols','#pfic','#pprep','#pord','#ptipo','#ptag','#ptags','#pcolor'].forEach(id => $(id).addEventListener('change', () => { $('#imgOut').hidden = true; say('#imgStatus','',''); }));
 
 /* ---------- criar / editar magia ---------- */
 let formBuilt = false, editId = null;
