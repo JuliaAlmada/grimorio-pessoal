@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inclusive+Sans:ital,wght@0,300..700;1,300..700&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=imagem-1">
+<link rel="stylesheet" href="styles.css?v=busca-1">
 <script>
 /* escolhe o tema antes da página aparecer, para não piscar branco */
 (function(){
@@ -70,12 +70,14 @@
   <section id="v-book" hidden>
     <div class="bookhead"><h1 class="view-title" id="bookTitle">Meu grimório</h1><span class="meta" id="bookMeta"></span></div>
     <div class="opts" id="bookbar">
+      <label class="grow">Buscar <input type="search" id="bq" placeholder="Nome, tag ou anotação" autocomplete="off"></label>
       <label>Organizar por <select id="bord"><option value="circ">Círculo</option><option value="tag">Tag</option><option value="az">A–Z</option></select></label>
       <label>Mostrar <select id="btipo"><option value="">Magias e habilidades</option><option value="magia">Só magias</option><option value="hab">Só habilidades</option></select></label>
       <label>Só a tag <select id="btag"></select></label>
       <label><input type="checkbox" id="bsem"> <span id="bsemTxt">Só sem tag</span></label>
       <button class="btn ghost sm outline-accent" type="button" id="btagRen">Renomear tag</button>
       <button class="btn warn sm" type="button" id="btagDel">Excluir tag</button>
+      <span class="hint" id="bqCount" role="status"></span>
     </div>
     <div class="split">
       <ul class="list" id="booklist" aria-label="Magias do grimório"></ul>
@@ -392,7 +394,7 @@ function sortSpells(a, ord){
 }
 
 /* ---------- tags do grimório ---------- */
-const B = { ord:'circ', tag:'', tipo:'' };
+const B = { ord:'circ', tag:'', tipo:'', q:'' };
 const NONE = '__sem_tag__';   // valor especial do filtro "Sem tag"
 const normTag = t => String(t||'').trim().replace(/^#+/,'').replace(/\s+/g,' ').slice(0,30);
 const tagsOf = (ch,id) => (ch.tags && ch.tags[id]) || [];
@@ -422,10 +424,12 @@ function mapTags(ch, fn){
     if (out.length) ch.tags[id] = out; else delete ch.tags[id];
   }
 }
-function bookGroups(ch, ord, tag, onlyPrep, tipo){
+function bookGroups(ch, ord, tag, onlyPrep, tipo, q){
   let arr = ch.spells.map(id=>BY[id]).filter(Boolean);
   if (onlyPrep) arr = arr.filter(s=>ch.prep.includes(s.id));
   if (tipo==='hab') arr = arr.filter(ehHab); else if (tipo==='magia') arr = arr.filter(s=>!ehHab(s));
+  const termos = norm(q).split(/\s+/).filter(Boolean);        // busca: nome, nome em inglês, tags e anotações
+  if (termos.length) arr = arr.filter(s => { const palheiro = norm([s.nome, s.nomeEn, ...tagsOf(ch,s.id), noteOf(ch,s.id)].join(' ')); return termos.every(t => palheiro.includes(t)); });
   if (tag===NONE) arr = arr.filter(s=>!tagsOf(ch,s.id).length);
   else if (tag) arr = arr.filter(s=>tagsOf(ch,s.id).includes(tag));
   if (ord==='az') return arr.length ? [{ num:'A', head:'', lab:'Ordem alfabética', items: arr.sort((x,y)=>ptSort(x.nome,y.nome)) }] : [];
@@ -611,9 +615,12 @@ function renderBook(){
   $('#btipo').value = B.tipo;
   $('#bsem').checked = B.tag===NONE;
   $('#bsemTxt').textContent = `Só sem tag (${ch.spells.filter(id=>BY[id] && !tagsOf(ch,id).length && (B.tipo==='hab' ? ehHab(BY[id]) : B.tipo==='magia' ? !ehHab(BY[id]) : true)).length})`;
-  const groups = bookGroups(ch, B.ord, B.tag, false, B.tipo);
+  if ($('#bq') !== document.activeElement) $('#bq').value = B.q;
+  const groups = bookGroups(ch, B.ord, B.tag, false, B.tipo, B.q);
+  const totalGrim = ch.spells.filter(id=>BY[id]).length, mostrados = new Set(groups.flatMap(g=>g.items.map(s=>s.id))).size;
+  $('#bqCount').textContent = (B.q.trim() || B.tag || B.tipo) ? `${mostrados} de ${totalGrim}` : '';
   if (!ch.spells.some(id=>BY[id])) $('#booklist').innerHTML = '<li class="empty">O grimório está vazio. Na biblioteca, use o botão + ao lado de cada magia.<br><br><button class="btn" type="button" data-go-lib>Abrir biblioteca</button></li>';
-  else if (!groups.length) $('#booklist').innerHTML = (B.tag===NONE ? '<li class="empty">Nenhum item sem tag com esse filtro.</li>' : B.tipo==='hab' ? '<li class="empty">Nenhuma habilidade com esse filtro.</li>' : '<li class="empty">Nenhuma magia com esse filtro.</li>');
+  else if (!groups.length) $('#booklist').innerHTML = B.q.trim() ? `<li class="empty">Nada encontrado para “${esc(B.q.trim())}”.</li>` : (B.tag===NONE ? '<li class="empty">Nenhum item sem tag com esse filtro.</li>' : B.tipo==='hab' ? '<li class="empty">Nenhuma habilidade com esse filtro.</li>' : '<li class="empty">Nenhuma magia com esse filtro.</li>');
   else $('#booklist').innerHTML = groups.map(g=>{
     const n = g.items.length;
     const hd = g.num==='A' ? '' : `<li class="grp" role="presentation"><span class="num">${esc(g.num)}</span><span class="lab">${esc(g.lab)} — ${n} ${g.c!==undefined ? itemNome(g.c,n) : (n===1?'magia':'magias')}</span></li>`;
@@ -624,6 +631,7 @@ function renderBook(){
 $('#bord').addEventListener('change', e=>{ B.ord = e.target.value; renderBook(); });
 $('#btag').addEventListener('change', e=>{ B.tag = e.target.value; renderBook(); });
 $('#btipo').addEventListener('change', e=>{ B.tipo = e.target.value; renderBook(); });
+$('#bq').addEventListener('input', e=>{ B.q = e.target.value; renderBook(); });
 $('#bsem').addEventListener('change', e=>{ B.tag = e.target.checked ? NONE : ''; renderBook(); });
 $('#btagRen').addEventListener('click', ()=>{
   const ch = activeChar(); if (!ch || !B.tag || B.tag===NONE) return;

@@ -282,6 +282,10 @@ button.tagchip.pick{color:var(--muted);border-style:dashed}
 /* impressão */
 .opts{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;margin-bottom:16px;padding:11px 13px;background:var(--surface);border:1px solid var(--line)}
 .opts label{display:flex;gap:6px;align-items:center;max-width:100%;min-width:0}
+.opts .grow{flex:1 1 240px;min-width:0}
+.opts .grow input{flex:1;width:100%;min-width:0}
+.opts input[type=search]{padding:5px 8px;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:3px}
+.opts .hint{color:var(--muted);font-size:13px}
 .opts select{padding:5px 7px;min-width:0;max-width:100%;background:var(--surface);border:1px solid var(--line);border-radius:3px}
 .colorpick input[type=color]{width:34px;height:30px;padding:2px;background:var(--surface);border:1px solid var(--line);border-radius:3px;cursor:pointer}
 .paper{max-width:210mm;min-height:120mm;margin:0 auto;padding:18mm 16mm;background:#fff;border:1px solid var(--line)}
