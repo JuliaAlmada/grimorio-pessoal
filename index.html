@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inclusive+Sans:ital,wght@0,300..700;1,300..700&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=busca-1">
+<link rel="stylesheet" href="styles.css?v=wow-1">
 <script>
 /* escolhe o tema antes da página aparecer, para não piscar branco */
 (function(){
@@ -255,14 +255,16 @@ const ehHab = s => s.circulo===HAB;
 const FONTES = {
   'site':             { curto:'Base',   nome:'Livro base',       cls:'src-base' },
   'Heróis de Faerûn': { curto:'Faerûn', nome:'Heróis de Faerûn', cls:'src-fae'  },
-  'Arcana Unleashed': { curto:'Arcana', nome:'Arcana Unleashed', cls:'src-arc'  }
+  'Arcana Unleashed': { curto:'Arcana', nome:'Arcana Unleashed', cls:'src-arc'  },
+  'WoW':              { curto:'WoW',    nome:'WoW',              cls:'src-wow'  }
 };
-const FONTES_ORDEM = ['site','Heróis de Faerûn','Arcana Unleashed'];
+const FONTES_ORDEM = ['site','Heróis de Faerûn','Arcana Unleashed','WoW'];
 function canonFonte(f){
   const n = norm(f).trim();
   if (!n || n==='site' || n==='base' || n==='livro base') return 'site';
   if (n==='herois de faerun') return 'Heróis de Faerûn';
   if (n==='arcana unleashed') return 'Arcana Unleashed';
+  if (n==='wow' || n==='world of warcraft') return 'WoW';
   return String(f).trim();
 }
 const fonteKey = s => s.custom ? 'personalizada' : (s.fonte || 'site');

@@ -38,6 +38,9 @@
   --arc-fg:#5a4690;
   --arc-line:#c9bde6;
   --arc-bg:#f3eefb;
+  --wow-fg:#0f5a73;
+  --wow-line:#9ecbd9;
+  --wow-bg:#e6f4f8;
   --toast-bg:#30483a;
   --backdrop:rgba(25,31,27,.45);
   color-scheme:light;
@@ -86,6 +89,9 @@
   --arc-fg:#c6b4f2;
   --arc-line:#53457d;
   --arc-bg:#272037;
+  --wow-fg:#7fd0e8;
+  --wow-line:#2f6578;
+  --wow-bg:#162a33;
   --toast-bg:#34493c;
   --backdrop:rgba(0,0,0,.6);
 }
@@ -171,6 +177,7 @@ main{max-width:1220px;margin:0 auto;padding:24px 22px 56px}
 .pill.src-base{color:var(--muted);background:var(--surface-soft)}
 .pill.src-fae{color:var(--fae-fg);border-color:var(--fae-line);background:var(--fae-bg)}
 .pill.src-arc{color:var(--arc-fg);border-color:var(--arc-line);background:var(--arc-bg)}
+.pill.src-wow{color:var(--wow-fg);border-color:var(--wow-line);background:var(--wow-bg)}
 .pill.src-out{color:var(--muted);background:var(--surface-soft)}
 .srcline{margin:2px 0 10px;color:var(--muted);font-size:13px}
 #baseCard code{font-size:.92em}
